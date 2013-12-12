@@ -5,7 +5,7 @@
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      var aMeshMirror, directionalLight, waterNormals,
+      var aMeshMirror, directionalLight, planeGeo, planeMaterial, waterNormals,
         _this = this;
       this.textureCounter = 0;
       this.animDelta = 0;
@@ -36,6 +36,7 @@
       document.body.appendChild(this.stats.domElement);
       FW.scene = new THREE.Scene();
       this.groundControl = new FW.Rockets();
+      this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
@@ -46,6 +47,12 @@
       directionalLight = new THREE.DirectionalLight(0xff0000, 1);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
+      planeGeo = new THREE.PlaneGeometry(100000, 100000, 250, 250);
+      planeMaterial = new THREE.MeshPhongMaterial({
+        vertexColors: THREE.VertexColors,
+        shading: THREE.FlatShading,
+        side: THREE.DoubleSide
+      });
       this.loadTerrain();
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
@@ -63,7 +70,6 @@
       aMeshMirror.add(this.water);
       aMeshMirror.rotation.x = -Math.PI * 0.5;
       FW.scene.add(aMeshMirror);
-      this.loadSkyBox();
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
       }), false);
@@ -121,9 +127,10 @@
     };
 
     World.prototype.animate = function() {
-      var delta;
+      var delta, time;
       requestAnimationFrame(this.animate);
       delta = this.clock.getDelta();
+      time = Date.now();
       this.water.material.uniforms.time.value += 1.0 / 60.0;
       this.controls.update(delta);
       return this.render();
@@ -132,6 +139,7 @@
     World.prototype.render = function() {
       this.stats.update();
       this.groundControl.update();
+      this.meteor.tick();
       this.stars.tick();
       this.water.render();
       return this.renderer.render(FW.scene, FW.camera);

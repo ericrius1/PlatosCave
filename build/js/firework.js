@@ -36,19 +36,18 @@
       var emitterSettings, light;
       this.colorStart.setRGB(Math.random(), Math.random(), Math.random());
       light = new THREE.PointLight(this.colorStart, 0.0, this.lightRange);
-      FW.scene.add(light);
       this.lights.push(light);
       this.colorEnd.setRGB(Math.random(), Math.random(), Math.random());
       return emitterSettings = {
         type: 'sphere',
-        radius: 4,
+        radius: 10,
         radiusScale: new THREE.Vector3(rnd(1, 1.5), rnd(1, 1.5), rnd(1, 1.5)),
-        speed: 10,
-        speedSpread: 10,
+        speed: 1,
+        size: 20,
         colorStart: this.colorStart,
         colorSpread: new THREE.Vector3(.2, .2, .2),
         colorEnd: this.colorEnd,
-        particlesPerSecond: 400,
+        particlesPerSecond: 1000,
         alive: 0,
         emitterDuration: 1.0
       };

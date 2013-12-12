@@ -44,7 +44,7 @@ FW.World = class World
 
     #FUN
     @groundControl = new FW.Rockets()
-    # @meteor = new FW.Meteor()
+    @meteor = new FW.Meteor()
     @stars = new FW.Stars()
 
     
@@ -63,6 +63,12 @@ FW.World = class World
     FW.scene.add( directionalLight )
 
     #TERRAIN
+    planeGeo = new THREE.PlaneGeometry(100000, 100000, 250, 250)
+    planeMaterial = new THREE.MeshPhongMaterial vertexColors: THREE.VertexColors, shading: THREE.FlatShading, side: THREE.DoubleSide
+    # @plane = new THREE.Mesh planeGeo, planeMaterial
+    # @plane.rotation.x = 1
+    # @plane.position.y +=2000
+    # FW.scene.add @plane
     @loadTerrain() 
 
     #WATER
@@ -86,7 +92,7 @@ FW.World = class World
     aMeshMirror.rotation.x = -Math.PI * 0.5
     FW.scene.add aMeshMirror
 
-    @loadSkyBox()
+    # @loadSkyBox()
     
 
 
@@ -153,13 +159,15 @@ FW.World = class World
   animate : =>
     requestAnimationFrame @animate
     delta = @clock.getDelta()
+    time = Date.now()
     @water.material.uniforms.time.value += 1.0 / 60.0
     @controls.update(delta)
     @render()
   render : ->
     @stats.update()
+
     @groundControl.update()
-    # @meteor.tick()
+    @meteor.tick()
     @stars.tick()
     @water.render()
     @renderer.render( FW.scene, FW.camera );

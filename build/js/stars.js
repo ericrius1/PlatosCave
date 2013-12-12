@@ -12,7 +12,7 @@
       this.starGroup = new ShaderParticleGroup({
         texture: THREE.ImageUtils.loadTexture('assets/star.png'),
         blending: THREE.AdditiveBlending,
-        maxAge: 30
+        maxAge: 100
       });
       this.colorEnd = new THREE.Color();
       this.colorEnd.setRGB(Math.random(), Math.random(), Math.random());
@@ -23,10 +23,10 @@
     Stars.prototype.createStars = function() {
       this.starEmitter = new ShaderParticleEmitter({
         type: 'sphere',
-        radius: 4000,
+        radius: 100000,
         speed: .1,
         position: new THREE.Vector3().copy(FW.camera.position),
-        size: 300,
+        size: 30000,
         sizeSpread: 300,
         particlesPerSecond: 300,
         opacityStart: 0,
@@ -39,9 +39,7 @@
       return this.starGroup.addEmitter(this.starEmitter);
     };
 
-    Stars.prototype.tick = function() {
-      return this.starGroup.tick(0.16);
-    };
+    Stars.prototype.tick = function() {};
 
     return Stars;
 

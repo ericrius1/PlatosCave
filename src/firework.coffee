@@ -30,19 +30,19 @@ FW.Firework = class Firework
   generateEmitter : ->
     @colorStart.setRGB(Math.random(), Math.random(),Math.random())
     light = new THREE.PointLight(@colorStart, 0.0, @lightRange)
-    FW.scene.add(light)
+    # FW.scene.add(light)
     @lights.push(light)
     @colorEnd.setRGB(Math.random(), Math.random(),Math.random())
     emitterSettings = 
       type: 'sphere'
-      radius: 4
+      radius: 10
       radiusScale: new THREE.Vector3(rnd(1, 1.5), rnd(1, 1.5), rnd(1, 1.5))
-      speed: 10
-      speedSpread: 10
+      speed: 1
+      size: 20
       colorStart: @colorStart,
       colorSpread: new THREE.Vector3(.2, .2, .2)
       colorEnd: @colorEnd,
-      particlesPerSecond: 400
+      particlesPerSecond: 1000
       alive: 0,  
       emitterDuration: 1.0
 
