@@ -32,11 +32,7 @@ FW.World = class World
     @stats.domElement.style.top = '0px';
     document.body.appendChild(@stats.domElement);
     
-    # SCENE (RENDER TARGET)
-    @sceneRenderTarget = new THREE.Scene()
-    @cameraOrtho = new THREE.OrthographicCamera(@SCREEN_WIDTH / -2, @SCREEN_WIDTH / 2, @SCREEN_HEIGHT / 2, @SCREEN_HEIGHT / -2, -10000, 10000)
-    @cameraOrtho.position.z = 100
-    @sceneRenderTarget.add @cameraOrtho
+
     
     
     # SCENE (FINAL)
@@ -59,15 +55,13 @@ FW.World = class World
     
     
     # RENDERER
-    @renderer = new THREE.WebGLRenderer({antialias: true})
+    @renderer = new THREE.WebGLRenderer()
     @renderer.setSize @SCREEN_WIDTH, @SCREEN_HEIGHT
     @renderer.setClearColor FW.scene.fog.color, 1
     @renderer.domElement.style.position = "absolute"
     @renderer.domElement.style.top = @MARGIN + "px"
     @renderer.domElement.style.left = "0px"
     document.body.appendChild @renderer.domElement
-    @renderer.gammaInput = true
-    @renderer.gammaOutput = true
     
     # EVENTS
     @onWindowResize()

@@ -32,10 +32,6 @@
       this.stats.domElement.style.left = '0px';
       this.stats.domElement.style.top = '0px';
       document.body.appendChild(this.stats.domElement);
-      this.sceneRenderTarget = new THREE.Scene();
-      this.cameraOrtho = new THREE.OrthographicCamera(this.SCREEN_WIDTH / -2, this.SCREEN_WIDTH / 2, this.SCREEN_HEIGHT / 2, this.SCREEN_HEIGHT / -2, -10000, 10000);
-      this.cameraOrtho.position.z = 100;
-      this.sceneRenderTarget.add(this.cameraOrtho);
       FW.scene = new THREE.Scene();
       FW.scene.fog = new THREE.Fog(0x000000, 1000, 4000);
       this.firework = new FW.Firework();
@@ -45,17 +41,13 @@
       directionalLight = new THREE.DirectionalLight(0xffff55, 1);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
-      this.renderer = new THREE.WebGLRenderer({
-        antialias: true
-      });
+      this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
       this.renderer.setClearColor(FW.scene.fog.color, 1);
       this.renderer.domElement.style.position = "absolute";
       this.renderer.domElement.style.top = this.MARGIN + "px";
       this.renderer.domElement.style.left = "0px";
       document.body.appendChild(this.renderer.domElement);
-      this.renderer.gammaInput = true;
-      this.renderer.gammaOutput = true;
       this.onWindowResize();
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
