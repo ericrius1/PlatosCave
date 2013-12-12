@@ -1,4 +1,5 @@
 
+rnd = FW.rnd
 FW.World = class World
   constructor : ->
     @textureCounter = 0
@@ -64,15 +65,15 @@ FW.World = class World
 
     #SCREEN
     screenGeo = new THREE.PlaneGeometry(600, 600, 10, 10)
-    screenMat = new THREE.MeshBasicMaterial map: THREE.ImageUtils.loadTexture('assets/ponyo.jpg')
+    screenMat = new THREE.MeshBasicMaterial map: THREE.ImageUtils.loadTexture('assets/watts.jpg')
     @screen = new THREE.Mesh(screenGeo, screenMat)
     @screen.position.z =  -1000
     @screen.position.y =  -300
     FW.scene.add @screen
 
     #TERRAIN
-
-    @loadTerrain() 
+    for i in [1..5]
+      @loadTerrain() 
 
     #WATER
     waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'
@@ -147,6 +148,8 @@ FW.World = class World
     terrainGeo = TERRAINGEN.Get(parameters)
     terrainMaterial = new THREE.MeshPhongMaterial vertexColors: THREE.VertexColors, shading: THREE.FlatShading, side: THREE.DoubleSide 
     terrain = new THREE.Mesh terrainGeo, terrainMaterial
+    terrain.position.x = rnd -@width/10, @width/10
+    terrain.position.z = rnd -@height/10, @height/10
     FW.scene.add terrain
   onWindowResize : (event) ->
     @SCREEN_WIDTH = window.innerWidth

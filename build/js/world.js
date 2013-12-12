@@ -1,11 +1,13 @@
 (function() {
-  var World,
+  var World, rnd,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  rnd = FW.rnd;
 
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      var aMeshMirror, directionalLight, screenGeo, screenMat, waterNormals,
+      var aMeshMirror, directionalLight, i, screenGeo, screenMat, waterNormals, _i,
         _this = this;
       this.textureCounter = 0;
       this.animDelta = 0;
@@ -49,13 +51,15 @@
       FW.scene.add(directionalLight);
       screenGeo = new THREE.PlaneGeometry(600, 600, 10, 10);
       screenMat = new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture('assets/ponyo.jpg')
+        map: THREE.ImageUtils.loadTexture('assets/watts.jpg')
       });
       this.screen = new THREE.Mesh(screenGeo, screenMat);
       this.screen.position.z = -1000;
       this.screen.position.y = -300;
       FW.scene.add(this.screen);
-      this.loadTerrain();
+      for (i = _i = 1; _i <= 5; i = ++_i) {
+        this.loadTerrain();
+      }
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
       this.water = new THREE.Water(this.renderer, FW.camera, FW.scene, {
@@ -115,6 +119,8 @@
         side: THREE.DoubleSide
       });
       terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
+      terrain.position.x = rnd(-this.width / 10, this.width / 10);
+      terrain.position.z = rnd(-this.height / 10, this.height / 10);
       return FW.scene.add(terrain);
     };
 
