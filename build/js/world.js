@@ -33,7 +33,6 @@
       this.stats.domElement.style.top = '0px';
       document.body.appendChild(this.stats.domElement);
       FW.scene = new THREE.Scene();
-      FW.scene.fog = new THREE.Fog(0x000000, 1000, 4000);
       this.firework = new FW.Firework();
       this.groundControl = new FW.Rockets();
       this.meteor = new FW.Meteor();
@@ -43,7 +42,6 @@
       FW.scene.add(directionalLight);
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
-      this.renderer.setClearColor(FW.scene.fog.color, 1);
       this.renderer.domElement.style.position = "absolute";
       this.renderer.domElement.style.top = this.MARGIN + "px";
       this.renderer.domElement.style.left = "0px";

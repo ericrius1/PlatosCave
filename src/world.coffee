@@ -35,9 +35,8 @@ FW.World = class World
 
     
     
-    # SCENE (FINAL)
+    # SCENE 
     FW.scene = new THREE.Scene()
-    FW.scene.fog = new THREE.Fog(0x000000, 1000, 4000)
 
 
     #FUN
@@ -57,7 +56,6 @@ FW.World = class World
     # RENDERER
     @renderer = new THREE.WebGLRenderer()
     @renderer.setSize @SCREEN_WIDTH, @SCREEN_HEIGHT
-    @renderer.setClearColor FW.scene.fog.color, 1
     @renderer.domElement.style.position = "absolute"
     @renderer.domElement.style.top = @MARGIN + "px"
     @renderer.domElement.style.left = "0px"
