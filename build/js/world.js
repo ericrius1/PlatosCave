@@ -5,7 +5,6 @@
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      this.onKeyDown = __bind(this.onKeyDown, this);
       var aMeshMirror, directionalLight, waterNormals,
         _this = this;
       this.textureCounter = 0;
@@ -21,14 +20,14 @@
       this.SCREEN_WIDTH = window.innerWidth;
       this.SCREEN_HEIGHT = window.innerHeight - 2 * this.MARGIN;
       this.camFar = 300000;
-      this.width = 20000;
-      this.height = 20000;
+      this.width = 2000;
+      this.height = 2000;
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 0.5, this.camFar);
       FW.camera.position.set(0, (this.width * 1.5) / 8, -this.height);
       FW.camera.lookAt(new THREE.Vector3(0, 0, 0));
       this.controls = new THREE.FlyControls(FW.camera);
-      this.controls.movementSpeed = 300;
-      this.controls.rollSpeed = Math.PI / 16;
+      this.controls.movementSpeed = 2000;
+      this.controls.rollSpeed = Math.PI / 4;
       this.controls.pitchEnabled = true;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
@@ -45,7 +44,7 @@
       this.renderer.domElement.style.top = this.MARGIN + "px";
       this.renderer.domElement.style.left = "0px";
       document.body.appendChild(this.renderer.domElement);
-      directionalLight = new THREE.DirectionalLight(0xffff55, 1);
+      directionalLight = new THREE.DirectionalLight(0xffff55, 10, 100000);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
@@ -57,18 +56,15 @@
         alpha: 1.0,
         sunDirection: directionalLight.position.normalize(),
         sunColor: 0xffffff,
-        waterColor: 0x001e0f
+        waterColor: 0x001e0f,
+        distortionScale: 50.0
       });
       aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(this.width * 500, this.height * 500, 50, 50), this.water.material);
       aMeshMirror.add(this.water);
       aMeshMirror.rotation.x = -Math.PI * 0.5;
       FW.scene.add(aMeshMirror);
-      this.onWindowResize();
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
-      }), false);
-      document.addEventListener("keydown", (function() {
-        return _this.onKeyDown(event);
       }), false);
     }
 
@@ -78,15 +74,6 @@
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
       FW.camera.aspect = this.SCREEN_WIDTH / this.SCREEN_HEIGHT;
       return FW.camera.updateProjectionMatrix();
-    };
-
-    World.prototype.onKeyDown = function(event) {
-      switch (event.keyCode) {
-        case 78:
-          return this.lightDir *= -1;
-        case 77:
-          return this.animDeltaDir *= -1;
-      }
     };
 
     World.prototype.animate = function() {

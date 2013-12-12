@@ -17,7 +17,7 @@
       this.firework = new FW.Firework(this.color);
       this.projector = new THREE.Projector();
       this.launchSpeed = 5;
-      this.explosionDelay = 100;
+      this.explosionDelay = 500;
       this.shootDirection = new THREE.Vector3();
       this.rocketMat = FW.rocketMat;
       this.rocketGeo = new THREE.CylinderGeometry(.1, 1, 1);
@@ -59,8 +59,7 @@
       this.rockets.push(rocket);
       return setTimeout(function() {
         _this.explode(rocket);
-        _this.launching = false;
-        return _this.explosionDelay = rnd(1000, 1400);
+        return _this.launching = false;
       }, this.explosionDelay);
     };
 

@@ -14,8 +14,8 @@ FW.World = class World
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
     @camFar = 300000
-    @width = 20000
-    @height = 20000
+    @width = 2000
+    @height = 2000
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 0.5, @camFar)
@@ -24,8 +24,8 @@ FW.World = class World
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
-    @controls.movementSpeed = 300;
-    @controls.rollSpeed =  Math.PI / 16;
+    @controls.movementSpeed = 2000;
+    @controls.rollSpeed =  Math.PI / 4;
     @controls.pitchEnabled = true
 
     #STATS
@@ -49,8 +49,6 @@ FW.World = class World
     @stars = new FW.Stars()
 
     
-    
-    
     # RENDERER
     @renderer = new THREE.WebGLRenderer()
     @renderer.setSize @SCREEN_WIDTH, @SCREEN_HEIGHT
@@ -61,7 +59,7 @@ FW.World = class World
     
     
     # LIGHTS
-    directionalLight = new THREE.DirectionalLight( 0xffff55, 1 );
+    directionalLight = new THREE.DirectionalLight( 0xffff55, 10, 100000 );
     directionalLight.position.set( -600, 300, 600 );
     FW.scene.add( directionalLight );
 
@@ -76,6 +74,7 @@ FW.World = class World
       sunDirection: directionalLight.position.normalize()
       sunColor: 0xffffff
       waterColor: 0x001e0f
+      distortionScale: 50.0
 
     aMeshMirror = new THREE.Mesh(
       new THREE.PlaneGeometry @width * 500, @height * 500, 50, 50
@@ -88,15 +87,10 @@ FW.World = class World
 
 
     # EVENTS
-    @onWindowResize()
-
-
     window.addEventListener "resize", (=>
       @onWindowResize()
     ), false
-    document.addEventListener "keydown", (=>
-      @onKeyDown(event)
-    ), false
+
 
 
   onWindowResize : (event) ->
@@ -106,12 +100,6 @@ FW.World = class World
     FW.camera.aspect = @SCREEN_WIDTH / @SCREEN_HEIGHT
     FW.camera.updateProjectionMatrix()
 
-  onKeyDown : (event) =>
-    switch event.keyCode
-      when 78
-        @lightDir *= -1 #N
-      when 77
-        @animDeltaDir *= -1 #M
 
   
 
