@@ -4,14 +4,18 @@ FW.Firework = class Firework
     #create a few different emmitters and add to pool
     @colorStart = new THREE.Color()
     @colorEnd = new THREE.Color()
+    @lightIndex = 0
     @fwSpread = 200
     @fwAge = 15
-
+    @lightRange = 10000
+    @startLightIntensity = 10
+    @lightDimmingFactor = .5/@fwAge
 
     @explodeSound = new Audio('./assets/explosion.mp3');
     @explodeSound.volume = FW.sfxVolume
     @crackleSound = new Audio('./assets/crackle.mp3');
     @crackleSound.volume = FW.sfxVolume * 0.5
+    @lights = []
     
     @particleGroup = new ShaderParticleGroup({
       texture: THREE.ImageUtils.loadTexture('assets/star.png'),
@@ -25,6 +29,9 @@ FW.Firework = class Firework
 
   generateEmitter : ->
     @colorStart.setRGB(Math.random(), Math.random(),Math.random())
+    light = new THREE.PointLight(@colorStart, 0.0, @lightRange)
+    FW.scene.add(light)
+    @lights.push(light)
     @colorEnd.setRGB(Math.random(), Math.random(),Math.random())
     emitterSettings = 
       type: 'sphere'
@@ -41,6 +48,11 @@ FW.Firework = class Firework
 
   createExplosion: (origPos, newPos = origPos, count=0)->
     emitter = @particleGroup.triggerPoolEmitter(1, newPos)
+    light = @lights[@lightIndex++]
+    if @lightIndex is @lights.length
+      @lightIndex = 0
+    light.position.set(newPos.x, newPos.y, newPos.z)
+    light.intensity = @startLightIntensity
     if count < FW.numExplosionsPerRocket-1
       setTimeout =>
         #set timeout for speed of sound delay!
@@ -61,6 +73,8 @@ FW.Firework = class Firework
     
   tick: ->
     @particleGroup.tick(0.16)
-
+    for light in @lights
+      if light.intensity > 0
+        light.intensity -=@lightDimmingFactor
 
 

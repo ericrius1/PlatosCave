@@ -36,7 +36,6 @@
       document.body.appendChild(this.stats.domElement);
       FW.scene = new THREE.Scene();
       this.groundControl = new FW.Rockets();
-      this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
@@ -92,8 +91,8 @@
       parameters = {
         alea: RAND_MT,
         generator: PN_GENERATOR,
-        width: 20000,
-        height: 20000,
+        width: 2000,
+        height: 2000,
         widthSegments: 250,
         heightSegments: 250,
         depth: 1500,
@@ -133,7 +132,6 @@
     World.prototype.render = function() {
       this.stats.update();
       this.groundControl.update();
-      this.meteor.tick();
       this.stars.tick();
       this.water.render();
       return this.renderer.render(FW.scene, FW.camera);

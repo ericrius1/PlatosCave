@@ -44,7 +44,7 @@ FW.World = class World
 
     #FUN
     @groundControl = new FW.Rockets()
-    @meteor = new FW.Meteor()
+    # @meteor = new FW.Meteor()
     @stars = new FW.Stars()
 
     
@@ -126,8 +126,8 @@ FW.World = class World
     parameters = 
       alea: RAND_MT,
       generator: PN_GENERATOR,
-      width: 20000,
-      height: 20000,
+      width: 2000,
+      height: 2000,
       widthSegments: 250,
       heightSegments: 250,
       depth: 1500,
@@ -159,7 +159,7 @@ FW.World = class World
   render : ->
     @stats.update()
     @groundControl.update()
-    @meteor.tick()
+    # @meteor.tick()
     @stars.tick()
     @water.render()
     @renderer.render( FW.scene, FW.camera );

@@ -10,12 +10,17 @@
       var i, _i;
       this.colorStart = new THREE.Color();
       this.colorEnd = new THREE.Color();
+      this.lightIndex = 0;
       this.fwSpread = 200;
       this.fwAge = 15;
+      this.lightRange = 10000;
+      this.startLightIntensity = 10;
+      this.lightDimmingFactor = .5 / this.fwAge;
       this.explodeSound = new Audio('./assets/explosion.mp3');
       this.explodeSound.volume = FW.sfxVolume;
       this.crackleSound = new Audio('./assets/crackle.mp3');
       this.crackleSound.volume = FW.sfxVolume * 0.5;
+      this.lights = [];
       this.particleGroup = new ShaderParticleGroup({
         texture: THREE.ImageUtils.loadTexture('assets/star.png'),
         blending: THREE.AdditiveBlending,
@@ -28,8 +33,11 @@
     }
 
     Firework.prototype.generateEmitter = function() {
-      var emitterSettings;
+      var emitterSettings, light;
       this.colorStart.setRGB(Math.random(), Math.random(), Math.random());
+      light = new THREE.PointLight(this.colorStart, 0.0, this.lightRange);
+      FW.scene.add(light);
+      this.lights.push(light);
       this.colorEnd.setRGB(Math.random(), Math.random(), Math.random());
       return emitterSettings = {
         type: 'sphere',
@@ -47,7 +55,7 @@
     };
 
     Firework.prototype.createExplosion = function(origPos, newPos, count) {
-      var emitter,
+      var emitter, light,
         _this = this;
       if (newPos == null) {
         newPos = origPos;
@@ -56,6 +64,12 @@
         count = 0;
       }
       emitter = this.particleGroup.triggerPoolEmitter(1, newPos);
+      light = this.lights[this.lightIndex++];
+      if (this.lightIndex === this.lights.length) {
+        this.lightIndex = 0;
+      }
+      light.position.set(newPos.x, newPos.y, newPos.z);
+      light.intensity = this.startLightIntensity;
       if (count < FW.numExplosionsPerRocket - 1) {
         return setTimeout(function() {
           if (soundOn) {
@@ -76,7 +90,19 @@
     };
 
     Firework.prototype.tick = function() {
-      return this.particleGroup.tick(0.16);
+      var light, _i, _len, _ref, _results;
+      this.particleGroup.tick(0.16);
+      _ref = this.lights;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        light = _ref[_i];
+        if (light.intensity > 0) {
+          _results.push(light.intensity -= this.lightDimmingFactor);
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
     };
 
     return Firework;
