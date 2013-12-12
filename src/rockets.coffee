@@ -67,6 +67,6 @@ FW.Rockets = class Rockets
     rocket.translateX(@launchSpeed * rocket.shootDirection.x)
     rocket.translateY( @launchSpeed * rocket.shootDirection.y)
     rocket.translateZ(@launchSpeed * rocket.shootDirection.z)
-    # rocket.translateY(rocket.launchSpeedY)
-    # rocket.launchSpeedY -= .05
+    rocket.translateY(rocket.launchSpeedY)
+    rocket.launchSpeedY -= .05
 

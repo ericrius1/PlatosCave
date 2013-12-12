@@ -22,9 +22,9 @@ FW.Stars = class Stars
       radius: 100000
       speed: .1
       position: new THREE.Vector3().copy FW.camera.position
-      size: 30000
+      size: 10000
       sizeSpread: 300
-      particlesPerSecond: 300
+      particlesPerSecond: 100
       opacityStart: 0
       opacityMiddle: 1
       opacityEnd: 0
@@ -36,7 +36,7 @@ FW.Stars = class Stars
  
     
   tick: ->
-    # @starGroup.tick(0.16)
+    @starGroup.tick(0.16)
     
 
 

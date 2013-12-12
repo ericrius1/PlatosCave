@@ -78,7 +78,9 @@
     Rockets.prototype.updateRocket = function(rocket) {
       rocket.translateX(this.launchSpeed * rocket.shootDirection.x);
       rocket.translateY(this.launchSpeed * rocket.shootDirection.y);
-      return rocket.translateZ(this.launchSpeed * rocket.shootDirection.z);
+      rocket.translateZ(this.launchSpeed * rocket.shootDirection.z);
+      rocket.translateY(rocket.launchSpeedY);
+      return rocket.launchSpeedY -= .05;
     };
 
     return Rockets;

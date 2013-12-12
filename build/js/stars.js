@@ -26,9 +26,9 @@
         radius: 100000,
         speed: .1,
         position: new THREE.Vector3().copy(FW.camera.position),
-        size: 30000,
+        size: 10000,
         sizeSpread: 300,
-        particlesPerSecond: 300,
+        particlesPerSecond: 100,
         opacityStart: 0,
         opacityMiddle: 1,
         opacityEnd: 0,
@@ -39,7 +39,9 @@
       return this.starGroup.addEmitter(this.starEmitter);
     };
 
-    Stars.prototype.tick = function() {};
+    Stars.prototype.tick = function() {
+      return this.starGroup.tick(0.16);
+    };
 
     return Stars;
 

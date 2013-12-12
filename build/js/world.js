@@ -23,12 +23,10 @@
       this.width = 2000;
       this.height = 2000;
       FW.camera = new THREE.PerspectiveCamera(40.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
-      FW.camera.position.set(0, (this.width * 1.5) / 8, -this.height);
-      FW.camera.lookAt(new THREE.Vector3(0, 0, 0));
+      FW.camera.position.set(0, 40, -this.height);
       this.controls = new THREE.FlyControls(FW.camera);
-      this.controls.movementSpeed = 2000;
-      this.controls.rollSpeed = Math.PI / 4;
-      this.controls.pitchEnabled = true;
+      this.controls.movementSpeed = 1000;
+      this.controls.rollSpeed = Math.PI / 16;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
       this.stats.domElement.style.left = '0px';
@@ -64,7 +62,7 @@
         sunDirection: directionalLight.position.normalize(),
         sunColor: 0xffffff,
         waterColor: 0x001e0f,
-        distortionScale: 50.0
+        distortionScale: 10.0
       });
       aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(this.width * 500, this.height * 500, 50, 50), this.water.material);
       aMeshMirror.add(this.water);

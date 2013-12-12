@@ -19,14 +19,13 @@ FW.World = class World
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(40.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 3, @camFar)
-    FW.camera.position.set  0, (@width * 1.5) /8, -@height
-    FW.camera.lookAt new THREE.Vector3 0, 0, 0
+    FW.camera.position.set  0, 40, -@height
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
-    @controls.movementSpeed = 2000;
-    @controls.rollSpeed =  Math.PI / 4;
-    @controls.pitchEnabled = true
+    @controls.movementSpeed = 1000;
+    @controls.rollSpeed =  Math.PI / 16;
+    # @controls.pitchEnabled = true
 
     #STATS
     @stats = new Stats()
@@ -82,7 +81,7 @@ FW.World = class World
       sunDirection: directionalLight.position.normalize()
       sunColor: 0xffffff
       waterColor: 0x001e0f
-      distortionScale: 50.0
+      distortionScale: 10.0
 
     aMeshMirror = new THREE.Mesh(
       new THREE.PlaneGeometry @width * 500, @height * 500, 50, 50
