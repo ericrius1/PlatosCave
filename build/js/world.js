@@ -24,7 +24,8 @@
       this.height = 100000;
       this.startingY = 40;
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
-      FW.camera.position.set(0, this.startingY, -2000);
+      FW.camera.position.set(-1930, this.startingY, -730);
+      FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
       this.controls.movementSpeed = 100;
       this.controls.rollSpeed = Math.PI / 4;
@@ -43,7 +44,7 @@
       this.renderer.domElement.style.top = this.MARGIN + "px";
       this.renderer.domElement.style.left = "0px";
       document.body.appendChild(this.renderer.domElement);
-      directionalLight = new THREE.DirectionalLight(0xff0000, 1);
+      directionalLight = new THREE.DirectionalLight(0xff00ff, 4);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
       this.loadTerrain();

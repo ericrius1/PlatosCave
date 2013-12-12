@@ -20,7 +20,8 @@ FW.World = class World
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 3, @camFar)
-    FW.camera.position.set  0, @startingY, -2000
+    FW.camera.position.set  -1930, @startingY, -730
+    FW.camera.lookAt new THREE.Vector3 0, 40, 0
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
@@ -59,7 +60,7 @@ FW.World = class World
     
     
     # LIGHTS
-    directionalLight = new THREE.DirectionalLight 0xff0000, 1
+    directionalLight = new THREE.DirectionalLight 0xff00ff, 4
     directionalLight.position.set( -600, 300, 600 )
     FW.scene.add( directionalLight )
 
