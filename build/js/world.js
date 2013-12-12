@@ -64,10 +64,28 @@
       aMeshMirror.add(this.water);
       aMeshMirror.rotation.x = -Math.PI * 0.5;
       FW.scene.add(aMeshMirror);
+      this.loadSkyBox();
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
       }), false);
     }
+
+    World.prototype.loadSkyBox = function() {
+      var aCubeMap, aShader, aSkyBox, aSkyBoxMaterial;
+      aCubeMap = THREE.ImageUtils.loadTextureCube(['./assets/px.jpg', './assets/nx.jpg', './assets/py.jpg', './assets/ny.jpg', './assets/pz.jpg', './assets/nz.jpg']);
+      aCubeMap.format = THREE.RGBFormat;
+      aShader = THREE.ShaderLib['cube'];
+      aShader.uniforms['tCube'].value = aCubeMap;
+      aSkyBoxMaterial = new THREE.ShaderMaterial({
+        fragmentShader: aShader.fragmentShader,
+        vertexShader: aShader.vertexShader,
+        uniforms: aShader.uniforms,
+        depthWrite: false,
+        side: THREE.BackSide
+      });
+      aSkyBox = new THREE.Mesh(new THREE.CubeGeometry(1000000, 1000000, 1000000), aSkyBoxMaterial);
+      return FW.scene.add(aSkyBox);
+    };
 
     World.prototype.onWindowResize = function(event) {
       this.SCREEN_WIDTH = window.innerWidth;

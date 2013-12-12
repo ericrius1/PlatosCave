@@ -83,6 +83,8 @@ FW.World = class World
     aMeshMirror.add @water
     aMeshMirror.rotation.x = -Math.PI * 0.5
     FW.scene.add aMeshMirror
+
+    @loadSkyBox()
     
 
 
@@ -91,6 +93,32 @@ FW.World = class World
       @onWindowResize()
     ), false
 
+  loadSkyBox: ->
+    aCubeMap = THREE.ImageUtils.loadTextureCube [
+      './assets/px.jpg'
+      './assets/nx.jpg'
+      './assets/py.jpg'
+      './assets/ny.jpg'
+      './assets/pz.jpg'
+      './assets/nz.jpg'
+    ]
+
+    aCubeMap.format = THREE.RGBFormat
+    aShader = THREE.ShaderLib['cube']
+    aShader.uniforms['tCube'].value = aCubeMap
+
+    aSkyBoxMaterial = new THREE.ShaderMaterial
+      fragmentShader: aShader.fragmentShader
+      vertexShader: aShader.vertexShader
+      uniforms: aShader.uniforms
+      depthWrite: false
+      side: THREE.BackSide
+
+    aSkyBox = new THREE.Mesh(
+      new THREE.CubeGeometry 1000000, 1000000, 1000000
+      aSkyBoxMaterial
+    )
+    FW.scene.add aSkyBox
 
 
   onWindowResize : (event) ->
@@ -100,8 +128,6 @@ FW.World = class World
     FW.camera.aspect = @SCREEN_WIDTH / @SCREEN_HEIGHT
     FW.camera.updateProjectionMatrix()
 
-
-  
 
 
   animate : =>
