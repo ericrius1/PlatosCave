@@ -43,8 +43,6 @@ FW.Firework = class Firework
       colorSpread: new THREE.Vector3(.2, .2, .2)
       colorEnd: @colorEnd,
       particlesPerSecond: 400
-      size: rnd(50, 200)
-      sizeSpread: 100
       alive: 0,  
       emitterDuration: 1.0
 

@@ -16,7 +16,7 @@
       this.color.setRGB(200, 10, 0);
       this.firework = new FW.Firework(this.color);
       this.projector = new THREE.Projector();
-      this.launchSpeed = 5;
+      this.launchSpeed = .001;
       this.explosionDelay = 500;
       this.shootDirection = new THREE.Vector3();
       this.rocketMat = FW.rocketMat;
@@ -32,7 +32,7 @@
     Rockets.prototype.launchRocket = function() {
       var ray, rocket, vector,
         _this = this;
-      FW.numExplosionsPerRocket = rnd(1, 5);
+      FW.numExplosionsPerRocket = 1;
       if (this.launching) {
         return;
       }
@@ -76,9 +76,7 @@
     Rockets.prototype.updateRocket = function(rocket) {
       rocket.translateX(this.launchSpeed * rocket.shootDirection.x);
       rocket.translateY(this.launchSpeed * rocket.shootDirection.y);
-      rocket.translateZ(this.launchSpeed * rocket.shootDirection.z);
-      rocket.translateY(rocket.launchSpeedY);
-      return rocket.launchSpeedY -= .05;
+      return rocket.translateZ(this.launchSpeed * rocket.shootDirection.z);
     };
 
     return Rockets;

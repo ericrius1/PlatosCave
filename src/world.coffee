@@ -18,7 +18,7 @@ FW.World = class World
     @height = 2000
 
     # CAMERA
-    FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 0.5, @camFar)
+    FW.camera = new THREE.PerspectiveCamera(40.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 0.5, @camFar)
     FW.camera.position.set  0, (@width * 1.5) /8, -@height
     FW.camera.lookAt new THREE.Vector3 0, 0, 0
     
@@ -45,7 +45,7 @@ FW.World = class World
     #FUN
     @firework = new FW.Firework()
     @groundControl = new FW.Rockets()
-    # @meteor = new FW.Meteor()
+    @meteor = new FW.Meteor()
     @stars = new FW.Stars()
 
     
@@ -113,7 +113,7 @@ FW.World = class World
   render : ->
     @stats.update()
     @groundControl.update()
-    # @meteor.tick()
+    @meteor.tick()
     @stars.tick()
     @water.render()
     @renderer.render( FW.scene, FW.camera );

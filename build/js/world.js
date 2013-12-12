@@ -22,7 +22,7 @@
       this.camFar = 300000;
       this.width = 2000;
       this.height = 2000;
-      FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 0.5, this.camFar);
+      FW.camera = new THREE.PerspectiveCamera(40.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 0.5, this.camFar);
       FW.camera.position.set(0, (this.width * 1.5) / 8, -this.height);
       FW.camera.lookAt(new THREE.Vector3(0, 0, 0));
       this.controls = new THREE.FlyControls(FW.camera);
@@ -37,6 +37,7 @@
       FW.scene = new THREE.Scene();
       this.firework = new FW.Firework();
       this.groundControl = new FW.Rockets();
+      this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
@@ -88,6 +89,7 @@
     World.prototype.render = function() {
       this.stats.update();
       this.groundControl.update();
+      this.meteor.tick();
       this.stars.tick();
       this.water.render();
       return this.renderer.render(FW.scene, FW.camera);
