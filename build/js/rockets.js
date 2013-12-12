@@ -19,7 +19,9 @@
       this.launchSpeed = 1;
       this.explosionDelay = 500;
       this.shootDirection = new THREE.Vector3();
-      this.rocketMat = FW.rocketMat;
+      this.rocketMat = new THREE.MeshBasicMaterial({
+        color: 0xff00ff
+      });
       this.rocketGeo = new THREE.CylinderGeometry(.1, 1, 1);
     }
 

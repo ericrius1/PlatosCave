@@ -18,7 +18,7 @@ FW.Rockets = class Rockets
     @launchSpeed = 1
     @explosionDelay = 500
     @shootDirection = new THREE.Vector3()
-    @rocketMat = FW.rocketMat
+    @rocketMat = new THREE.MeshBasicMaterial color : 0xff00ff
 
 
 
