@@ -16,6 +16,7 @@ window.soundOn = false
 FW.sfxVolume = 0.2
 
 #make user let go when they want to explode firework
+#flocking birds
 window.onload = ->
   FW.myWorld = new FW.World()
   FW.myWorld.animate()

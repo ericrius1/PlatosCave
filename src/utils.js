@@ -13,3 +13,7 @@ FW.rnd = function(p1, p2) {
         }
         return r;
 };
+
+Number.prototype.clamp = function(min, max) {
+  return Math.min(Math.max(this, min), max);
+};
