@@ -43,11 +43,12 @@
         positionSpread: new THREE.Vector3(10, 10, 10),
         velocitySpread: new THREE.Vector3(50, 50, 50),
         accelerationSpread: new THREE.Vector3(10, 10, 10),
-        size: 500,
+        size: 200,
+        sizeSpread: 100,
         colorStart: this.colorStart,
         colorSpread: new THREE.Vector3(.2, .2, .2),
         colorEnd: this.colorEnd,
-        particlesPerSecond: 100,
+        particlesPerSecond: 500,
         alive: 0,
         emitterDuration: 1.0
       };

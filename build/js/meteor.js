@@ -48,8 +48,8 @@
       meteor.tailEmitter = new ShaderParticleEmitter({
         position: meteor.position,
         positionSpread: new THREE.Vector3(20, 20, 2),
-        size: 100,
-        sizeSpread: 10,
+        size: 200,
+        sizeSpread: 100,
         acceleration: new THREE.Vector3(meteor.dirX, meteor.dirY, meteor.dirZ),
         accelerationSpread: new THREE.Vector3(.7, .7, .7),
         particlesPerSecond: 100,
@@ -69,7 +69,7 @@
         distance = FW.camera.position.distanceTo(meteor.position);
         if (distance > this.meteorVisibleDistance) {
           this.generateSpeed(meteor);
-          meteor.position = new THREE.Vector3(0, 3000, 0);
+          meteor.position = new THREE.Vector3(0, 1000, 0);
         }
       }
       return setTimeout(function() {
