@@ -25,11 +25,9 @@
   FW.sfxVolume = 0.2;
 
   window.onload = function() {
-    FW.startingPos = new THREE.Vector3(3537, 500, -324);
     FW.myWorld = new FW.World();
     FW.myWorld.animate();
-    FW.main = new FW.Main();
-    return FW.camera.lookAt(FW.startingPos);
+    return FW.main = new FW.Main();
   };
 
   FW.Main = Main = (function() {

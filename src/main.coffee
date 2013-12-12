@@ -18,11 +18,9 @@ FW.sfxVolume = 0.2
 #inspire rameses b
 #Give user option between building a permanent structure or laun@stars fire works
 window.onload = ->
-  FW.startingPos = new THREE.Vector3(3537, 500, -324)
   FW.myWorld = new FW.World()
   FW.myWorld.animate()
   FW.main = new FW.Main()
-  FW.camera.lookAt FW.startingPos 
 
 
 FW.Main = class Main

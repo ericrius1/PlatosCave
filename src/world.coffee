@@ -13,16 +13,19 @@ FW.World = class World
     @MARGIN = 10
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
-    @camFar = 8000
+    @camFar = 300000
+    @width = 20000
+    @height = 20000
 
     # CAMERA
-    FW.camera = new THREE.PerspectiveCamera(40, @SCREEN_WIDTH / @SCREEN_HEIGHT, 2, @camFar)
-    FW.camera.position.set  0, 570, 0
+    FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 0.5, @camFar)
+    FW.camera.position.set  0, (@width * 1.5) /8, -@height
+    FW.camera.lookAt new THREE.Vector3 0, 0, 0
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
-    @controls.movementSpeed = 600;
-    @controls.rollSpeed =  Math.PI / 6;
+    @controls.movementSpeed = 300;
+    @controls.rollSpeed =  Math.PI / 16;
     @controls.pitchEnabled = true
 
     #STATS
@@ -42,14 +45,9 @@ FW.World = class World
     #FUN
     @firework = new FW.Firework()
     @groundControl = new FW.Rockets()
-    @meteor = new FW.Meteor()
+    # @meteor = new FW.Meteor()
     @stars = new FW.Stars()
 
-    
-    # LIGHTS
-    directionalLight = new THREE.DirectionalLight( 0xffff55, 1 );
-    directionalLight.position.set( -600, 300, 600 );
-    FW.scene.add( directionalLight );
     
     
     
@@ -61,9 +59,15 @@ FW.World = class World
     @renderer.domElement.style.left = "0px"
     document.body.appendChild @renderer.domElement
     
+    
+    # LIGHTS
+    directionalLight = new THREE.DirectionalLight( 0xffff55, 1 );
+    directionalLight.position.set( -600, 300, 600 );
+    FW.scene.add( directionalLight );
 
     #WATER
     waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'
+    waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping
     @water = new THREE.Water @renderer, FW.camera, FW.scene,
       textureWidth: 512
       textureHeight: 512
@@ -74,7 +78,7 @@ FW.World = class World
       waterColor: 0x001e0f
 
     aMeshMirror = new THREE.Mesh(
-      new THREE.PlaneGeometry 2000, 2000, 10, 10
+      new THREE.PlaneGeometry @width * 500, @height * 500, 50, 50
       @water.material
     )
     aMeshMirror.add @water
@@ -114,15 +118,15 @@ FW.World = class World
 
   animate : =>
     requestAnimationFrame @animate
+    delta = @clock.getDelta()
     @water.material.uniforms.time.value += 1.0 / 60.0
+    @controls.update(delta)
     @render()
   render : ->
-    delta = @clock.getDelta()
     @stats.update()
     @groundControl.update()
-    @meteor.tick()
+    # @meteor.tick()
     @stars.tick()
-    @controls.update(delta)
     @water.render()
     @renderer.render( FW.scene, FW.camera );
      

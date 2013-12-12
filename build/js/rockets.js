@@ -16,8 +16,8 @@
       this.color.setRGB(200, 10, 0);
       this.firework = new FW.Firework(this.color);
       this.projector = new THREE.Projector();
-      this.launchSpeed = 20;
-      this.explosionDelay = rnd(2000, 1400);
+      this.launchSpeed = 5;
+      this.explosionDelay = 100;
       this.shootDirection = new THREE.Vector3();
       this.rocketMat = FW.rocketMat;
       this.rocketGeo = new THREE.CylinderGeometry(.1, 1, 1);

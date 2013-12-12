@@ -20,12 +20,15 @@
       this.MARGIN = 10;
       this.SCREEN_WIDTH = window.innerWidth;
       this.SCREEN_HEIGHT = window.innerHeight - 2 * this.MARGIN;
-      this.camFar = 8000;
-      FW.camera = new THREE.PerspectiveCamera(40, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 2, this.camFar);
-      FW.camera.position.set(0, 570, 0);
+      this.camFar = 300000;
+      this.width = 20000;
+      this.height = 20000;
+      FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 0.5, this.camFar);
+      FW.camera.position.set(0, (this.width * 1.5) / 8, -this.height);
+      FW.camera.lookAt(new THREE.Vector3(0, 0, 0));
       this.controls = new THREE.FlyControls(FW.camera);
-      this.controls.movementSpeed = 600;
-      this.controls.rollSpeed = Math.PI / 6;
+      this.controls.movementSpeed = 300;
+      this.controls.rollSpeed = Math.PI / 16;
       this.controls.pitchEnabled = true;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
@@ -35,18 +38,18 @@
       FW.scene = new THREE.Scene();
       this.firework = new FW.Firework();
       this.groundControl = new FW.Rockets();
-      this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
-      directionalLight = new THREE.DirectionalLight(0xffff55, 1);
-      directionalLight.position.set(-600, 300, 600);
-      FW.scene.add(directionalLight);
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
       this.renderer.domElement.style.position = "absolute";
       this.renderer.domElement.style.top = this.MARGIN + "px";
       this.renderer.domElement.style.left = "0px";
       document.body.appendChild(this.renderer.domElement);
+      directionalLight = new THREE.DirectionalLight(0xffff55, 1);
+      directionalLight.position.set(-600, 300, 600);
+      FW.scene.add(directionalLight);
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
+      waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
       this.water = new THREE.Water(this.renderer, FW.camera, FW.scene, {
         textureWidth: 512,
         textureHeight: 512,
@@ -56,7 +59,7 @@
         sunColor: 0xffffff,
         waterColor: 0x001e0f
       });
-      aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000, 10, 10), this.water.material);
+      aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(this.width * 500, this.height * 500, 50, 50), this.water.material);
       aMeshMirror.add(this.water);
       aMeshMirror.rotation.x = -Math.PI * 0.5;
       FW.scene.add(aMeshMirror);
@@ -87,19 +90,18 @@
     };
 
     World.prototype.animate = function() {
+      var delta;
       requestAnimationFrame(this.animate);
+      delta = this.clock.getDelta();
       this.water.material.uniforms.time.value += 1.0 / 60.0;
+      this.controls.update(delta);
       return this.render();
     };
 
     World.prototype.render = function() {
-      var delta;
-      delta = this.clock.getDelta();
       this.stats.update();
       this.groundControl.update();
-      this.meteor.tick();
       this.stars.tick();
-      this.controls.update(delta);
       this.water.render();
       return this.renderer.render(FW.scene, FW.camera);
     };
