@@ -22,7 +22,7 @@
       this.camFar = 300000;
       this.width = 2000;
       this.height = 2000;
-      FW.camera = new THREE.PerspectiveCamera(40.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 0.5, this.camFar);
+      FW.camera = new THREE.PerspectiveCamera(40.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
       FW.camera.position.set(0, (this.width * 1.5) / 8, -this.height);
       FW.camera.lookAt(new THREE.Vector3(0, 0, 0));
       this.controls = new THREE.FlyControls(FW.camera);
@@ -37,6 +37,7 @@
       FW.scene = new THREE.Scene();
       this.firework = new FW.Firework();
       this.groundControl = new FW.Rockets();
+      this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
@@ -44,9 +45,10 @@
       this.renderer.domElement.style.top = this.MARGIN + "px";
       this.renderer.domElement.style.left = "0px";
       document.body.appendChild(this.renderer.domElement);
-      directionalLight = new THREE.DirectionalLight(0xff0000, 1000);
+      directionalLight = new THREE.DirectionalLight(0xff0000, 1);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
+      this.loadTerrain();
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
       this.water = new THREE.Water(this.renderer, FW.camera, FW.scene, {
@@ -86,6 +88,32 @@
       return FW.scene.add(aSkyBox);
     };
 
+    World.prototype.loadTerrain = function() {
+      var parameters, terrain, terrainGeo, terrainMaterial;
+      parameters = {
+        alea: RAND_MT,
+        generator: PN_GENERATOR,
+        width: 2000,
+        height: 2000,
+        widthSegments: 250,
+        heightSegments: 250,
+        depth: 1500,
+        param: 4,
+        filterparam: 1,
+        filter: [CIRCLE_FILTER],
+        postgen: [MOUNTAINS_COLORS],
+        effect: [DESTRUCTURE_EFFECT]
+      };
+      terrainGeo = TERRAINGEN.Get(parameters);
+      terrainMaterial = new THREE.MeshPhongMaterial({
+        vertexColors: THREE.VertexColors,
+        shading: THREE.FlatShading,
+        side: THREE.DoubleSide
+      });
+      terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
+      return FW.scene.add(terrain);
+    };
+
     World.prototype.onWindowResize = function(event) {
       this.SCREEN_WIDTH = window.innerWidth;
       this.SCREEN_HEIGHT = window.innerHeight - 2 * this.MARGIN;
@@ -106,6 +134,7 @@
     World.prototype.render = function() {
       this.stats.update();
       this.groundControl.update();
+      this.meteor.tick();
       this.stars.tick();
       this.water.render();
       return this.renderer.render(FW.scene, FW.camera);

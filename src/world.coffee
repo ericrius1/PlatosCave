@@ -18,7 +18,7 @@ FW.World = class World
     @height = 2000
 
     # CAMERA
-    FW.camera = new THREE.PerspectiveCamera(40.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 0.5, @camFar)
+    FW.camera = new THREE.PerspectiveCamera(40.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 3, @camFar)
     FW.camera.position.set  0, (@width * 1.5) /8, -@height
     FW.camera.lookAt new THREE.Vector3 0, 0, 0
     
@@ -45,7 +45,7 @@ FW.World = class World
     #FUN
     @firework = new FW.Firework()
     @groundControl = new FW.Rockets()
-    # @meteor = new FW.Meteor()
+    @meteor = new FW.Meteor()
     @stars = new FW.Stars()
 
     
@@ -59,9 +59,12 @@ FW.World = class World
     
     
     # LIGHTS
-    directionalLight = new THREE.DirectionalLight( 0xff0000, 1000 );
-    directionalLight.position.set( -600, 300, 600 );
-    FW.scene.add( directionalLight );
+    directionalLight = new THREE.DirectionalLight 0xff0000, 1
+    directionalLight.position.set( -600, 300, 600 )
+    FW.scene.add( directionalLight )
+
+    #TERRAIN
+    @loadTerrain() 
 
     #WATER
     waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'
@@ -120,7 +123,25 @@ FW.World = class World
     )
     FW.scene.add aSkyBox
 
+  loadTerrain: ->
+    parameters = 
+      alea: RAND_MT,
+      generator: PN_GENERATOR,
+      width: 2000,
+      height: 2000,
+      widthSegments: 250,
+      heightSegments: 250,
+      depth: 1500,
+      param: 4,
+      filterparam: 1,
+      filter: [ CIRCLE_FILTER ],
+      postgen: [ MOUNTAINS_COLORS ],
+      effect: [ DESTRUCTURE_EFFECT ]
 
+    terrainGeo = TERRAINGEN.Get(parameters)
+    terrainMaterial = new THREE.MeshPhongMaterial vertexColors: THREE.VertexColors, shading: THREE.FlatShading, side: THREE.DoubleSide 
+    terrain = new THREE.Mesh terrainGeo, terrainMaterial
+    FW.scene.add terrain
   onWindowResize : (event) ->
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
@@ -139,7 +160,7 @@ FW.World = class World
   render : ->
     @stats.update()
     @groundControl.update()
-    # @meteor.tick()
+    @meteor.tick()
     @stars.tick()
     @water.render()
     @renderer.render( FW.scene, FW.camera );
