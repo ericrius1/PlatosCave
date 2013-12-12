@@ -6,7 +6,7 @@
     function World() {
       this.animate = __bind(this.animate, this);
       this.onKeyDown = __bind(this.onKeyDown, this);
-      var directionalLight,
+      var aMeshMirror, directionalLight, waterNormals,
         _this = this;
       this.textureCounter = 0;
       this.animDelta = 0;
@@ -46,6 +46,20 @@
       this.renderer.domElement.style.top = this.MARGIN + "px";
       this.renderer.domElement.style.left = "0px";
       document.body.appendChild(this.renderer.domElement);
+      waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
+      this.water = new THREE.Water(this.renderer, FW.camera, FW.scene, {
+        textureWidth: 512,
+        textureHeight: 512,
+        waterNormals: waterNormals,
+        alpha: 1.0,
+        sunDirection: directionalLight.position.normalize(),
+        sunColor: 0xffffff,
+        waterColor: 0x001e0f
+      });
+      aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000, 10, 10), this.water.material);
+      aMeshMirror.add(this.water);
+      aMeshMirror.rotation.x = -Math.PI * 0.5;
+      FW.scene.add(aMeshMirror);
       this.onWindowResize();
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
@@ -74,6 +88,7 @@
 
     World.prototype.animate = function() {
       requestAnimationFrame(this.animate);
+      this.water.material.uniforms.time.value += 1.0 / 60.0;
       return this.render();
     };
 
@@ -85,6 +100,7 @@
       this.meteor.tick();
       this.stars.tick();
       this.controls.update(delta);
+      this.water.render();
       return this.renderer.render(FW.scene, FW.camera);
     };
 

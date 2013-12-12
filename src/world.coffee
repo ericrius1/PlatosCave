@@ -61,6 +61,28 @@ FW.World = class World
     @renderer.domElement.style.left = "0px"
     document.body.appendChild @renderer.domElement
     
+
+    #WATER
+    waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'
+    @water = new THREE.Water @renderer, FW.camera, FW.scene,
+      textureWidth: 512
+      textureHeight: 512
+      waterNormals: waterNormals
+      alpha: 1.0
+      sunDirection: directionalLight.position.normalize()
+      sunColor: 0xffffff
+      waterColor: 0x001e0f
+
+    aMeshMirror = new THREE.Mesh(
+      new THREE.PlaneGeometry 2000, 2000, 10, 10
+      @water.material
+    )
+    aMeshMirror.add @water
+    aMeshMirror.rotation.x = -Math.PI * 0.5
+    FW.scene.add aMeshMirror
+    
+
+
     # EVENTS
     @onWindowResize()
 
@@ -92,6 +114,7 @@ FW.World = class World
 
   animate : =>
     requestAnimationFrame @animate
+    @water.material.uniforms.time.value += 1.0 / 60.0
     @render()
   render : ->
     delta = @clock.getDelta()
@@ -100,6 +123,7 @@ FW.World = class World
     @meteor.tick()
     @stars.tick()
     @controls.update(delta)
+    @water.render()
     @renderer.render( FW.scene, FW.camera );
      
 
