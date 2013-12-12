@@ -24,7 +24,7 @@
       this.height = 100000;
       this.startingY = 40;
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
-      FW.camera.position.set(-1930, this.startingY, -730);
+      FW.camera.position.set(0, this.startingY, 0);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
       this.controls.movementSpeed = 100;
@@ -89,11 +89,11 @@
       parameters = {
         alea: RAND_MT,
         generator: PN_GENERATOR,
-        width: 2000,
-        height: 2000,
-        widthSegments: 100,
-        heightSegments: 100,
-        depth: 1500,
+        width: 4000,
+        height: 4000,
+        widthSegments: 200,
+        heightSegments: 200,
+        depth: 2000,
         param: 4,
         filterparam: 1,
         filter: [CIRCLE_FILTER],

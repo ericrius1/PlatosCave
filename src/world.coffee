@@ -20,7 +20,7 @@ FW.World = class World
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 3, @camFar)
-    FW.camera.position.set  -1930, @startingY, -730
+    FW.camera.position.set  0, @startingY, 0
     FW.camera.lookAt new THREE.Vector3 0, 40, 0
     
     #CONTROLS
@@ -127,11 +127,11 @@ FW.World = class World
     parameters = 
       alea: RAND_MT,
       generator: PN_GENERATOR,
-      width: 2000,
-      height: 2000,
-      widthSegments: 100,
-      heightSegments: 100,
-      depth: 1500,
+      width: 4000,
+      height: 4000,
+      widthSegments: 200,
+      heightSegments: 200,
+      depth: 2000,
       param: 4,
       filterparam: 1,
       filter: [ CIRCLE_FILTER ],
