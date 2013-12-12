@@ -25,8 +25,8 @@
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
       FW.camera.position.set(0, 40, -2000);
       this.controls = new THREE.FlyControls(FW.camera);
-      this.controls.movementSpeed = 1000;
-      this.controls.rollSpeed = Math.PI / 8;
+      this.controls.movementSpeed = 100;
+      this.controls.rollSpeed = Math.PI / 4;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
       this.stats.domElement.style.left = '0px';

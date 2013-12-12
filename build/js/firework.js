@@ -41,14 +41,14 @@
       this.colorEnd.setRGB(Math.random(), Math.random(), Math.random());
       return emitterSettings = {
         type: 'sphere',
-        radius: 10,
+        radius: 40,
         radiusScale: new THREE.Vector3(rnd(1, 1.5), rnd(1, 1.5), rnd(1, 1.5)),
-        speed: 1,
-        size: 20,
+        speed: .1,
+        size: 100,
         colorStart: this.colorStart,
         colorSpread: new THREE.Vector3(.2, .2, .2),
         colorEnd: this.colorEnd,
-        particlesPerSecond: 1000,
+        particlesPerSecond: 100,
         alive: 0,
         emitterDuration: 1.0
       };
