@@ -14,17 +14,17 @@ FW.World = class World
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
     @camFar = 300000
-    @width = 2000
-    @height = 2000
+    @width = 10000
+    @height = 10000
 
     # CAMERA
-    FW.camera = new THREE.PerspectiveCamera(40.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 3, @camFar)
-    FW.camera.position.set  0, 40, -@height
+    FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 3, @camFar)
+    FW.camera.position.set  0, 40, -2000
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
     @controls.movementSpeed = 1000;
-    @controls.rollSpeed =  Math.PI / 16;
+    @controls.rollSpeed =  Math.PI / 8;
     # @controls.pitchEnabled = true
 
     #STATS
@@ -62,12 +62,7 @@ FW.World = class World
     FW.scene.add( directionalLight )
 
     #TERRAIN
-    planeGeo = new THREE.PlaneGeometry(100000, 100000, 250, 250)
-    planeMaterial = new THREE.MeshPhongMaterial vertexColors: THREE.VertexColors, shading: THREE.FlatShading, side: THREE.DoubleSide
-    # @plane = new THREE.Mesh planeGeo, planeMaterial
-    # @plane.rotation.x = 1
-    # @plane.position.y +=2000
-    # FW.scene.add @plane
+
     @loadTerrain() 
 
     #WATER
@@ -78,13 +73,11 @@ FW.World = class World
       textureHeight: 512
       waterNormals: waterNormals
       alpha: 1.0
-      sunDirection: directionalLight.position.normalize()
-      sunColor: 0xffffff
       waterColor: 0x001e0f
-      distortionScale: 10.0
+      distortionScale: 50
 
     aMeshMirror = new THREE.Mesh(
-      new THREE.PlaneGeometry @width * 500, @height * 500, 50, 50
+      new THREE.PlaneGeometry @width, @height, 50, 50
       @water.material
     )
     aMeshMirror.add @water
@@ -133,8 +126,8 @@ FW.World = class World
       generator: PN_GENERATOR,
       width: 2000,
       height: 2000,
-      widthSegments: 250,
-      heightSegments: 250,
+      widthSegments: 100,
+      heightSegments: 100,
       depth: 1500,
       param: 4,
       filterparam: 1,

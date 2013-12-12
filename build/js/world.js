@@ -5,7 +5,7 @@
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      var aMeshMirror, directionalLight, planeGeo, planeMaterial, waterNormals,
+      var aMeshMirror, directionalLight, waterNormals,
         _this = this;
       this.textureCounter = 0;
       this.animDelta = 0;
@@ -20,13 +20,13 @@
       this.SCREEN_WIDTH = window.innerWidth;
       this.SCREEN_HEIGHT = window.innerHeight - 2 * this.MARGIN;
       this.camFar = 300000;
-      this.width = 2000;
-      this.height = 2000;
-      FW.camera = new THREE.PerspectiveCamera(40.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
-      FW.camera.position.set(0, 40, -this.height);
+      this.width = 10000;
+      this.height = 10000;
+      FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
+      FW.camera.position.set(0, 40, -2000);
       this.controls = new THREE.FlyControls(FW.camera);
       this.controls.movementSpeed = 1000;
-      this.controls.rollSpeed = Math.PI / 16;
+      this.controls.rollSpeed = Math.PI / 8;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
       this.stats.domElement.style.left = '0px';
@@ -45,12 +45,6 @@
       directionalLight = new THREE.DirectionalLight(0xff0000, 1);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
-      planeGeo = new THREE.PlaneGeometry(100000, 100000, 250, 250);
-      planeMaterial = new THREE.MeshPhongMaterial({
-        vertexColors: THREE.VertexColors,
-        shading: THREE.FlatShading,
-        side: THREE.DoubleSide
-      });
       this.loadTerrain();
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
@@ -59,12 +53,10 @@
         textureHeight: 512,
         waterNormals: waterNormals,
         alpha: 1.0,
-        sunDirection: directionalLight.position.normalize(),
-        sunColor: 0xffffff,
         waterColor: 0x001e0f,
-        distortionScale: 10.0
+        distortionScale: 50
       });
-      aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(this.width * 500, this.height * 500, 50, 50), this.water.material);
+      aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(this.width, this.height, 50, 50), this.water.material);
       aMeshMirror.add(this.water);
       aMeshMirror.rotation.x = -Math.PI * 0.5;
       FW.scene.add(aMeshMirror);
@@ -97,8 +89,8 @@
         generator: PN_GENERATOR,
         width: 2000,
         height: 2000,
-        widthSegments: 250,
-        heightSegments: 250,
+        widthSegments: 100,
+        heightSegments: 100,
         depth: 1500,
         param: 4,
         filterparam: 1,

@@ -30,7 +30,7 @@ FW.Firework = class Firework
   generateEmitter : ->
     @colorStart.setRGB(Math.random(), Math.random(),Math.random())
     light = new THREE.PointLight(@colorStart, 0.0, @lightRange)
-    # FW.scene.add(light)
+    FW.scene.add(light)
     @lights.push(light)
     @colorEnd.setRGB(Math.random(), Math.random(),Math.random())
     emitterSettings = 
