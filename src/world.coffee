@@ -45,7 +45,7 @@ FW.World = class World
     #FUN
     @firework = new FW.Firework()
     @groundControl = new FW.Rockets()
-    @meteor = new FW.Meteor()
+    # @meteor = new FW.Meteor()
     @stars = new FW.Stars()
 
     
@@ -59,7 +59,7 @@ FW.World = class World
     
     
     # LIGHTS
-    directionalLight = new THREE.DirectionalLight( 0xffff55, 10, 100000 );
+    directionalLight = new THREE.DirectionalLight( 0xff0000, 1000 );
     directionalLight.position.set( -600, 300, 600 );
     FW.scene.add( directionalLight );
 
@@ -139,7 +139,7 @@ FW.World = class World
   render : ->
     @stats.update()
     @groundControl.update()
-    @meteor.tick()
+    # @meteor.tick()
     @stars.tick()
     @water.render()
     @renderer.render( FW.scene, FW.camera );

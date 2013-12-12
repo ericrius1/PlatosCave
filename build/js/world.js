@@ -37,7 +37,6 @@
       FW.scene = new THREE.Scene();
       this.firework = new FW.Firework();
       this.groundControl = new FW.Rockets();
-      this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
@@ -45,7 +44,7 @@
       this.renderer.domElement.style.top = this.MARGIN + "px";
       this.renderer.domElement.style.left = "0px";
       document.body.appendChild(this.renderer.domElement);
-      directionalLight = new THREE.DirectionalLight(0xffff55, 10, 100000);
+      directionalLight = new THREE.DirectionalLight(0xff0000, 1000);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
@@ -107,7 +106,6 @@
     World.prototype.render = function() {
       this.stats.update();
       this.groundControl.update();
-      this.meteor.tick();
       this.stars.tick();
       this.water.render();
       return this.renderer.render(FW.scene, FW.camera);
