@@ -25,7 +25,7 @@ FW.World = class World
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
-    @controls.movementSpeed = 100;
+    @controls.movementSpeed = 400;
     @controls.rollSpeed =  Math.PI / 4;
     # @controls.pitchEnabled = true
     # @controls.flyEnabled = true
@@ -38,8 +38,6 @@ FW.World = class World
     document.body.appendChild(@stats.domElement);
     
 
-    
-    
     # SCENE 
     FW.scene = new THREE.Scene()
 
@@ -63,6 +61,14 @@ FW.World = class World
     directionalLight = new THREE.DirectionalLight 0xff00ff, 4
     directionalLight.position.set( -600, 300, 600 )
     FW.scene.add( directionalLight )
+
+    #SCREEN
+    screenGeo = new THREE.PlaneGeometry(600, 600, 10, 10)
+    screenMat = new THREE.MeshBasicMaterial map: THREE.ImageUtils.loadTexture('assets/ponyo.jpg')
+    @screen = new THREE.Mesh(screenGeo, screenMat)
+    @screen.position.z =  -1000
+    @screen.position.y =  -300
+    FW.scene.add @screen
 
     #TERRAIN
 
@@ -131,7 +137,7 @@ FW.World = class World
       height: 4000,
       widthSegments: 200,
       heightSegments: 200,
-      depth: 2000,
+      depth: 1500,
       param: 4,
       filterparam: 1,
       filter: [ CIRCLE_FILTER ],
@@ -159,6 +165,7 @@ FW.World = class World
     @controls.update(delta)
     @render()
   render : ->
+    @screen.position.y += 1
     @stats.update()
     FW.camera.position.y = @startingY
     @groundControl.update()

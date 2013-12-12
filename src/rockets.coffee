@@ -32,7 +32,7 @@ FW.Rockets = class Rockets
 
 
   launchRocket: ()->
-    FW.numExplosionsPerRocket = 3
+    FW.numExplosionsPerRocket = 1
     if @launching
       return
     @launching = true

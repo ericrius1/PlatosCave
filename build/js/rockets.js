@@ -34,7 +34,7 @@
     Rockets.prototype.launchRocket = function() {
       var ray, rocket, vector,
         _this = this;
-      FW.numExplosionsPerRocket = 3;
+      FW.numExplosionsPerRocket = 1;
       if (this.launching) {
         return;
       }

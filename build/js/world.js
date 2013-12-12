@@ -5,7 +5,7 @@
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      var aMeshMirror, directionalLight, waterNormals,
+      var aMeshMirror, directionalLight, screenGeo, screenMat, waterNormals,
         _this = this;
       this.textureCounter = 0;
       this.animDelta = 0;
@@ -27,7 +27,7 @@
       FW.camera.position.set(0, this.startingY, 0);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
-      this.controls.movementSpeed = 100;
+      this.controls.movementSpeed = 400;
       this.controls.rollSpeed = Math.PI / 4;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
@@ -47,6 +47,14 @@
       directionalLight = new THREE.DirectionalLight(0xff00ff, 4);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
+      screenGeo = new THREE.PlaneGeometry(600, 600, 10, 10);
+      screenMat = new THREE.MeshBasicMaterial({
+        map: THREE.ImageUtils.loadTexture('assets/ponyo.jpg')
+      });
+      this.screen = new THREE.Mesh(screenGeo, screenMat);
+      this.screen.position.z = -1000;
+      this.screen.position.y = -300;
+      FW.scene.add(this.screen);
       this.loadTerrain();
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
@@ -93,7 +101,7 @@
         height: 4000,
         widthSegments: 200,
         heightSegments: 200,
-        depth: 2000,
+        depth: 1500,
         param: 4,
         filterparam: 1,
         filter: [CIRCLE_FILTER],
@@ -129,6 +137,7 @@
     };
 
     World.prototype.render = function() {
+      this.screen.position.y += 1;
       this.stats.update();
       FW.camera.position.y = this.startingY;
       this.groundControl.update();
