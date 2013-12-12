@@ -35,7 +35,6 @@
       this.stats.domElement.style.top = '0px';
       document.body.appendChild(this.stats.domElement);
       FW.scene = new THREE.Scene();
-      this.firework = new FW.Firework();
       this.groundControl = new FW.Rockets();
       this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
@@ -93,8 +92,8 @@
       parameters = {
         alea: RAND_MT,
         generator: PN_GENERATOR,
-        width: 2000,
-        height: 2000,
+        width: 20000,
+        height: 20000,
         widthSegments: 250,
         heightSegments: 250,
         depth: 1500,
