@@ -1,7 +1,6 @@
 FW.Meteor = class Meteor
   rnd = FW.rnd
   constructor: ()->
-    @startingPos = new THREE.Vector3 0, 700, 0
 
     @meteors = []
     @meteorGroup = new ShaderParticleGroup
@@ -16,11 +15,11 @@ FW.Meteor = class Meteor
     
 
   generateSpeed: (meteor)->
-    meteor.speedX = rnd(0.1, 1)
-    meteor.speedY = .05
-    meteor.speedZ = rnd(0.1, 1)
-    meteor.accelX = .1
-    meteor.accelY = 0.005  
+    meteor.speedX = rnd(0.01, 1)
+    meteor.speedY = .005
+    meteor.speedZ = rnd(0.01, 1)
+    meteor.accelX = .01
+    meteor.accelY = 0
     meteor.accelZ = .1
     meteor.dirX = rnd(-1, 1)
     meteor.dirY = -1
@@ -32,7 +31,7 @@ FW.Meteor = class Meteor
     colorStart.setRGB(Math.random(),Math.random(),Math.random() )
     meteor = new THREE.Object3D()
     @generateSpeed meteor
-    meteor.position = new THREE.Vector3(@startingPos.x, rnd(@startingPos.y, @startingPos.y+1000), @startingPos.z)
+    meteor.position = new THREE.Vector3(0, 2000, 0)
     colorEnd = new THREE.Color()
     colorEnd.setRGB(Math.random(),Math.random(),Math.random() )
     meteor.light = new THREE.PointLight(colorStart, 2, 1000)
@@ -56,9 +55,9 @@ FW.Meteor = class Meteor
       #meteor is off screen, respawn it somewhere
       if distance > @meteorVisibleDistance
         @generateSpeed meteor
-        meteor.position = new THREE.Vector3().copy(@startingPos)
+        meteor.position = new THREE.Vector3(0, 3000, 0)
 
-    setInterval(=>
+    setTimeout(=>
       @calcPositions()
     10000)
     
@@ -73,7 +72,7 @@ FW.Meteor = class Meteor
       meteor.translateZ(meteor.speedZ * meteor.dirZ)
       meteor.light.position = new THREE.Vector3().copy(meteor.position)
       meteor.tailEmitter.position = new THREE.Vector3().copy(meteor.position)
-    @meteorGroup.tick(.32)
+    @meteorGroup.tick(.16)
     
 
 

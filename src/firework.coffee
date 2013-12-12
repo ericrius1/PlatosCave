@@ -34,11 +34,10 @@ FW.Firework = class Firework
     @lights.push(light)
     @colorEnd.setRGB(Math.random(), Math.random(),Math.random())
     emitterSettings = 
-      type: 'sphere'
-      radius: 40
-      radiusScale: new THREE.Vector3(rnd(1, 1.5), rnd(1, 1.5), rnd(1, 1.5))
-      speed: .1
-      size: 100
+      positionSpread: new THREE.Vector3(10, 10, 10)
+      velocitySpread: new THREE.Vector3 50, 50, 50
+      accelerationSpread: new THREE.Vector3 10, 10, 10
+      size: 500
       colorStart: @colorStart,
       colorSpread: new THREE.Vector3(.2, .2, .2)
       colorEnd: @colorEnd,

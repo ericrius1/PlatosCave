@@ -13,19 +13,21 @@ FW.World = class World
     @MARGIN = 10
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
-    @camFar = 300000
-    @width = 10000
-    @height = 10000
+    @camFar = 200000
+    @width = 100000
+    @height = 100000
+    @startingY = 40
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 3, @camFar)
-    FW.camera.position.set  0, 40, -2000
+    FW.camera.position.set  0, @startingY, -2000
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
     @controls.movementSpeed = 100;
     @controls.rollSpeed =  Math.PI / 4;
-    # @controls.pitchEnabled = true
+    @controls.pitchEnabled = true
+    # @controls.flyEnabled = true
 
     #STATS
     @stats = new Stats()
@@ -157,7 +159,7 @@ FW.World = class World
     @render()
   render : ->
     @stats.update()
-
+    FW.camera.position.y = @startingY
     @groundControl.update()
     @meteor.tick()
     @stars.tick()

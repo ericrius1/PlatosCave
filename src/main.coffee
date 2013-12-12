@@ -15,8 +15,7 @@ SC?.initialize({
 window.soundOn = false
 FW.sfxVolume = 0.2
 
-#inspire rameses b
-#Give user option between building a permanent structure or laun@stars fire works
+#make user let go when they want to explode firework
 window.onload = ->
   FW.myWorld = new FW.World()
   FW.myWorld.animate()

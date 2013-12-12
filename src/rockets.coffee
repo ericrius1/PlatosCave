@@ -15,7 +15,7 @@ FW.Rockets = class Rockets
     @firework = new FW.Firework(@color)
 
     @projector = new THREE.Projector()
-    @launchSpeed = rnd 20, 40
+    @launchSpeed = 50
     @explosionDelay = 500
     @shootDirection = new THREE.Vector3()
     @rocketMat = new THREE.MeshBasicMaterial color : 0xff00ff
@@ -48,7 +48,7 @@ FW.Rockets = class Rockets
     rocket.shootDirection.x = ray.direction.x;
     rocket.shootDirection.y = ray.direction.y;
     rocket.shootDirection.z = ray.direction.z;
-    rocket.launchSpeedY = rnd(2, 10)
+    rocket.launchSpeedY = 5
     rocket.translateX(rocket.shootDirection.x)
     rocket.translateY(rocket.shootDirection.y)
     rocket.translateZ(rocket.shootDirection.z)

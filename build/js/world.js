@@ -19,14 +19,16 @@
       this.MARGIN = 10;
       this.SCREEN_WIDTH = window.innerWidth;
       this.SCREEN_HEIGHT = window.innerHeight - 2 * this.MARGIN;
-      this.camFar = 300000;
-      this.width = 10000;
-      this.height = 10000;
+      this.camFar = 200000;
+      this.width = 100000;
+      this.height = 100000;
+      this.startingY = 40;
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
-      FW.camera.position.set(0, 40, -2000);
+      FW.camera.position.set(0, this.startingY, -2000);
       this.controls = new THREE.FlyControls(FW.camera);
       this.controls.movementSpeed = 100;
       this.controls.rollSpeed = Math.PI / 4;
+      this.controls.pitchEnabled = true;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
       this.stats.domElement.style.left = '0px';
@@ -128,6 +130,7 @@
 
     World.prototype.render = function() {
       this.stats.update();
+      FW.camera.position.y = this.startingY;
       this.groundControl.update();
       this.meteor.tick();
       this.stars.tick();

@@ -8,7 +8,6 @@
 
     function Meteor() {
       var i, _i;
-      this.startingPos = new THREE.Vector3(0, 700, 0);
       this.meteors = [];
       this.meteorGroup = new ShaderParticleGroup({
         texture: THREE.ImageUtils.loadTexture('assets/star.png'),
@@ -24,11 +23,11 @@
     }
 
     Meteor.prototype.generateSpeed = function(meteor) {
-      meteor.speedX = rnd(0.1, 1);
-      meteor.speedY = .05;
-      meteor.speedZ = rnd(0.1, 1);
-      meteor.accelX = .1;
-      meteor.accelY = 0.005;
+      meteor.speedX = rnd(0.01, 1);
+      meteor.speedY = .005;
+      meteor.speedZ = rnd(0.01, 1);
+      meteor.accelX = .01;
+      meteor.accelY = 0;
       meteor.accelZ = .1;
       meteor.dirX = rnd(-1, 1);
       meteor.dirY = -1;
@@ -41,7 +40,7 @@
       colorStart.setRGB(Math.random(), Math.random(), Math.random());
       meteor = new THREE.Object3D();
       this.generateSpeed(meteor);
-      meteor.position = new THREE.Vector3(this.startingPos.x, rnd(this.startingPos.y, this.startingPos.y + 1000), this.startingPos.z);
+      meteor.position = new THREE.Vector3(0, 2000, 0);
       colorEnd = new THREE.Color();
       colorEnd.setRGB(Math.random(), Math.random(), Math.random());
       meteor.light = new THREE.PointLight(colorStart, 2, 1000);
@@ -70,10 +69,10 @@
         distance = FW.camera.position.distanceTo(meteor.position);
         if (distance > this.meteorVisibleDistance) {
           this.generateSpeed(meteor);
-          meteor.position = new THREE.Vector3().copy(this.startingPos);
+          meteor.position = new THREE.Vector3(0, 3000, 0);
         }
       }
-      return setInterval(function() {
+      return setTimeout(function() {
         return _this.calcPositions();
       }, 10000);
     };
@@ -92,7 +91,7 @@
         meteor.light.position = new THREE.Vector3().copy(meteor.position);
         meteor.tailEmitter.position = new THREE.Vector3().copy(meteor.position);
       }
-      return this.meteorGroup.tick(.32);
+      return this.meteorGroup.tick(.16);
     };
 
     return Meteor;
