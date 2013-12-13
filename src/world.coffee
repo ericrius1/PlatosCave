@@ -52,9 +52,6 @@ FW.World = class World
     # RENDERER
     @renderer = new THREE.WebGLRenderer()
     @renderer.setSize @SCREEN_WIDTH, @SCREEN_HEIGHT
-    @renderer.domElement.style.position = "absolute"
-    @renderer.domElement.style.top = @MARGIN + "px"
-    @renderer.domElement.style.left = "0px"
     document.body.appendChild @renderer.domElement
     
     
@@ -70,17 +67,17 @@ FW.World = class World
 
 
     #SCREEN
-    screenGeo = new THREE.PlaneGeometry(400, 400, 10, 10)
-    screenMat = new THREE.MeshLambertMaterial map: THREE.ImageUtils.loadTexture('assets/watts.jpg'), side: THREE.DoubleSide
+    screenGeo = new THREE.PlaneGeometry(200, 100, 10, 10)
+    screenMat = new THREE.MeshLambertMaterial map: THREE.ImageUtils.loadTexture('assets/sagan.jpg'), side: THREE.DoubleSide
     @screen = new THREE.Mesh(screenGeo, screenMat)
-    @screen.position.set(0, -300, -500)
+    @screen.position.set(0,  -50, -200)
 
     FW.scene.add @screen
 
     #TERRAIN
     @loadTerrain new THREE.Vector3()
-    # for i in [1..10]
-    #   @loadTerrain new THREE.Vector3(rnd(-@width/10, @width/10), 0, rnd(-@height/10, @height/10)) 
+    for i in [1..6]
+      @loadTerrain new THREE.Vector3(rnd(-@width/5, @width/5), 0, rnd(-@height/5, @height/5)) 
 
     #WATER
     waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'
@@ -89,7 +86,7 @@ FW.World = class World
       textureWidth: 512
       textureHeight: 512
       waterNormals: waterNormals
-      alpha: 1.0
+      alpha: 0.8
       waterColor: 0x001e0f
       distortionScale: 50
 
@@ -143,13 +140,13 @@ FW.World = class World
       generator: PN_GENERATOR,
       width: rnd 1000, 2000
       height: rnd 1000, 2000
-      widthSegments: 50,
-      heightSegments: 50,
-      depth: rnd 1500, 3000
+      widthSegments: 100
+      heightSegments: 100
+      depth: rnd 1500, 10000
       param: 4,
-      filterparam: 1,
-      filter: [ CIRCLE_FILTER ],
-      postgen: [ MOUNTAINS_COLORS ],
+      filterparam: 1
+      filter: [ CIRCLE_FILTER ]
+      postgen: [ MOUNTAINS_COLORS ]
       effect: [ DESTRUCTURE_EFFECT ]
 
     terrainGeo = TERRAINGEN.Get(parameters)
@@ -164,8 +161,6 @@ FW.World = class World
     FW.camera.aspect = @SCREEN_WIDTH / @SCREEN_HEIGHT
     FW.camera.updateProjectionMatrix()
 
-
-
   animate : =>
     requestAnimationFrame @animate
     delta = @clock.getDelta()
@@ -174,7 +169,7 @@ FW.World = class World
     @controls.update(delta)
     @render()
   render : ->
-    @screen.position.y += 1
+    @screen.position.y += .1
     @stats.update()
     FW.camera.position.y = @startingY
     @groundControl.update()

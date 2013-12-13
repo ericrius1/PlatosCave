@@ -17,9 +17,9 @@
       this.startLightIntensity = 10;
       this.lightDimmingFactor = .5 / this.fwAge;
       this.explodeSound = new Audio('./assets/explosion.mp3');
-      this.explodeSound.volume = FW.sfxVolume;
+      this.explodeSound.volume = FW.sfxVolume * 0.6;
       this.crackleSound = new Audio('./assets/crackle.mp3');
-      this.crackleSound.volume = FW.sfxVolume * 0.5;
+      this.crackleSound.volume = FW.sfxVolume * 0.2;
       this.lights = [];
       this.particleGroup = new ShaderParticleGroup({
         texture: THREE.ImageUtils.loadTexture('assets/star.png'),
@@ -70,7 +70,7 @@
       }
       light.position.set(newPos.x, newPos.y, newPos.z);
       light.intensity = this.startLightIntensity;
-      if (count < FW.numExplosionsPerRocket - 1) {
+      if (count < FW.numExplosionsPerRocket) {
         return setTimeout(function() {
           if (soundOn) {
             setTimeout(function() {

@@ -8,7 +8,7 @@ FW.Meteor = class Meteor
       blending: THREE.AdditiveBlending,
       maxAge: 15
     @meteorVisibleDistance = 3000
-    for i in [1..3]
+    for i in [1..5]
       @newMeteor()
     FW.scene.add(@meteorGroup.mesh)
     @calcPositions()

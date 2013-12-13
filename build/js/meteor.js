@@ -15,7 +15,7 @@
         maxAge: 15
       });
       this.meteorVisibleDistance = 3000;
-      for (i = _i = 1; _i <= 3; i = ++_i) {
+      for (i = _i = 1; _i <= 5; i = ++_i) {
         this.newMeteor();
       }
       FW.scene.add(this.meteorGroup.mesh);

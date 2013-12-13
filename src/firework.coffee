@@ -12,9 +12,9 @@ FW.Firework = class Firework
     @lightDimmingFactor = .5/@fwAge
 
     @explodeSound = new Audio('./assets/explosion.mp3');
-    @explodeSound.volume = FW.sfxVolume
+    @explodeSound.volume = FW.sfxVolume * 0.6
     @crackleSound = new Audio('./assets/crackle.mp3');
-    @crackleSound.volume = FW.sfxVolume * 0.5
+    @crackleSound.volume = FW.sfxVolume * 0.2
     @lights = []
     
     @particleGroup = new ShaderParticleGroup({
@@ -53,7 +53,7 @@ FW.Firework = class Firework
       @lightIndex = 0
     light.position.set(newPos.x, newPos.y, newPos.z)
     light.intensity = @startLightIntensity
-    if count < FW.numExplosionsPerRocket-1
+    if count < FW.numExplosionsPerRocket
       setTimeout =>
         #set timeout for speed of sound delay!
         if soundOn

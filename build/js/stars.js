@@ -16,11 +16,11 @@
       });
       this.colorEnd = new THREE.Color();
       this.colorEnd.setRGB(Math.random(), Math.random(), Math.random());
-      this.createStars();
+      this.generateStars();
       FW.scene.add(this.starGroup.mesh);
     }
 
-    Stars.prototype.createStars = function() {
+    Stars.prototype.generateStars = function() {
       this.starEmitter = new ShaderParticleEmitter({
         type: 'sphere',
         radius: 120000,
@@ -32,14 +32,15 @@
         opacityMiddle: 1,
         opacityEnd: 0,
         colorStart: this.colorStart,
-        colorSpread: new THREE.Vector3(.2, .2, .2),
+        colorSpread: new THREE.Vector3(rnd(.1, .5), rnd(.1, .5), rnd(.1, .5)),
         colorEnd: this.colorEnd
       });
       return this.starGroup.addEmitter(this.starEmitter);
     };
 
     Stars.prototype.tick = function() {
-      return this.starGroup.tick(0.16);
+      this.starGroup.tick(0.16);
+      return this.starEmitter.size += 100;
     };
 
     return Stars;

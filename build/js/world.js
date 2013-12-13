@@ -7,7 +7,7 @@
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      var aMeshMirror, caveLight, directionalLight, screenGeo, screenMat, waterNormals,
+      var aMeshMirror, caveLight, directionalLight, i, screenGeo, screenMat, waterNormals, _i,
         _this = this;
       this.textureCounter = 0;
       this.animDelta = 0;
@@ -42,9 +42,6 @@
       this.stars = new FW.Stars();
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
-      this.renderer.domElement.style.position = "absolute";
-      this.renderer.domElement.style.top = this.MARGIN + "px";
-      this.renderer.domElement.style.left = "0px";
       document.body.appendChild(this.renderer.domElement);
       directionalLight = new THREE.DirectionalLight(0xff00ff, 4);
       directionalLight.position.set(-600, 300, 600);
@@ -53,22 +50,25 @@
       caveLight.position.set(0, 300, 10000);
       caveLight.castShadow = true;
       FW.scene.add(caveLight);
-      screenGeo = new THREE.PlaneGeometry(400, 400, 10, 10);
+      screenGeo = new THREE.PlaneGeometry(200, 100, 10, 10);
       screenMat = new THREE.MeshLambertMaterial({
-        map: THREE.ImageUtils.loadTexture('assets/watts.jpg'),
+        map: THREE.ImageUtils.loadTexture('assets/sagan.jpg'),
         side: THREE.DoubleSide
       });
       this.screen = new THREE.Mesh(screenGeo, screenMat);
-      this.screen.position.set(0, -300, -500);
+      this.screen.position.set(0, -50, -200);
       FW.scene.add(this.screen);
       this.loadTerrain(new THREE.Vector3());
+      for (i = _i = 1; _i <= 6; i = ++_i) {
+        this.loadTerrain(new THREE.Vector3(rnd(-this.width / 5, this.width / 5), 0, rnd(-this.height / 5, this.height / 5)));
+      }
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
       this.water = new THREE.Water(this.renderer, FW.camera, FW.scene, {
         textureWidth: 512,
         textureHeight: 512,
         waterNormals: waterNormals,
-        alpha: 1.0,
+        alpha: 0.8,
         waterColor: 0x001e0f,
         distortionScale: 50
       });
@@ -105,9 +105,9 @@
         generator: PN_GENERATOR,
         width: rnd(1000, 2000),
         height: rnd(1000, 2000),
-        widthSegments: 50,
-        heightSegments: 50,
-        depth: rnd(1500, 3000),
+        widthSegments: 100,
+        heightSegments: 100,
+        depth: rnd(1500, 10000),
         param: 4,
         filterparam: 1,
         filter: [CIRCLE_FILTER],
@@ -144,7 +144,7 @@
     };
 
     World.prototype.render = function() {
-      this.screen.position.y += 1;
+      this.screen.position.y += .1;
       this.stats.update();
       FW.camera.position.y = this.startingY;
       this.groundControl.update();
