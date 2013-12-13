@@ -12,12 +12,13 @@ window.FW = {}
 SC?.initialize({
     client_id: "7da24ca214bf72b66ed2494117d05480",
 });
-window.soundOn = true
+window.soundOn = false
 FW.sfxVolume = 0.2
 FW.globalTick = 0.16
 
 #make user let go when they want to explode firework
 #flocking birds
+#sunrise sunset
 window.onload = ->
   FW.myWorld = new FW.World()
   FW.myWorld.animate()

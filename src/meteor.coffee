@@ -72,7 +72,7 @@ FW.Meteor = class Meteor
       meteor.translateZ(meteor.speedZ * meteor.dirZ)
       meteor.light.position = new THREE.Vector3().copy(meteor.position)
       meteor.tailEmitter.position = new THREE.Vector3().copy(meteor.position)
-    @meteorGroup.tick(.16)
+    @meteorGroup.tick(FW.globalTick)
     
 
 

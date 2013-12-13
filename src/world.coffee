@@ -56,19 +56,19 @@ FW.World = class World
     
     
     # LIGHTS
-    directionalLight = new THREE.DirectionalLight 0xff00ff, 4
+    directionalLight = new THREE.DirectionalLight 0xff0000, 3
     directionalLight.position.set( -600, 300, 600 )
     FW.scene.add( directionalLight )
 
-    caveLight = new THREE.SpotLight(0x00ff00, 2)
-    caveLight.position.set(0, 300, 10000)
-    caveLight.castShadow = true
-    FW.scene.add caveLight
+    # caveLight = new THREE.SpotLight(0xffffff, 20, 1000)
+    # caveLight.position.set(0, 40, 0 )
+    # caveLight.castShadow = true
+    # FW.scene.add caveLight  
 
 
     #SCREEN
     screenGeo = new THREE.PlaneGeometry(200, 100, 10, 10)
-    screenMat = new THREE.MeshLambertMaterial map: THREE.ImageUtils.loadTexture('assets/sagan.jpg'), side: THREE.DoubleSide
+    screenMat = new THREE.MeshBasicMaterial map: THREE.ImageUtils.loadTexture('assets/sagan.jpg'), side: THREE.DoubleSide
     @screen = new THREE.Mesh(screenGeo, screenMat)
     @screen.position.set(0,  -50, -200)
 
@@ -76,7 +76,7 @@ FW.World = class World
 
     #TERRAIN
     @loadTerrain new THREE.Vector3()
-    for i in [1..10]
+    for i in [1..3]
       @loadTerrain new THREE.Vector3(rnd(-@width/5, @width/5), 0, rnd(-@height/5, @height/5)) 
 
     #WATER

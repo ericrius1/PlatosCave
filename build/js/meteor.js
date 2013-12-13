@@ -91,7 +91,7 @@
         meteor.light.position = new THREE.Vector3().copy(meteor.position);
         meteor.tailEmitter.position = new THREE.Vector3().copy(meteor.position);
       }
-      return this.meteorGroup.tick(.16);
+      return this.meteorGroup.tick(FW.globalTick);
     };
 
     return Meteor;
