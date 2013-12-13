@@ -59,7 +59,7 @@
       this.screen.position.set(0, -50, -200);
       FW.scene.add(this.screen);
       this.loadTerrain(new THREE.Vector3());
-      for (i = _i = 1; _i <= 6; i = ++_i) {
+      for (i = _i = 1; _i <= 10; i = ++_i) {
         this.loadTerrain(new THREE.Vector3(rnd(-this.width / 5, this.width / 5), 0, rnd(-this.height / 5, this.height / 5)));
       }
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');

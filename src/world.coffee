@@ -76,7 +76,7 @@ FW.World = class World
 
     #TERRAIN
     @loadTerrain new THREE.Vector3()
-    for i in [1..6]
+    for i in [1..10]
       @loadTerrain new THREE.Vector3(rnd(-@width/5, @width/5), 0, rnd(-@height/5, @height/5)) 
 
     #WATER
