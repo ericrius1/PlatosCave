@@ -91,7 +91,7 @@
 
     Firework.prototype.tick = function() {
       var light, _i, _len, _ref, _results;
-      this.particleGroup.tick(0.16);
+      this.particleGroup.tick(FW.globalTick);
       _ref = this.lights;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {

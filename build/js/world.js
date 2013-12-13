@@ -7,7 +7,7 @@
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      var aMeshMirror, directionalLight, i, screenGeo, screenMat, waterNormals, _i,
+      var aMeshMirror, caveLight, directionalLight, screenGeo, screenMat, waterNormals,
         _this = this;
       this.textureCounter = 0;
       this.animDelta = 0;
@@ -29,7 +29,7 @@
       FW.camera.position.set(0, this.startingY, 0);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
-      this.controls.movementSpeed = 400;
+      this.controls.movementSpeed = 1000;
       this.controls.rollSpeed = Math.PI / 4;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
@@ -49,17 +49,19 @@
       directionalLight = new THREE.DirectionalLight(0xff00ff, 4);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
-      screenGeo = new THREE.PlaneGeometry(600, 600, 10, 10);
-      screenMat = new THREE.MeshBasicMaterial({
-        map: THREE.ImageUtils.loadTexture('assets/watts.jpg')
+      caveLight = new THREE.SpotLight(0x00ff00, 2);
+      caveLight.position.set(0, 300, 10000);
+      caveLight.castShadow = true;
+      FW.scene.add(caveLight);
+      screenGeo = new THREE.PlaneGeometry(400, 400, 10, 10);
+      screenMat = new THREE.MeshLambertMaterial({
+        map: THREE.ImageUtils.loadTexture('assets/watts.jpg'),
+        side: THREE.DoubleSide
       });
       this.screen = new THREE.Mesh(screenGeo, screenMat);
-      this.screen.position.z = -1000;
-      this.screen.position.y = -300;
+      this.screen.position.set(0, -300, -500);
       FW.scene.add(this.screen);
-      for (i = _i = 1; _i <= 5; i = ++_i) {
-        this.loadTerrain();
-      }
+      this.loadTerrain(new THREE.Vector3());
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
       this.water = new THREE.Water(this.renderer, FW.camera, FW.scene, {
@@ -96,16 +98,16 @@
       return FW.scene.add(aSkyBox);
     };
 
-    World.prototype.loadTerrain = function() {
+    World.prototype.loadTerrain = function(position) {
       var parameters, terrain, terrainGeo, terrainMaterial;
       parameters = {
         alea: RAND_MT,
         generator: PN_GENERATOR,
-        width: 4000,
-        height: 4000,
-        widthSegments: 200,
-        heightSegments: 200,
-        depth: 1500,
+        width: rnd(1000, 2000),
+        height: rnd(1000, 2000),
+        widthSegments: 50,
+        heightSegments: 50,
+        depth: rnd(1500, 3000),
         param: 4,
         filterparam: 1,
         filter: [CIRCLE_FILTER],
@@ -119,8 +121,7 @@
         side: THREE.DoubleSide
       });
       terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
-      terrain.position.x = rnd(-this.width / 10, this.width / 10);
-      terrain.position.z = rnd(-this.height / 10, this.height / 10);
+      terrain.position = position;
       return FW.scene.add(terrain);
     };
 

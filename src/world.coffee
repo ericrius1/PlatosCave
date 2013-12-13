@@ -26,7 +26,7 @@ FW.World = class World
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
-    @controls.movementSpeed = 400;
+    @controls.movementSpeed = 1000;
     @controls.rollSpeed =  Math.PI / 4;
     # @controls.pitchEnabled = true
     # @controls.flyEnabled = true
@@ -63,17 +63,24 @@ FW.World = class World
     directionalLight.position.set( -600, 300, 600 )
     FW.scene.add( directionalLight )
 
+    caveLight = new THREE.SpotLight(0x00ff00, 2)
+    caveLight.position.set(0, 300, 10000)
+    caveLight.castShadow = true
+    FW.scene.add caveLight
+
+
     #SCREEN
-    screenGeo = new THREE.PlaneGeometry(600, 600, 10, 10)
-    screenMat = new THREE.MeshBasicMaterial map: THREE.ImageUtils.loadTexture('assets/watts.jpg')
+    screenGeo = new THREE.PlaneGeometry(400, 400, 10, 10)
+    screenMat = new THREE.MeshLambertMaterial map: THREE.ImageUtils.loadTexture('assets/watts.jpg'), side: THREE.DoubleSide
     @screen = new THREE.Mesh(screenGeo, screenMat)
-    @screen.position.z =  -1000
-    @screen.position.y =  -300
+    @screen.position.set(0, -300, -500)
+
     FW.scene.add @screen
 
     #TERRAIN
-    for i in [1..5]
-      @loadTerrain() 
+    @loadTerrain new THREE.Vector3()
+    # for i in [1..10]
+    #   @loadTerrain new THREE.Vector3(rnd(-@width/10, @width/10), 0, rnd(-@height/10, @height/10)) 
 
     #WATER
     waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'
@@ -130,15 +137,15 @@ FW.World = class World
     )
     FW.scene.add aSkyBox
 
-  loadTerrain: ->
+  loadTerrain: (position)->
     parameters = 
       alea: RAND_MT,
       generator: PN_GENERATOR,
-      width: 4000,
-      height: 4000,
-      widthSegments: 200,
-      heightSegments: 200,
-      depth: 1500,
+      width: rnd 1000, 2000
+      height: rnd 1000, 2000
+      widthSegments: 50,
+      heightSegments: 50,
+      depth: rnd 1500, 3000
       param: 4,
       filterparam: 1,
       filter: [ CIRCLE_FILTER ],
@@ -148,8 +155,7 @@ FW.World = class World
     terrainGeo = TERRAINGEN.Get(parameters)
     terrainMaterial = new THREE.MeshPhongMaterial vertexColors: THREE.VertexColors, shading: THREE.FlatShading, side: THREE.DoubleSide 
     terrain = new THREE.Mesh terrainGeo, terrainMaterial
-    terrain.position.x = rnd -@width/10, @width/10
-    terrain.position.z = rnd -@height/10, @height/10
+    terrain.position = position
     FW.scene.add terrain
   onWindowResize : (event) ->
     @SCREEN_WIDTH = window.innerWidth
