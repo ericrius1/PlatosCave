@@ -12,7 +12,6 @@ FW.Stars = class Stars
     });
 
     @colorEnd = new THREE.Color()
-    @colorEnd.setRGB(Math.random(),Math.random(),Math.random() )
     @generateStars()
     FW.scene.add(@starGroup.mesh)
 
@@ -21,7 +20,7 @@ FW.Stars = class Stars
       type: 'sphere'
       radius: 50000
       speed: .1
-      size: 7000
+      size: 4000
       sizeSpread: 4000
       particlesPerSecond: rnd(500, 1100)
       opacityStart: 0
@@ -29,7 +28,6 @@ FW.Stars = class Stars
       opacityEnd: 0
       colorStart: @colorStart
       colorSpread: new THREE.Vector3(rnd(.1, .5), rnd(.1, .5), rnd(.1, .5))
-      colorEnd: @colorEnd
     
     @starGroup.addEmitter @starEmitter
   

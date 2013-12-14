@@ -22,8 +22,9 @@ FW.LightTower = class LightTower
       positionSpread: new THREE.Vector3(100, 0, 100)
       colorStart: colorStart
       velocity: new THREE.Vector3(0, 5, 0)
-      acceleration: new THREE.Vector3(0, 1.0, 0)
-      accelerationSpread: new THREE.Vector3(0, .01, 0)
+      acceleration: new THREE.Vector3(0, 1.8, 0)
+      accelerationSpread: new THREE.Vector3(0, .03, 0)
+      particlesPerSecond: 5
      
     
     @towerGroup.addEmitter @towerEmitter

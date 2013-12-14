@@ -15,7 +15,6 @@
         maxAge: 100
       });
       this.colorEnd = new THREE.Color();
-      this.colorEnd.setRGB(Math.random(), Math.random(), Math.random());
       this.generateStars();
       FW.scene.add(this.starGroup.mesh);
     }
@@ -25,15 +24,14 @@
         type: 'sphere',
         radius: 50000,
         speed: .1,
-        size: 7000,
+        size: 4000,
         sizeSpread: 4000,
         particlesPerSecond: rnd(500, 1100),
         opacityStart: 0,
         opacityMiddle: 1,
         opacityEnd: 0,
         colorStart: this.colorStart,
-        colorSpread: new THREE.Vector3(rnd(.1, .5), rnd(.1, .5), rnd(.1, .5)),
-        colorEnd: this.colorEnd
+        colorSpread: new THREE.Vector3(rnd(.1, .5), rnd(.1, .5), rnd(.1, .5))
       });
       return this.starGroup.addEmitter(this.starEmitter);
     };

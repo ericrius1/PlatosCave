@@ -48,8 +48,8 @@
       meteor.tailEmitter = new ShaderParticleEmitter({
         position: meteor.position,
         positionSpread: new THREE.Vector3(20, 20, 2),
-        size: rnd(1000, 3000),
-        sizeSpread: 1000,
+        size: rnd(1000, 2000),
+        sizeSpread: 500,
         acceleration: new THREE.Vector3(meteor.dirX, meteor.dirY, meteor.dirZ),
         accelerationSpread: new THREE.Vector3(.7, .7, .7),
         particlesPerSecond: 10,
