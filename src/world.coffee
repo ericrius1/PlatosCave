@@ -18,6 +18,7 @@ FW.World = class World
     @width = 100000
     @height = 100000
     @startingY = 40
+    @rippleFactor = rnd(60, 300)
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 3, @camFar)
@@ -163,7 +164,7 @@ FW.World = class World
     requestAnimationFrame @animate
     delta = @clock.getDelta()
     time = Date.now()
-    @water.material.uniforms.time.value += 1.0 / 60.0
+    @water.material.uniforms.time.value += 1.0 / 60
     @controls.update(delta)
     @render()
   render : ->

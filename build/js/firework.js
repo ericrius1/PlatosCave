@@ -12,10 +12,10 @@
       this.colorEnd = new THREE.Color();
       this.lightIndex = 0;
       this.fwSpread = 200;
-      this.fwAge = 15;
+      this.fwAge = 11;
       this.lightRange = 10000;
       this.startLightIntensity = 10;
-      this.lightDimmingFactor = .5 / this.fwAge;
+      this.lightDimmingFactor = 2 / this.fwAge;
       this.explodeSound = new Audio('./assets/explosion.mp3');
       this.explodeSound.volume = FW.sfxVolume * 0.6;
       this.crackleSound = new Audio('./assets/crackle.mp3');
@@ -24,7 +24,7 @@
       this.particleGroup = new ShaderParticleGroup({
         texture: THREE.ImageUtils.loadTexture('assets/star.png'),
         blending: THREE.AdditiveBlending,
-        maxAge: 9
+        maxAge: this.fwAge
       });
       for (i = _i = 1; _i <= 5; i = ++_i) {
         this.particleGroup.addPool(1, this.generateEmitter(), false);

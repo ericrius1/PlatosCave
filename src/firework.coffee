@@ -6,10 +6,10 @@ FW.Firework = class Firework
     @colorEnd = new THREE.Color()
     @lightIndex = 0
     @fwSpread = 200
-    @fwAge = 15
+    @fwAge = 11
     @lightRange = 10000
     @startLightIntensity = 10
-    @lightDimmingFactor = .5/@fwAge
+    @lightDimmingFactor = 2/@fwAge
 
     @explodeSound = new Audio('./assets/explosion.mp3');
     @explodeSound.volume = FW.sfxVolume * 0.6
@@ -20,7 +20,7 @@ FW.Firework = class Firework
     @particleGroup = new ShaderParticleGroup({
       texture: THREE.ImageUtils.loadTexture('assets/star.png'),
       blending: THREE.AdditiveBlending,
-      maxAge: 9
+      maxAge: @fwAge
     });
 
     for i in [1..5]

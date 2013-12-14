@@ -25,6 +25,7 @@
       this.width = 100000;
       this.height = 100000;
       this.startingY = 40;
+      this.rippleFactor = rnd(60, 300);
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
       FW.camera.position.set(0, this.startingY, 0);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
@@ -134,7 +135,7 @@
       requestAnimationFrame(this.animate);
       delta = this.clock.getDelta();
       time = Date.now();
-      this.water.material.uniforms.time.value += 1.0 / 60.0;
+      this.water.material.uniforms.time.value += 1.0 / 60;
       this.controls.update(delta);
       return this.render();
     };
