@@ -29,8 +29,8 @@
       FW.camera.position.set(0, this.startingY, 0);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
-      this.controls.movementSpeed = 100;
-      this.controls.rollSpeed = Math.PI / 16;
+      this.controls.movementSpeed = 800;
+      this.controls.rollSpeed = Math.PI / 8;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
       this.stats.domElement.style.left = '0px';
@@ -40,6 +40,7 @@
       this.groundControl = new FW.Rockets();
       this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
+      this.lightTower = new FW.LightTower();
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
       document.body.appendChild(this.renderer.domElement);
@@ -55,7 +56,7 @@
       this.screen.position.set(0, -50, -200);
       FW.scene.add(this.screen);
       this.loadTerrain(new THREE.Vector3());
-      for (i = _i = 1; _i <= 3; i = ++_i) {
+      for (i = _i = 1; _i <= 4; i = ++_i) {
         this.loadTerrain(new THREE.Vector3(rnd(-this.width / 5, this.width / 5), 0, rnd(-this.height / 5, this.height / 5)));
       }
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
@@ -64,7 +65,7 @@
         textureWidth: 512,
         textureHeight: 512,
         waterNormals: waterNormals,
-        alpha: 0.8,
+        alpha: 0.95,
         waterColor: 0x001e0f,
         distortionScale: 50
       });
@@ -146,6 +147,7 @@
       this.groundControl.update();
       this.meteor.tick();
       this.stars.tick();
+      this.lightTower.tick();
       this.water.render();
       return this.renderer.render(FW.scene, FW.camera);
     };

@@ -14,8 +14,8 @@
         blending: THREE.AdditiveBlending,
         maxAge: 15
       });
-      this.meteorVisibleDistance = 3000;
-      for (i = _i = 1; _i <= 5; i = ++_i) {
+      this.meteorVisibleDistance = 10000;
+      for (i = _i = 1; _i <= 3; i = ++_i) {
         this.newMeteor();
       }
       FW.scene.add(this.meteorGroup.mesh);
@@ -48,11 +48,11 @@
       meteor.tailEmitter = new ShaderParticleEmitter({
         position: meteor.position,
         positionSpread: new THREE.Vector3(20, 20, 2),
-        size: 200,
-        sizeSpread: 100,
+        size: rnd(1000, 3000),
+        sizeSpread: 1000,
         acceleration: new THREE.Vector3(meteor.dirX, meteor.dirY, meteor.dirZ),
         accelerationSpread: new THREE.Vector3(.7, .7, .7),
-        particlesPerSecond: 100,
+        particlesPerSecond: 10,
         colorStart: colorStart,
         colorEnd: colorEnd
       });

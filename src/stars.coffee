@@ -15,14 +15,13 @@ FW.Stars = class Stars
     @colorEnd.setRGB(Math.random(),Math.random(),Math.random() )
     @generateStars()
     FW.scene.add(@starGroup.mesh)
-    @changeColor()
 
   generateStars: ->
     @starEmitter = new ShaderParticleEmitter
       type: 'sphere'
-      radius: 90000
+      radius: 20000
       speed: .1
-      size: 10000
+      size: 1000
       sizeSpread: 5000
       particlesPerSecond: 2000
       opacityStart: 0
@@ -34,15 +33,11 @@ FW.Stars = class Stars
     
     @starGroup.addEmitter @starEmitter
   
-  changeColor: =>
-    setTimeout(=>
-      console.log(_this)
-    5000)
+
    
     
   tick: ->
     @starGroup.tick(0.16)
-    @starEmitter.size += 100
     
 
 

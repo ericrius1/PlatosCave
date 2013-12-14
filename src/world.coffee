@@ -26,8 +26,8 @@ FW.World = class World
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
-    @controls.movementSpeed = 100;
-    @controls.rollSpeed =  Math.PI / 16;
+    @controls.movementSpeed = 800;
+    @controls.rollSpeed =  Math.PI / 8;
     # @controls.pitchEnabled = true
     # @controls.flyEnabled = true
 
@@ -47,6 +47,7 @@ FW.World = class World
     @groundControl = new FW.Rockets()
     @meteor = new FW.Meteor()
     @stars = new FW.Stars()
+    @lightTower = new FW.LightTower()
 
     
     # RENDERER
@@ -60,10 +61,7 @@ FW.World = class World
     directionalLight.position.set( -600, 300, 600 )
     FW.scene.add( directionalLight )
 
-    # caveLight = new THREE.SpotLight(0xffffff, 20, 1000)
-    # caveLight.position.set(0, 40, 0 )
-    # caveLight.castShadow = true
-    # FW.scene.add caveLight  
+
 
 
     #SCREEN
@@ -76,7 +74,7 @@ FW.World = class World
 
     #TERRAIN
     @loadTerrain new THREE.Vector3()
-    for i in [1..3]
+    for i in [1..4]
       @loadTerrain new THREE.Vector3(rnd(-@width/5, @width/5), 0, rnd(-@height/5, @height/5)) 
 
     #WATER
@@ -86,7 +84,7 @@ FW.World = class World
       textureWidth: 512
       textureHeight: 512
       waterNormals: waterNormals
-      alpha: 0.8
+      alpha: 0.95
       waterColor: 0x001e0f
       distortionScale: 50
 
@@ -175,6 +173,7 @@ FW.World = class World
     @groundControl.update()
     @meteor.tick()
     @stars.tick()
+    @lightTower.tick()
     @water.render()
     @renderer.render( FW.scene, FW.camera );
      

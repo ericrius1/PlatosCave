@@ -7,8 +7,8 @@ FW.Meteor = class Meteor
       texture: THREE.ImageUtils.loadTexture('assets/star.png'),
       blending: THREE.AdditiveBlending,
       maxAge: 15
-    @meteorVisibleDistance = 3000
-    for i in [1..5]
+    @meteorVisibleDistance = 10000
+    for i in [1..3]
       @newMeteor()
     FW.scene.add(@meteorGroup.mesh)
     @calcPositions()
@@ -39,11 +39,11 @@ FW.Meteor = class Meteor
     meteor.tailEmitter = new ShaderParticleEmitter
       position: meteor.position
       positionSpread: new THREE.Vector3(20, 20, 2)
-      size: 200
-      sizeSpread: 100
+      size: rnd(1000, 3000)
+      sizeSpread: 1000
       acceleration: new THREE.Vector3(meteor.dirX, meteor.dirY, meteor.dirZ),
       accelerationSpread: new THREE.Vector3(.7, .7, .7),
-      particlesPerSecond: 100
+      particlesPerSecond: 10
       colorStart: colorStart
       colorEnd: colorEnd
     @meteorGroup.addEmitter meteor.tailEmitter
