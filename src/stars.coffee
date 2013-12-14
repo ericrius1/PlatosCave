@@ -21,9 +21,9 @@ FW.Stars = class Stars
       type: 'sphere'
       radius: 50000
       speed: .1
-      size: 11000
-      sizeSpread: 5000
-      particlesPerSecond: 1100
+      size: 7000
+      sizeSpread: 4000
+      particlesPerSecond: rnd(500, 1100)
       opacityStart: 0
       opacityMiddle: 1
       opacityEnd: 0

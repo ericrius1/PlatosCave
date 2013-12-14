@@ -103,7 +103,7 @@
         height: rnd(1000, 2000),
         widthSegments: 100,
         heightSegments: 100,
-        depth: rnd(1500, 10000),
+        depth: rnd(1500, 5000),
         param: 4,
         filterparam: 1,
         filter: [CIRCLE_FILTER],
