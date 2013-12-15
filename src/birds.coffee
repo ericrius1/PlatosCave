@@ -1,19 +1,15 @@
-WIDTH = 32
-HEIGHT = WIDTH
-window.PARTICLES = WIDTH * WIDTH;
-window.BOUNDS = 800
-window.BOUNDS_HALF = BOUNDS / 2
+window.WIDTH = 32
 window.BIRDS = 1024
+
+
 THREE.BirdGeometry = ->
-  THREE.Geometry.call @
+  THREE.Geometry.call this
   BIRDS = WIDTH * WIDTH
   verts = @vertices
   faces = @faces
   uvs = @faceVertexUvs[0]
   fi = 0
   f = 0
-  @t = 0;
-  @last = performance.now()
 
   while f < BIRDS
     verts.push new THREE.Vector3(0, -0, -20), new THREE.Vector3(0, 4, -20), new THREE.Vector3(0, 0, 30)
@@ -34,49 +30,104 @@ THREE.BirdGeometry = ->
 
 THREE.BirdGeometry:: = Object.create(THREE.Geometry::)
 
+
+windowHalfX = window.innerWidth / 2
+windowHalfY = window.innerHeight / 2
+window.HEIGHT = WIDTH
+window.PARTICLES = WIDTH * WIDTH
+window.BOUNDS = 800
+window.BOUNDS_HALF = BOUNDS / 2
+last = performance.now()
+
+
 FW.Birds = class Birds
-  constructor: () ->
-    window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer)
+  constructor : ->
+    container = document.createElement("div")
+    document.body.appendChild container
+    @camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000)
+    @camera.position.z = 350
+    @scene = new THREE.Scene()
+    @scene.fog = new THREE.Fog(0xffffff, 100, 1000)
+    @renderer = new THREE.WebGLRenderer()
+    @renderer.setSize window.innerWidth, window.innerHeight
+    container.appendChild @renderer.domElement
+    @renderer.setClearColor @scene.fog.color, 1
+    @renderer.autoClear = true
+    
+    window.simulator = new SimulatorRenderer(WIDTH, @renderer)
     simulator.init()
-    @flockingBehavior = 
-      separtion: 20.0
+    @effectController =
+      seperation: 20.0
       alignment: 20.0
       cohesion: 20.0
       freedom: 0.75
-    simulator.velocityUniforms.seperationDistance.value = @flockingBehavior.separation
-    simulator.velocityUniforms.alignmentDistance.value = @flockingBehavior.alignment
-    simulator.velocityUniforms.cohesionDistance.value = @flockingBehavior.cohesion
-    simulator.velocityUniforms.freedomFactor.value = @flockingBehavior.freedom
+    @valuesChanger()
     @initBirds()
+    @scene.add new THREE.Mesh(new THREE.CubeGeometry(400,400), new THREE.MeshBasicMaterial({color: 0xff0000}))
 
-  initBirds: ->
+  valuesChanger : ->
+    simulator.velocityUniforms.seperationDistance.value = @effectController.seperation
+    simulator.velocityUniforms.alignmentDistance.value = @effectController.alignment
+    simulator.velocityUniforms.cohesionDistance.value = @effectController.cohesion
+    simulator.velocityUniforms.freedomFactor.value = @effectController.freedom
+
+  initBirds : ->
     geometry = new THREE.BirdGeometry()
-    #For Vertex Shader
-    birdAttributes = 
-      index: {type: 'i', value: []},
-      birdColor: {type: 'c', value: []},
-      reference: {type: 'v2', value: []},
-      birdVertex: {type: 'f', value: []}
-    #For vertex and fragment
+    
+    # For Vertex Shaders
+    birdAttributes =
+      index:
+        type: "i"
+        value: []
+
+      birdColor:
+        type: "c"
+        value: []
+
+      reference:
+        type: "v2"
+        value: []
+
+      birdVertex:
+        type: "f"
+        value: []
+
+    
+    # For Vertex and Fragment
     @birdUniforms =
-      color: type: 'c', value: new THREE.Color(0xff2200)
-      texturePosition: type: "t", value: null
-      textureVelocity: type: "t", value: null
-      time: type: "f", value: 1.0
-      delta: type: "f", value: 0.0
+      color:
+        type: "c"
+        value: new THREE.Color(0xff2200)
 
-    shaderMaterial = new THREE.ShaderMaterial
-      uniforms: @birdUniforms,
-      attributes: birdAttributes,
-      vertexShader: document.getElementById('birdVS').textContent
-      fragmentShader: document.getElementById('birdFS').textContent,
+      texturePosition:
+        type: "t"
+        value: null
+
+      textureVelocity:
+        type: "t"
+        value: null
+
+      time:
+        type: "f"
+        value: 1.0
+
+      delta:
+        type: "f"
+        value: 0.0
+
+    
+    # ShaderMaterial
+    shaderMaterial = new THREE.ShaderMaterial(
+      uniforms: @birdUniforms
+      attributes: birdAttributes
+      vertexShader: document.getElementById("birdVS").textContent
+      fragmentShader: document.getElementById("birdFS").textContent
       side: THREE.DoubleSide
-
+    )
     vertices = geometry.vertices
     birdColors = birdAttributes.birdColor.value
     references = birdAttributes.reference.value
     birdVertex = birdAttributes.birdVertex.value
-
     v = 0
 
     while v < vertices.length
@@ -87,26 +138,27 @@ FW.Birds = class Birds
       references[v] = new THREE.Vector2(x, y)
       birdVertex[v] = v % 9
       v++
-
-    birdMesh = new THREE.Mesh geometry, shaderMaterial
+    
+    birdMesh = new THREE.Mesh(geometry, shaderMaterial)
     birdMesh.rotation.y = Math.PI / 2
     birdMesh.sortObjects = false
     birdMesh.matrixAutoUpdate = false
     birdMesh.updateMatrix()
-    FW.scene.add birdMesh
-
-  update: ->
-    @now = performance.now()
-    @delta = (@now - @last) / 1000
-    delta = 1 if delta > 1
-    @birdUniforms.time.value = @now
-    @birdUniforms.delta.value = @delta
-
-    simulator.simulate @delta
+    @scene.add birdMesh
+  animate : =>
+    requestAnimationFrame @animate
+    @render()
+  update : ->
+    now = performance.now()
+    delta = (now - last) / 1000
+    delta = 1  if delta > 1 # safety cap on large deltas
+    last = now
+    @birdUniforms.time.value = now
+    @birdUniforms.delta.value = delta
+    simulator.simulate delta
     @birdUniforms.texturePosition.value = simulator.currentPosition
     @birdUniforms.textureVelocity.value = simulator.currentVelocity
 
-    mouseX = 10000
-    mouseY = 10000
+    @renderer.render @scene, @camera
 
-
+ 

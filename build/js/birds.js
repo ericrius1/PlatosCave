@@ -1,15 +1,8 @@
 (function() {
-  var Birds, HEIGHT, WIDTH;
+  var Birds, last, windowHalfX, windowHalfY,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-  WIDTH = 32;
-
-  HEIGHT = WIDTH;
-
-  window.PARTICLES = WIDTH * WIDTH;
-
-  window.BOUNDS = 800;
-
-  window.BOUNDS_HALF = BOUNDS / 2;
+  window.WIDTH = 32;
 
   window.BIRDS = 1024;
 
@@ -22,8 +15,6 @@
     uvs = this.faceVertexUvs[0];
     fi = 0;
     f = 0;
-    this.t = 0;
-    this.last = performance.now();
     while (f < BIRDS) {
       verts.push(new THREE.Vector3(0, -0, -20), new THREE.Vector3(0, 4, -20), new THREE.Vector3(0, 0, 30));
       faces.push(new THREE.Face3(fi++, fi++, fi++));
@@ -45,47 +36,81 @@
 
   THREE.BirdGeometry.prototype = Object.create(THREE.Geometry.prototype);
 
+  windowHalfX = window.innerWidth / 2;
+
+  windowHalfY = window.innerHeight / 2;
+
+  window.HEIGHT = WIDTH;
+
+  window.PARTICLES = WIDTH * WIDTH;
+
+  window.BOUNDS = 800;
+
+  window.BOUNDS_HALF = BOUNDS / 2;
+
+  last = performance.now();
+
   FW.Birds = Birds = (function() {
     function Birds() {
-      window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer);
+      this.animate = __bind(this.animate, this);
+      var container;
+      container = document.createElement("div");
+      document.body.appendChild(container);
+      this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
+      this.camera.position.z = 350;
+      this.scene = new THREE.Scene();
+      this.scene.fog = new THREE.Fog(0xffffff, 100, 1000);
+      this.renderer = new THREE.WebGLRenderer();
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(this.renderer.domElement);
+      this.renderer.setClearColor(this.scene.fog.color, 1);
+      this.renderer.autoClear = true;
+      window.simulator = new SimulatorRenderer(WIDTH, this.renderer);
       simulator.init();
-      this.flockingBehavior = {
-        separtion: 20.0,
+      this.effectController = {
+        seperation: 20.0,
         alignment: 20.0,
         cohesion: 20.0,
         freedom: 0.75
       };
-      simulator.velocityUniforms.seperationDistance.value = this.flockingBehavior.separation;
-      simulator.velocityUniforms.alignmentDistance.value = this.flockingBehavior.alignment;
-      simulator.velocityUniforms.cohesionDistance.value = this.flockingBehavior.cohesion;
-      simulator.velocityUniforms.freedomFactor.value = this.flockingBehavior.freedom;
+      this.valuesChanger();
       this.initBirds();
+      this.scene.add(new THREE.Mesh(new THREE.CubeGeometry(400, 400), new THREE.MeshBasicMaterial({
+        color: 0xff0000
+      })));
     }
+
+    Birds.prototype.valuesChanger = function() {
+      simulator.velocityUniforms.seperationDistance.value = this.effectController.seperation;
+      simulator.velocityUniforms.alignmentDistance.value = this.effectController.alignment;
+      simulator.velocityUniforms.cohesionDistance.value = this.effectController.cohesion;
+      return simulator.velocityUniforms.freedomFactor.value = this.effectController.freedom;
+    };
 
     Birds.prototype.initBirds = function() {
       var birdAttributes, birdColors, birdMesh, birdVertex, geometry, i, references, shaderMaterial, v, vertices, x, y;
       geometry = new THREE.BirdGeometry();
       birdAttributes = {
         index: {
-          type: 'i',
+          type: "i",
           value: []
         },
         birdColor: {
-          type: 'c',
+          type: "c",
           value: []
         },
         reference: {
-          type: 'v2',
+          type: "v2",
           value: []
         },
         birdVertex: {
-          type: 'f',
+          type: "f",
           value: []
         }
       };
       this.birdUniforms = {
         color: {
-          type: 'c',
+          type: "c",
           value: new THREE.Color(0xff2200)
         },
         texturePosition: {
@@ -108,8 +133,8 @@
       shaderMaterial = new THREE.ShaderMaterial({
         uniforms: this.birdUniforms,
         attributes: birdAttributes,
-        vertexShader: document.getElementById('birdVS').textContent,
-        fragmentShader: document.getElementById('birdFS').textContent,
+        vertexShader: document.getElementById("birdVS").textContent,
+        fragmentShader: document.getElementById("birdFS").textContent,
         side: THREE.DoubleSide
       });
       vertices = geometry.vertices;
@@ -131,23 +156,28 @@
       birdMesh.sortObjects = false;
       birdMesh.matrixAutoUpdate = false;
       birdMesh.updateMatrix();
-      return FW.scene.add(birdMesh);
+      return this.scene.add(birdMesh);
+    };
+
+    Birds.prototype.animate = function() {
+      requestAnimationFrame(this.animate);
+      return this.render();
     };
 
     Birds.prototype.update = function() {
-      var delta, mouseX, mouseY;
-      this.now = performance.now();
-      this.delta = (this.now - this.last) / 1000;
+      var delta, now;
+      now = performance.now();
+      delta = (now - last) / 1000;
       if (delta > 1) {
         delta = 1;
       }
-      this.birdUniforms.time.value = this.now;
-      this.birdUniforms.delta.value = this.delta;
-      simulator.simulate(this.delta);
+      last = now;
+      this.birdUniforms.time.value = now;
+      this.birdUniforms.delta.value = delta;
+      simulator.simulate(delta);
       this.birdUniforms.texturePosition.value = simulator.currentPosition;
       this.birdUniforms.textureVelocity.value = simulator.currentVelocity;
-      mouseX = 10000;
-      return mouseY = 10000;
+      return this.renderer.render(this.scene, this.camera);
     };
 
     return Birds;
