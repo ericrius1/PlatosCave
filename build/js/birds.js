@@ -128,7 +128,6 @@
       }
       birdMesh = new THREE.Mesh(geometry, shaderMaterial);
       birdMesh.rotation.y = Math.PI / 2;
-      birdMesh.scale.set(100);
       birdMesh.sortObjects = false;
       birdMesh.matrixAutoUpdate = false;
       birdMesh.updateMatrix();

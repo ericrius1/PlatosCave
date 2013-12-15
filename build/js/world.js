@@ -30,8 +30,11 @@
       FW.camera.position.set(0, this.startingY, 0);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
-      this.controls.movementSpeed = 800;
+      this.controls.movementSpeed = 10;
       this.controls.rollSpeed = Math.PI / 8;
+      this.controls.pitchEnabled = true;
+      this.controls.flyEnabled = true;
+      this.controls.mouseMove = true;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
       this.stats.domElement.style.left = '0px';
@@ -40,6 +43,7 @@
       FW.scene = new THREE.Scene();
       FW.Renderer = new THREE.WebGLRenderer();
       FW.Renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
+      FW.Renderer.setClearColor('white');
       document.body.appendChild(FW.Renderer.domElement);
       this.groundControl = new FW.Rockets();
       this.meteor = new FW.Meteor();
@@ -146,7 +150,6 @@
       FW.camera.position.y = this.startingY;
       this.groundControl.update();
       this.meteor.tick();
-      this.stars.tick();
       this.lightTower.tick();
       this.water.render();
       this.birds.update();

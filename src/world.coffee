@@ -27,10 +27,11 @@ FW.World = class World
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
-    @controls.movementSpeed = 800;
+    @controls.movementSpeed = 10;
     @controls.rollSpeed =  Math.PI / 8;
-    # @controls.pitchEnabled = true
-    # @controls.flyEnabled = true
+    @controls.pitchEnabled = true
+    @controls.flyEnabled = true
+    @controls.mouseMove = true
 
     #STATS
     @stats = new Stats()
@@ -49,6 +50,7 @@ FW.World = class World
     # RENDERER
     FW.Renderer = new THREE.WebGLRenderer()
     FW.Renderer.setSize @SCREEN_WIDTH, @SCREEN_HEIGHT
+    FW.Renderer.setClearColor('white')
     document.body.appendChild FW.Renderer.domElement
     
     #FUN
@@ -174,7 +176,7 @@ FW.World = class World
     FW.camera.position.y = @startingY
     @groundControl.update()
     @meteor.tick()
-    @stars.tick()
+    # @stars.tick()
     @lightTower.tick()
     @water.render()
     @birds.update()
