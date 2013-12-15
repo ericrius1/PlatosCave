@@ -1,4 +1,9 @@
 WIDTH = 32
+HEIGHT = WIDTH
+window.PARTICLES = WIDTH * WIDTH;
+window.BOUNDS = 800
+window.BOUNDS_HALF = BOUNDS / 2
+window.BIRDS = 1024
 THREE.BirdGeometry = ->
   THREE.Geometry.call @
   BIRDS = WIDTH * WIDTH
@@ -29,6 +34,47 @@ THREE.BirdGeometry:: = Object.create(THREE.Geometry::)
 
 FW.Birds = class Birds
   constructor: () ->
-    simulator = new SimulatorRenderer(WIDTH, FW.Renderer)
+    window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer)
+    simulator.init()
+    @initBirds()
+
+  initBirds: ->
     geometry = new THREE.BirdGeometry()
+    #For Vertex Shader
+    birdAttributes = 
+      index: {type: 'i', value: []},
+      birdColor: {type: 'c', value: []},
+      reference: {type: 'c', value: []},
+      birdVertex: {type: 'f', value: []}
+    #For vertex and fragment
+    birdUniforms =
+      color: type: 'c', value: new THREE.Color(0xff2200)
+      texturePosition: type: "t", value: null
+      textureVelocity: type: "t", value: null
+      time: type: "f", value: 1.0
+      delta: type: "f", value: 0.0
+
+    shaderMaterial = new THREE.ShaderMaterial
+      uniforms: birdUniforms,
+      attributes: birdAttributes,
+      vertexShader: document.getElementById 'birdVS'
+      fragmentShader: document.getElementById 'birdFS'.textContent,
+      side: THREE.DoubleSide
+
+    vertices = geometry.vertices
+    birdColors = birdAttributes.birdColor.value
+    references = birdAttributes.reference.value
+    birdVertex = birdAttributes.birdVertex.value
+
+    v = 0
+
+    while v < vertices.length
+      i = ~~(v / 3)
+      x = (i % WIDTH) / WIDTH
+      y = ~~(i / WIDTH) / WIDTH
+      birdColors[v] = new THREE.Color(0x444444 + ~~(v / 9) / BIRDS * 0x666666)
+      references[v] = new THREE.Vector2(x, y)
+      birdVertex[v] = v % 9
+      v++
+
 

@@ -1,7 +1,17 @@
 (function() {
-  var Birds, WIDTH;
+  var Birds, HEIGHT, WIDTH;
 
   WIDTH = 32;
+
+  HEIGHT = WIDTH;
+
+  window.PARTICLES = WIDTH * WIDTH;
+
+  window.BOUNDS = 800;
+
+  window.BOUNDS_HALF = BOUNDS / 2;
+
+  window.BIRDS = 1024;
 
   THREE.BirdGeometry = function() {
     var BIRDS, f, faces, fi, uvs, verts, wingsSpan;
@@ -35,10 +45,79 @@
 
   FW.Birds = Birds = (function() {
     function Birds() {
-      var geometry, simulator;
-      simulator = new SimulatorRenderer(WIDTH, FW.Renderer);
-      geometry = new THREE.BirdGeometry();
+      window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer);
+      simulator.init();
+      this.initBirds();
     }
+
+    Birds.prototype.initBirds = function() {
+      var birdAttributes, birdColors, birdUniforms, birdVertex, geometry, i, references, shaderMaterial, v, vertices, x, y, _results;
+      geometry = new THREE.BirdGeometry();
+      birdAttributes = {
+        index: {
+          type: 'i',
+          value: []
+        },
+        birdColor: {
+          type: 'c',
+          value: []
+        },
+        reference: {
+          type: 'c',
+          value: []
+        },
+        birdVertex: {
+          type: 'f',
+          value: []
+        }
+      };
+      birdUniforms = {
+        color: {
+          type: 'c',
+          value: new THREE.Color(0xff2200)
+        },
+        texturePosition: {
+          type: "t",
+          value: null
+        },
+        textureVelocity: {
+          type: "t",
+          value: null
+        },
+        time: {
+          type: "f",
+          value: 1.0
+        },
+        delta: {
+          type: "f",
+          value: 0.0
+        }
+      };
+      shaderMaterial = new THREE.ShaderMaterial({
+        uniforms: birdUniforms,
+        attributes: birdAttributes,
+        vertexShader: document.getElementById('birdVS'),
+        fragmentShader: document.getElementById('birdFS'.textContent, {
+          side: THREE.DoubleSide
+        })
+      });
+      vertices = geometry.vertices;
+      birdColors = birdAttributes.birdColor.value;
+      references = birdAttributes.reference.value;
+      birdVertex = birdAttributes.birdVertex.value;
+      v = 0;
+      _results = [];
+      while (v < vertices.length) {
+        i = ~~(v / 3);
+        x = (i % WIDTH) / WIDTH;
+        y = ~~(i / WIDTH) / WIDTH;
+        birdColors[v] = new THREE.Color(0x444444 + ~~(v / 9) / BIRDS * 0x666666);
+        references[v] = new THREE.Vector2(x, y);
+        birdVertex[v] = v % 9;
+        _results.push(v++);
+      }
+      return _results;
+    };
 
     return Birds;
 

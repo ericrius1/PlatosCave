@@ -37,7 +37,7 @@ FW.World = class World
     @stats.domElement.style.position = 'absolute';
     @stats.domElement.style.left = '0px';
     @stats.domElement.style.top = '0px';
-    # document.body.appendChild(@stats.domElement);
+    document.body.appendChild(@stats.domElement);
     
 
     # SCENE 
@@ -170,7 +170,7 @@ FW.World = class World
     @render()
   render : ->
     @screen.position.y += .1
-    # @stats.update()
+    @stats.update()
     FW.camera.position.y = @startingY
     @groundControl.update()
     @meteor.tick()
