@@ -15,23 +15,24 @@
         maxAge: 15
       });
       this.meteorVisibleDistance = 50000;
-      for (i = _i = 1; _i <= 3; i = ++_i) {
+      for (i = _i = 1; _i <= 6; i = ++_i) {
         this.newMeteor();
       }
       FW.scene.add(this.meteorGroup.mesh);
       this.calcPositions();
     }
 
-    Meteor.prototype.generateSpeed = function(meteor) {
+    Meteor.prototype.resetMeteor = function(meteor) {
       meteor.speedX = rnd(0.01, 3);
       meteor.speedZ = rnd(0.01, 3);
       meteor.speedY = 0;
       meteor.accelX = rnd(.001, .2);
       meteor.accelZ = rnd(.001, .2);
-      meteor.accelY = rnd(-0.01, 0.01);
+      meteor.accelY = rnd(-0.005, 0.005);
       meteor.dirX = rnd(-1, 1);
       meteor.dirY = -1;
-      return meteor.dirZ = rnd(1, -1);
+      meteor.dirZ = rnd(1, -1);
+      return meteor.position = new THREE.Vector3(rnd(-10000, 10000), rnd(2000, 7000), rnd(-10000, 10000));
     };
 
     Meteor.prototype.newMeteor = function() {
@@ -39,8 +40,7 @@
       colorStart = new THREE.Color();
       colorStart.setRGB(Math.random(), Math.random(), Math.random());
       meteor = new THREE.Object3D();
-      this.generateSpeed(meteor);
-      meteor.position = new THREE.Vector3(rnd(-10000, 10000), rnd(2000, 7000), rnd(-10000, 10000));
+      this.resetMeteor(meteor);
       colorEnd = new THREE.Color();
       colorEnd.setRGB(Math.random(), Math.random(), Math.random());
       meteor.light = new THREE.PointLight(colorStart, 2, 1000);
@@ -67,9 +67,8 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         meteor = _ref[_i];
         distance = FW.camera.position.distanceTo(meteor.position);
-        if (distance > this.meteorVisibleDistance) {
-          this.generateSpeed(meteor);
-          meteor.position = new THREE.Vector3(0, 1000, 0);
+        if (distance > this.meteorVisibleDistance + rnd(-this.meteorVisibleDistance / 2, this.meteorVisibleDistance / 2)) {
+          this.resetMeteor(meteor);
         }
       }
       return setTimeout(function() {

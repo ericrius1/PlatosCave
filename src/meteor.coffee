@@ -8,30 +8,30 @@ FW.Meteor = class Meteor
       blending: THREE.AdditiveBlending,
       maxAge: 15
     @meteorVisibleDistance = 50000
-    for i in [1..3]
+    for i in [1..6]
       @newMeteor()
     FW.scene.add(@meteorGroup.mesh)
     @calcPositions()
     
 
-  generateSpeed: (meteor)->
+  resetMeteor: (meteor)->
     meteor.speedX = rnd(0.01, 3)
     meteor.speedZ = rnd(0.01, 3)
     meteor.speedY = 0
     meteor.accelX = rnd(.001, .2)
     meteor.accelZ = rnd(.001, .2)
-    meteor.accelY = rnd(-0.01, 0.01)
+    meteor.accelY = rnd(-0.005, 0.005)
     meteor.dirX = rnd(-1, 1)
     meteor.dirY = -1
     meteor.dirZ = rnd(1, -1)
+    meteor.position = new THREE.Vector3(rnd(-10000, 10000), rnd(2000, 7000), rnd(-10000, 10000))
 
 
   newMeteor: ->
     colorStart = new THREE.Color()
     colorStart.setRGB(Math.random(),Math.random(),Math.random() )
     meteor = new THREE.Object3D()
-    @generateSpeed meteor
-    meteor.position = new THREE.Vector3(rnd(-10000, 10000), rnd(2000, 7000), rnd(-10000, 10000))
+    @resetMeteor meteor
     colorEnd = new THREE.Color()
     colorEnd.setRGB(Math.random(),Math.random(),Math.random() )
     meteor.light = new THREE.PointLight(colorStart, 2, 1000)
@@ -52,10 +52,9 @@ FW.Meteor = class Meteor
   calcPositions: ->
     for meteor in @meteors
       distance =  FW.camera.position.distanceTo(meteor.position)
-      #meteor is off screen, respawn it somewhere
-      if distance > @meteorVisibleDistance
-        @generateSpeed meteor
-        meteor.position = new THREE.Vector3(0, 1000, 0)
+      #meteor is far away, respawn it somewhere. Randomize for staggered show
+      if distance > @meteorVisibleDistance + rnd(-@meteorVisibleDistance/2, @meteorVisibleDistance/2)
+        @resetMeteor meteor
 
     setTimeout(=>
       @calcPositions()

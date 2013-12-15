@@ -22,8 +22,8 @@
       this.SCREEN_WIDTH = window.innerWidth;
       this.SCREEN_HEIGHT = window.innerHeight - 2 * this.MARGIN;
       this.camFar = 200000;
-      this.width = 100000;
-      this.height = 100000;
+      this.width = 120000;
+      this.height = 120000;
       this.startingY = 40;
       this.rippleFactor = rnd(60, 300);
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
@@ -147,7 +147,6 @@
 
     World.prototype.render = function() {
       this.screen.position.y += .1;
-      this.stats.update();
       FW.camera.position.y = this.startingY;
       this.groundControl.update();
       this.meteor.tick();

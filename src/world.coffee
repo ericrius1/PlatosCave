@@ -15,8 +15,8 @@ FW.World = class World
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
     @camFar = 200000
-    @width = 100000
-    @height = 100000
+    @width = 120000
+    @height = 120000
     @startingY = 40
     @rippleFactor = rnd(60, 300)
 
@@ -171,7 +171,7 @@ FW.World = class World
     @render()
   render : ->
     @screen.position.y += .1
-    @stats.update()
+    # @stats.update()
     FW.camera.position.y = @startingY
     @groundControl.update()
     @meteor.tick()
