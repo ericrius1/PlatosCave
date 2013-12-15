@@ -27,11 +27,11 @@ FW.World = class World
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
-    @controls.movementSpeed = 10;
+    @controls.movementSpeed = 600;
     @controls.rollSpeed =  Math.PI / 8;
     @controls.pitchEnabled = true
     @controls.flyEnabled = true
-    @controls.mouseMove = true
+    @controls.mouseMove = false
 
     #STATS
     @stats = new Stats()
@@ -50,7 +50,6 @@ FW.World = class World
     # RENDERER
     FW.Renderer = new THREE.WebGLRenderer()
     FW.Renderer.setSize @SCREEN_WIDTH, @SCREEN_HEIGHT
-    FW.Renderer.setClearColor('white')
     document.body.appendChild FW.Renderer.domElement
     
     #FUN
@@ -98,7 +97,7 @@ FW.World = class World
     )
     aMeshMirror.add @water
     aMeshMirror.rotation.x = -Math.PI * 0.5
-    # FW.scene.add aMeshMirror
+    FW.scene.add aMeshMirror
 
     # @loadSkyBox()
     
@@ -155,7 +154,7 @@ FW.World = class World
     terrainMaterial = new THREE.MeshPhongMaterial vertexColors: THREE.VertexColors, shading: THREE.FlatShading, side: THREE.DoubleSide 
     terrain = new THREE.Mesh terrainGeo, terrainMaterial
     terrain.position = position
-    # FW.scene.add terrain
+    FW.scene.add terrain
   onWindowResize : (event) ->
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
@@ -176,7 +175,7 @@ FW.World = class World
     FW.camera.position.y = @startingY
     @groundControl.update()
     @meteor.tick()
-    # @stars.tick()
+    @stars.tick()
     @lightTower.tick()
     @water.render()
     @birds.update()

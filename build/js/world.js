@@ -30,11 +30,11 @@
       FW.camera.position.set(0, this.startingY, 0);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
-      this.controls.movementSpeed = 10;
+      this.controls.movementSpeed = 600;
       this.controls.rollSpeed = Math.PI / 8;
       this.controls.pitchEnabled = true;
       this.controls.flyEnabled = true;
-      this.controls.mouseMove = true;
+      this.controls.mouseMove = false;
       this.stats = new Stats();
       this.stats.domElement.style.position = 'absolute';
       this.stats.domElement.style.left = '0px';
@@ -43,7 +43,6 @@
       FW.scene = new THREE.Scene();
       FW.Renderer = new THREE.WebGLRenderer();
       FW.Renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
-      FW.Renderer.setClearColor('white');
       document.body.appendChild(FW.Renderer.domElement);
       this.groundControl = new FW.Rockets();
       this.meteor = new FW.Meteor();
@@ -78,6 +77,7 @@
       aMeshMirror = new THREE.Mesh(new THREE.PlaneGeometry(this.width, this.height, 50, 50), this.water.material);
       aMeshMirror.add(this.water);
       aMeshMirror.rotation.x = -Math.PI * 0.5;
+      FW.scene.add(aMeshMirror);
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
       }), false);
@@ -123,7 +123,8 @@
         side: THREE.DoubleSide
       });
       terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
-      return terrain.position = position;
+      terrain.position = position;
+      return FW.scene.add(terrain);
     };
 
     World.prototype.onWindowResize = function(event) {
@@ -150,6 +151,7 @@
       FW.camera.position.y = this.startingY;
       this.groundControl.update();
       this.meteor.tick();
+      this.stars.tick();
       this.lightTower.tick();
       this.water.render();
       this.birds.update();
