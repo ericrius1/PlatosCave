@@ -15,12 +15,12 @@ FW.Meteor = class Meteor
     
 
   generateSpeed: (meteor)->
-    meteor.speedX = rnd(0.01, 1)
-    meteor.speedY = .005
-    meteor.speedZ = rnd(0.01, 1)
-    meteor.accelX = .01
-    meteor.accelY = 0
-    meteor.accelZ = .1
+    meteor.speedX = rnd(0.01, 3)
+    meteor.speedZ = rnd(0.01, 3)
+    meteor.speedY = 0
+    meteor.accelX = rnd(.001, .2)
+    meteor.accelZ = rnd(.001, .2)
+    meteor.accelY = rnd(-0.01, 0.01)
     meteor.dirX = rnd(-1, 1)
     meteor.dirY = -1
     meteor.dirZ = rnd(1, -1)
@@ -31,7 +31,7 @@ FW.Meteor = class Meteor
     colorStart.setRGB(Math.random(),Math.random(),Math.random() )
     meteor = new THREE.Object3D()
     @generateSpeed meteor
-    meteor.position = new THREE.Vector3(rnd(-10000, 10000), rnd(2000, 4000), rnd(-10000, 10000))
+    meteor.position = new THREE.Vector3(rnd(-10000, 10000), rnd(2000, 7000), rnd(-10000, 10000))
     colorEnd = new THREE.Color()
     colorEnd.setRGB(Math.random(),Math.random(),Math.random() )
     meteor.light = new THREE.PointLight(colorStart, 2, 1000)
