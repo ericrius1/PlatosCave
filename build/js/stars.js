@@ -24,7 +24,7 @@
         type: 'sphere',
         radius: 50000,
         speed: .1,
-        size: 4000,
+        size: rnd(4000, 6000),
         sizeSpread: 4000,
         particlesPerSecond: rnd(500, 1100),
         opacityStart: 0,
