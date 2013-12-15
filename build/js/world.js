@@ -7,7 +7,7 @@
   FW.World = World = (function() {
     function World() {
       this.animate = __bind(this.animate, this);
-      var aMeshMirror, directionalLight, i, screenGeo, screenMat, waterNormals, _i,
+      var aMeshMirror, directionalLight, i, randColor, screenGeo, screenMat, waterNormals, _i,
         _this = this;
       this.textureCounter = 0;
       this.animDelta = 0;
@@ -51,7 +51,10 @@
       this.stars = new FW.Stars();
       this.lightTower = new FW.LightTower();
       this.birds = new FW.Birds();
-      directionalLight = new THREE.DirectionalLight(0xff0000, 3);
+      directionalLight = new THREE.DirectionalLight(0xff0000, rnd(1, 4));
+      randColor = Math.floor(Math.random() * 16777215);
+      console.log(randColor);
+      directionalLight.color.setHex(randColor);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
       screenGeo = new THREE.PlaneGeometry(200, 100, 10, 10);
