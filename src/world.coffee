@@ -61,11 +61,11 @@ FW.World = class World
     @birds = new FW.Birds()
     
     # LIGHTS
-    directionalLight = new THREE.DirectionalLight 0xff0000, rnd(1, 4)
+    directionalLight = new THREE.DirectionalLight 0xff0000, rnd(0.5, 1.5)
     randColor = Math.floor(Math.random()*16777215);
     console.log randColor
     directionalLight.color.setHex(randColor)
-    directionalLight.position.set( -600, 300, 600 )
+    directionalLight.position.set( 0, 6000, 0 )
     FW.scene.add( directionalLight )
 
 

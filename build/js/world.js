@@ -51,11 +51,11 @@
       this.stars = new FW.Stars();
       this.lightTower = new FW.LightTower();
       this.birds = new FW.Birds();
-      directionalLight = new THREE.DirectionalLight(0xff0000, rnd(1, 4));
+      directionalLight = new THREE.DirectionalLight(0xff0000, rnd(0.5, 1.5));
       randColor = Math.floor(Math.random() * 16777215);
       console.log(randColor);
       directionalLight.color.setHex(randColor);
-      directionalLight.position.set(-600, 300, 600);
+      directionalLight.position.set(0, 6000, 0);
       FW.scene.add(directionalLight);
       screenGeo = new THREE.PlaneGeometry(200, 100, 10, 10);
       screenMat = new THREE.MeshBasicMaterial({
