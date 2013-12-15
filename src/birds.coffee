@@ -38,6 +38,15 @@ FW.Birds = class Birds
   constructor: () ->
     window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer)
     simulator.init()
+    @flockingBehavior = 
+      separtion: 20.0
+      alignment: 20.0
+      cohesion: 20.0
+      freedom: 0.75
+    simulator.velocityUniforms.seperationDistance.value = @flockingBehavior.separation
+    simulator.velocityUniforms.alignmentDistance.value = @flockingBehavior.alignment
+    simulator.velocityUniforms.cohesionDistance.value = @flockingBehavior.cohesion
+    simulator.velocityUniforms.freedomFactor.value = @flockingBehavior.freedom
     @initBirds()
 
   initBirds: ->
@@ -81,6 +90,7 @@ FW.Birds = class Birds
 
     birdMesh = new THREE.Mesh geometry, shaderMaterial
     birdMesh.rotation.y = Math.PI / 2
+    birdMesh.scale.set(100)
     birdMesh.sortObjects = false
     birdMesh.matrixAutoUpdate = false
     birdMesh.updateMatrix()

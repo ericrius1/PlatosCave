@@ -49,6 +49,16 @@
     function Birds() {
       window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer);
       simulator.init();
+      this.flockingBehavior = {
+        separtion: 20.0,
+        alignment: 20.0,
+        cohesion: 20.0,
+        freedom: 0.75
+      };
+      simulator.velocityUniforms.seperationDistance.value = this.flockingBehavior.separation;
+      simulator.velocityUniforms.alignmentDistance.value = this.flockingBehavior.alignment;
+      simulator.velocityUniforms.cohesionDistance.value = this.flockingBehavior.cohesion;
+      simulator.velocityUniforms.freedomFactor.value = this.flockingBehavior.freedom;
       this.initBirds();
     }
 
@@ -118,6 +128,7 @@
       }
       birdMesh = new THREE.Mesh(geometry, shaderMaterial);
       birdMesh.rotation.y = Math.PI / 2;
+      birdMesh.scale.set(100);
       birdMesh.sortObjects = false;
       birdMesh.matrixAutoUpdate = false;
       birdMesh.updateMatrix();

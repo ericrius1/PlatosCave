@@ -96,7 +96,7 @@ FW.World = class World
     )
     aMeshMirror.add @water
     aMeshMirror.rotation.x = -Math.PI * 0.5
-    FW.scene.add aMeshMirror
+    # FW.scene.add aMeshMirror
 
     # @loadSkyBox()
     
