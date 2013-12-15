@@ -37,13 +37,14 @@
       this.stats.domElement.style.left = '0px';
       this.stats.domElement.style.top = '0px';
       FW.scene = new THREE.Scene();
+      FW.Renderer = new THREE.WebGLRenderer();
+      FW.Renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
+      document.body.appendChild(FW.Renderer.domElement);
       this.groundControl = new FW.Rockets();
       this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
       this.lightTower = new FW.LightTower();
-      this.renderer = new THREE.WebGLRenderer();
-      this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
-      document.body.appendChild(this.renderer.domElement);
+      this.birds = new FW.Birds();
       directionalLight = new THREE.DirectionalLight(0xff0000, 3);
       directionalLight.position.set(-600, 300, 600);
       FW.scene.add(directionalLight);
@@ -61,7 +62,7 @@
       }
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
       waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
-      this.water = new THREE.Water(this.renderer, FW.camera, FW.scene, {
+      this.water = new THREE.Water(FW.Renderer, FW.camera, FW.scene, {
         textureWidth: 512,
         textureHeight: 512,
         waterNormals: waterNormals,
@@ -125,7 +126,7 @@
     World.prototype.onWindowResize = function(event) {
       this.SCREEN_WIDTH = window.innerWidth;
       this.SCREEN_HEIGHT = window.innerHeight - 2 * this.MARGIN;
-      this.renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
+      FW.Renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
       FW.camera.aspect = this.SCREEN_WIDTH / this.SCREEN_HEIGHT;
       return FW.camera.updateProjectionMatrix();
     };
@@ -148,7 +149,7 @@
       this.stars.tick();
       this.lightTower.tick();
       this.water.render();
-      return this.renderer.render(FW.scene, FW.camera);
+      return FW.Renderer.render(FW.scene, FW.camera);
     };
 
     return World;

@@ -44,18 +44,19 @@ FW.World = class World
     FW.scene = new THREE.Scene()
 
 
+
+    
+    # RENDERER
+    FW.Renderer = new THREE.WebGLRenderer()
+    FW.Renderer.setSize @SCREEN_WIDTH, @SCREEN_HEIGHT
+    document.body.appendChild FW.Renderer.domElement
+    
     #FUN
     @groundControl = new FW.Rockets()
     @meteor = new FW.Meteor()
     @stars = new FW.Stars()
     @lightTower = new FW.LightTower()
-
-    
-    # RENDERER
-    @renderer = new THREE.WebGLRenderer()
-    @renderer.setSize @SCREEN_WIDTH, @SCREEN_HEIGHT
-    document.body.appendChild @renderer.domElement
-    
+    @birds = new FW.Birds()
     
     # LIGHTS
     directionalLight = new THREE.DirectionalLight 0xff0000, 3
@@ -81,7 +82,7 @@ FW.World = class World
     #WATER
     waterNormals = new THREE.ImageUtils.loadTexture './assets/waternormals.jpg'
     waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping
-    @water = new THREE.Water @renderer, FW.camera, FW.scene,
+    @water = new THREE.Water FW.Renderer, FW.camera, FW.scene,
       textureWidth: 512
       textureHeight: 512
       waterNormals: waterNormals
@@ -156,7 +157,7 @@ FW.World = class World
   onWindowResize : (event) ->
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
-    @renderer.setSize @SCREEN_WIDTH, @SCREEN_HEIGHT
+    FW.Renderer.setSize @SCREEN_WIDTH, @SCREEN_HEIGHT
     FW.camera.aspect = @SCREEN_WIDTH / @SCREEN_HEIGHT
     FW.camera.updateProjectionMatrix()
 
@@ -176,7 +177,7 @@ FW.World = class World
     @stars.tick()
     @lightTower.tick()
     @water.render()
-    @renderer.render( FW.scene, FW.camera );
+    FW.Renderer.render( FW.scene, FW.camera );
      
 
 

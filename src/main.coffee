@@ -12,7 +12,7 @@ window.FW = {}
 SC?.initialize({
     client_id: "7da24ca214bf72b66ed2494117d05480",
 });
-window.soundOn = true
+window.soundOn = false
 FW.sfxVolume = 0.2
 FW.globalTick = 0.16
 

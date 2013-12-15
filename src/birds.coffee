@@ -27,5 +27,5 @@ THREE.BirdGeometry = ->
 
 FW.Birds = class Birds
   constructor: () ->
-    simulator = new SimulatorRenderer()
+    simulator = new SimulatorRenderer(WIDTH, FW.Renderer)
 

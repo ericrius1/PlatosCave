@@ -34,7 +34,7 @@
   FW.Birds = Birds = (function() {
     function Birds() {
       var simulator;
-      simulator = new SimulatorRenderer();
+      simulator = new SimulatorRenderer(WIDTH, FW.Renderer);
     }
 
     return Birds;
