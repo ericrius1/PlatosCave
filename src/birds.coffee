@@ -1,6 +1,6 @@
 WIDTH = 32
 THREE.BirdGeometry = ->
-  THREE.Geometry.call this
+  THREE.Geometry.call @
   BIRDS = WIDTH * WIDTH
   verts = @vertices
   faces = @faces
@@ -25,7 +25,10 @@ THREE.BirdGeometry = ->
   @computeFaceNormals()
   @computeVertexNormals()
 
+THREE.BirdGeometry:: = Object.create(THREE.Geometry::)
+
 FW.Birds = class Birds
   constructor: () ->
     simulator = new SimulatorRenderer(WIDTH, FW.Renderer)
+    geometry = new THREE.BirdGeometry()
 

@@ -31,10 +31,13 @@
     return this.computeVertexNormals();
   };
 
+  THREE.BirdGeometry.prototype = Object.create(THREE.Geometry.prototype);
+
   FW.Birds = Birds = (function() {
     function Birds() {
-      var simulator;
+      var geometry, simulator;
       simulator = new SimulatorRenderer(WIDTH, FW.Renderer);
+      geometry = new THREE.BirdGeometry();
     }
 
     return Birds;
