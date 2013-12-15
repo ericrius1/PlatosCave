@@ -35,10 +35,13 @@
       this.controls.pitchEnabled = true;
       this.controls.flyEnabled = true;
       this.controls.mouseMove = false;
-      this.stats = new Stats();
-      this.stats.domElement.style.position = 'absolute';
-      this.stats.domElement.style.left = '0px';
-      this.stats.domElement.style.top = '0px';
+      if (FW.development === true) {
+        this.stats = new Stats();
+        this.stats.domElement.style.position = 'absolute';
+        this.stats.domElement.style.left = '0px';
+        this.stats.domElement.style.top = '0px';
+        document.body.appendChild(this.stats.domElement);
+      }
       FW.scene = new THREE.Scene();
       FW.Renderer = new THREE.WebGLRenderer();
       FW.Renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
@@ -146,6 +149,9 @@
 
     World.prototype.render = function() {
       this.screen.position.y += .1;
+      if (FW.development === true) {
+        this.stats.update();
+      }
       FW.camera.position.y = this.startingY;
       this.groundControl.update();
       this.meteor.tick();

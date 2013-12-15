@@ -34,11 +34,12 @@ FW.World = class World
     @controls.mouseMove = false
 
     #STATS
-    @stats = new Stats()
-    @stats.domElement.style.position = 'absolute';
-    @stats.domElement.style.left = '0px';
-    @stats.domElement.style.top = '0px';
-    # document.body.appendChild(@stats.domElement);
+    if FW.development is true
+      @stats = new Stats()
+      @stats.domElement.style.position = 'absolute';
+      @stats.domElement.style.left = '0px';
+      @stats.domElement.style.top = '0px';
+      document.body.appendChild(@stats.domElement);
     
 
     # SCENE 
@@ -171,7 +172,8 @@ FW.World = class World
     @render()
   render : ->
     @screen.position.y += .1
-    # @stats.update()
+    if FW.development is true
+      @stats.update()
     FW.camera.position.y = @startingY
     @groundControl.update()
     @meteor.tick()

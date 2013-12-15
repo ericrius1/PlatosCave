@@ -26,6 +26,8 @@
 
   FW.globalTick = 0.16;
 
+  FW.development = false;
+
   window.onload = function() {
     FW.myWorld = new FW.World();
     FW.myWorld.animate();

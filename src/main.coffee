@@ -15,6 +15,7 @@ SC?.initialize({
 window.soundOn = true
 FW.sfxVolume = 0.2
 FW.globalTick = 0.16
+FW.development = false
 
 #make user let go when they want to explode firework
 #flocking birds
