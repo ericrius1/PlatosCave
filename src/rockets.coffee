@@ -32,7 +32,9 @@ FW.Rockets = class Rockets
 
 
   launchRocket: ()->
-    FW.numExplosionsPerRocket = 1
+    FW.numExplosionsPerRocket = Math.random() > 0.7 ? 1 : 0
+    if Math.random() > 0.85
+      FW.numExplosionsPerRocket = 5
     if @launching
       return
     @launching = true

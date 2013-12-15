@@ -23,7 +23,7 @@ FW.Firework = class Firework
       maxAge: @fwAge
     });
 
-    for i in [1..5]
+    for i in [1..10]
       @particleGroup.addPool( 1, @generateEmitter(), false )     
     FW.scene.add(@particleGroup.mesh)
 
