@@ -59,8 +59,8 @@ FW.Birds = class Birds
     shaderMaterial = new THREE.ShaderMaterial
       uniforms: @birdUniforms,
       attributes: birdAttributes,
-      vertexShader: document.getElementById 'birdVS'.textContent
-      fragmentShader: document.getElementById 'birdFS'.textContent,
+      vertexShader: document.getElementById('birdVS').textContent
+      fragmentShader: document.getElementById('birdFS').textContent,
       side: THREE.DoubleSide
 
     vertices = geometry.vertices

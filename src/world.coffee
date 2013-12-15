@@ -153,7 +153,7 @@ FW.World = class World
     terrainMaterial = new THREE.MeshPhongMaterial vertexColors: THREE.VertexColors, shading: THREE.FlatShading, side: THREE.DoubleSide 
     terrain = new THREE.Mesh terrainGeo, terrainMaterial
     terrain.position = position
-    FW.scene.add terrain
+    # FW.scene.add terrain
   onWindowResize : (event) ->
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN

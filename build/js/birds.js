@@ -98,10 +98,9 @@
       shaderMaterial = new THREE.ShaderMaterial({
         uniforms: this.birdUniforms,
         attributes: birdAttributes,
-        vertexShader: document.getElementById('birdVS'.textContent),
-        fragmentShader: document.getElementById('birdFS'.textContent, {
-          side: THREE.DoubleSide
-        })
+        vertexShader: document.getElementById('birdVS').textContent,
+        fragmentShader: document.getElementById('birdFS').textContent,
+        side: THREE.DoubleSide
       });
       vertices = geometry.vertices;
       birdColors = birdAttributes.birdColor.value;
