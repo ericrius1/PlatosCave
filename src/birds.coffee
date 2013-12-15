@@ -12,6 +12,8 @@ THREE.BirdGeometry = ->
   uvs = @faceVertexUvs[0]
   fi = 0
   f = 0
+  @t = 0;
+  @last = performance.now()
 
   while f < BIRDS
     verts.push new THREE.Vector3(0, -0, -20), new THREE.Vector3(0, 4, -20), new THREE.Vector3(0, 0, 30)
@@ -44,10 +46,10 @@ FW.Birds = class Birds
     birdAttributes = 
       index: {type: 'i', value: []},
       birdColor: {type: 'c', value: []},
-      reference: {type: 'c', value: []},
+      reference: {type: 'v2', value: []},
       birdVertex: {type: 'f', value: []}
     #For vertex and fragment
-    birdUniforms =
+    @birdUniforms =
       color: type: 'c', value: new THREE.Color(0xff2200)
       texturePosition: type: "t", value: null
       textureVelocity: type: "t", value: null
@@ -55,9 +57,9 @@ FW.Birds = class Birds
       delta: type: "f", value: 0.0
 
     shaderMaterial = new THREE.ShaderMaterial
-      uniforms: birdUniforms,
+      uniforms: @birdUniforms,
       attributes: birdAttributes,
-      vertexShader: document.getElementById 'birdVS'
+      vertexShader: document.getElementById 'birdVS'.textContent
       fragmentShader: document.getElementById 'birdFS'.textContent,
       side: THREE.DoubleSide
 
@@ -76,5 +78,26 @@ FW.Birds = class Birds
       references[v] = new THREE.Vector2(x, y)
       birdVertex[v] = v % 9
       v++
+
+    birdMesh = new THREE.Mesh geometry, shaderMaterial
+    birdMesh.rotation.y = Math.PI / 2
+    birdMesh.sortObjects = false
+    birdMesh.matrixAutoUpdate = false
+    birdMesh.updateMatrix()
+    FW.scene.add birdMesh
+
+  update: ->
+    @now = performance.now()
+    @delta = (@now - @last) / 1000
+    delta = 1 if delta > 1
+    @birdUniforms.time.value = @now
+    @birdUniforms.delta.value = @delta
+
+    simulator.simulate @delta
+    @birdUniforms.texturePosition.value = simulator.currentPosition
+    @birdUniforms.textureVelocity.value = simulator.currentVelocity
+
+    mouseX = 10000
+    mouseY = 10000
 
 

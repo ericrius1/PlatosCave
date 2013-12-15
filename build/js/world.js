@@ -151,6 +151,7 @@
       this.stars.tick();
       this.lightTower.tick();
       this.water.render();
+      this.birds.update();
       return FW.Renderer.render(FW.scene, FW.camera);
     };
 

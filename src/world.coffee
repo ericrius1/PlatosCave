@@ -177,6 +177,7 @@ FW.World = class World
     @stars.tick()
     @lightTower.tick()
     @water.render()
+    @birds.update()
     FW.Renderer.render( FW.scene, FW.camera );
      
 
