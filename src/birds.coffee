@@ -44,17 +44,17 @@ FW.Birds = class Birds
   constructor : ->
     container = document.createElement("div")
     document.body.appendChild container
-    @camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000)
-    @camera.position.z = 350
-    @scene = new THREE.Scene()
-    @scene.fog = new THREE.Fog(0xffffff, 100, 1000)
-    @renderer = new THREE.WebGLRenderer()
-    @renderer.setSize window.innerWidth, window.innerHeight
-    container.appendChild @renderer.domElement
-    @renderer.setClearColor @scene.fog.color, 1
-    @renderer.autoClear = true
+    FW.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000)
+    FW.camera.position.z = 350
+    FW.scene = new THREE.Scene()
+    FW.scene.fog = new THREE.Fog(0xffffff, 100, 1000)
+    FW.Renderer = new THREE.WebGLRenderer()
+    FW.Renderer.setSize window.innerWidth, window.innerHeight
+    container.appendChild FW.Renderer.domElement
+    FW.Renderer.setClearColor FW.scene.fog.color, 1
+    FW.Renderer.autoClear = true
     
-    window.simulator = new SimulatorRenderer(WIDTH, @renderer)
+    window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer)
     simulator.init()
     @effectController =
       seperation: 20.0
@@ -63,7 +63,7 @@ FW.Birds = class Birds
       freedom: 0.75
     @valuesChanger()
     @initBirds()
-    @scene.add new THREE.Mesh(new THREE.CubeGeometry(400,400), new THREE.MeshBasicMaterial({color: 0xff0000}))
+    FW.scene.add new THREE.Mesh(new THREE.CubeGeometry(400,400), new THREE.MeshBasicMaterial({color: 0xff0000}))
 
   valuesChanger : ->
     simulator.velocityUniforms.seperationDistance.value = @effectController.seperation
@@ -144,7 +144,7 @@ FW.Birds = class Birds
     birdMesh.sortObjects = false
     birdMesh.matrixAutoUpdate = false
     birdMesh.updateMatrix()
-    @scene.add birdMesh
+    FW.scene.add birdMesh
   animate : =>
     requestAnimationFrame @animate
     @render()
@@ -159,6 +159,6 @@ FW.Birds = class Birds
     @birdUniforms.texturePosition.value = simulator.currentPosition
     @birdUniforms.textureVelocity.value = simulator.currentVelocity
 
-    @renderer.render @scene, @camera
+    FW.renderer.render FW.scene, FW.camera
 
  

@@ -56,16 +56,16 @@
       var container;
       container = document.createElement("div");
       document.body.appendChild(container);
-      this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
-      this.camera.position.z = 350;
-      this.scene = new THREE.Scene();
-      this.scene.fog = new THREE.Fog(0xffffff, 100, 1000);
-      this.renderer = new THREE.WebGLRenderer();
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
-      container.appendChild(this.renderer.domElement);
-      this.renderer.setClearColor(this.scene.fog.color, 1);
-      this.renderer.autoClear = true;
-      window.simulator = new SimulatorRenderer(WIDTH, this.renderer);
+      FW.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
+      FW.camera.position.z = 350;
+      FW.scene = new THREE.Scene();
+      FW.scene.fog = new THREE.Fog(0xffffff, 100, 1000);
+      FW.Renderer = new THREE.WebGLRenderer();
+      FW.Renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(FW.Renderer.domElement);
+      FW.Renderer.setClearColor(FW.scene.fog.color, 1);
+      FW.Renderer.autoClear = true;
+      window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer);
       simulator.init();
       this.effectController = {
         seperation: 20.0,
@@ -75,7 +75,7 @@
       };
       this.valuesChanger();
       this.initBirds();
-      this.scene.add(new THREE.Mesh(new THREE.CubeGeometry(400, 400), new THREE.MeshBasicMaterial({
+      FW.scene.add(new THREE.Mesh(new THREE.CubeGeometry(400, 400), new THREE.MeshBasicMaterial({
         color: 0xff0000
       })));
     }
@@ -156,7 +156,7 @@
       birdMesh.sortObjects = false;
       birdMesh.matrixAutoUpdate = false;
       birdMesh.updateMatrix();
-      return this.scene.add(birdMesh);
+      return FW.scene.add(birdMesh);
     };
 
     Birds.prototype.animate = function() {
@@ -177,7 +177,7 @@
       simulator.simulate(delta);
       this.birdUniforms.texturePosition.value = simulator.currentPosition;
       this.birdUniforms.textureVelocity.value = simulator.currentVelocity;
-      return this.renderer.render(this.scene, this.camera);
+      return FW.renderer.render(FW.scene, FW.camera);
     };
 
     return Birds;
