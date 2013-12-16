@@ -133,17 +133,7 @@ FW.Birds = class Birds
     birdMesh.sortObjects = false
     birdMesh.matrixAutoUpdate = false
     birdMesh.updateMatrix()
+    birdMesh.position.y = 20000
     FW.scene.add birdMesh
-  update : ->
-    now = performance.now()
-    delta = (now - last) / 1000
-    delta = 1  if delta > 1 # safety cap on large deltas
-    last = now
-    @birdUniforms.time.value = now
-    @birdUniforms.delta.value = delta
-    simulator.simulate delta
-    @birdUniforms.texturePosition.value = simulator.currentPosition
-    @birdUniforms.textureVelocity.value = simulator.currentVelocity
-
-
+    
  

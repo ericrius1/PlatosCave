@@ -14,7 +14,7 @@
       this.animDeltaDir = 1;
       this.lightVal = .16;
       this.lightDir = 0;
-      this.clock = new THREE.Clock();
+      FW.clock = new THREE.Clock();
       this.updateNoise = true;
       this.animateTerrain = false;
       this.mlib = {};
@@ -88,23 +88,6 @@
       }), false);
     }
 
-    World.prototype.loadSkyBox = function() {
-      var aCubeMap, aShader, aSkyBox, aSkyBoxMaterial;
-      aCubeMap = THREE.ImageUtils.loadTextureCube(['./assets/px.jpg', './assets/nx.jpg', './assets/py.jpg', './assets/ny.jpg', './assets/pz.jpg', './assets/nz.jpg']);
-      aCubeMap.format = THREE.RGBFormat;
-      aShader = THREE.ShaderLib['cube'];
-      aShader.uniforms['tCube'].value = aCubeMap;
-      aSkyBoxMaterial = new THREE.ShaderMaterial({
-        fragmentShader: aShader.fragmentShader,
-        vertexShader: aShader.vertexShader,
-        uniforms: aShader.uniforms,
-        depthWrite: false,
-        side: THREE.BackSide
-      });
-      aSkyBox = new THREE.Mesh(new THREE.CubeGeometry(1000000, 1000000, 1000000), aSkyBoxMaterial);
-      return FW.scene.add(aSkyBox);
-    };
-
     World.prototype.loadTerrain = function(position) {
       var parameters, terrain, terrainGeo, terrainMaterial;
       parameters = {
@@ -143,10 +126,15 @@
     World.prototype.animate = function() {
       var delta, time;
       requestAnimationFrame(this.animate);
-      delta = this.clock.getDelta();
+      delta = FW.clock.getDelta();
       time = Date.now();
       this.water.material.uniforms.time.value += 1.0 / 60;
       this.controls.update(delta);
+      this.birds.birdUniforms.time.value = performance.now();
+      this.birds.birdUniforms.delta.value = delta;
+      simulator.simulate(delta);
+      this.birds.birdUniforms.texturePosition.value = simulator.currentPosition;
+      this.birds.birdUniforms.textureVelocity.value = simulator.currentVelocity;
       return this.render();
     };
 
@@ -161,7 +149,6 @@
       this.stars.tick();
       this.lightTower.tick();
       this.water.render();
-      this.birds.update();
       return FW.Renderer.render(FW.scene, FW.camera);
     };
 

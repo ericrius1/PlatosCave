@@ -142,22 +142,8 @@
       birdMesh.sortObjects = false;
       birdMesh.matrixAutoUpdate = false;
       birdMesh.updateMatrix();
+      birdMesh.position.y = 20000;
       return FW.scene.add(birdMesh);
-    };
-
-    Birds.prototype.update = function() {
-      var delta, now;
-      now = performance.now();
-      delta = (now - last) / 1000;
-      if (delta > 1) {
-        delta = 1;
-      }
-      last = now;
-      this.birdUniforms.time.value = now;
-      this.birdUniforms.delta.value = delta;
-      simulator.simulate(delta);
-      this.birdUniforms.texturePosition.value = simulator.currentPosition;
-      return this.birdUniforms.textureVelocity.value = simulator.currentVelocity;
     };
 
     return Birds;
