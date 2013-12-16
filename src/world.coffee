@@ -69,8 +69,6 @@ FW.World = class World
     FW.scene.add( directionalLight )
 
 
-
-
     #SCREEN
     screenGeo = new THREE.PlaneGeometry(200, 100, 10, 10)
     screenMat = new THREE.MeshBasicMaterial map: THREE.ImageUtils.loadTexture('assets/sagan.jpg'), side: THREE.DoubleSide
@@ -133,7 +131,7 @@ FW.World = class World
     terrainMaterial = new THREE.MeshPhongMaterial vertexColors: THREE.VertexColors, shading: THREE.FlatShading, side: THREE.DoubleSide 
     terrain = new THREE.Mesh terrainGeo, terrainMaterial
     terrain.position = position
-    FW.scene.add terrain
+    # FW.scene.add terrain
   onWindowResize : (event) ->
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
@@ -155,7 +153,7 @@ FW.World = class World
     @birds.birdUniforms.textureVelocity.value = simulator.currentVelocity
     @render()
   render : ->
-    @screen.position.y += .1
+    @screen.position.y += .2
     if FW.development is true
       @stats.update()
     FW.camera.position.y = @startingY

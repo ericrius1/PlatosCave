@@ -3,8 +3,7 @@ FW.LightTower = class LightTower
   constructor: ()->
 
     @towerGroup = new ShaderParticleGroup({
-      texture: THREE.ImageUtils.loadTexture('assets/smokeparticle.png'),
-      blending: THREE.AdditiveBlending,
+      texture: THREE.ImageUtils.loadTexture('assets/smokeparticle.png')
       maxAge: 111
     });
 
@@ -17,14 +16,14 @@ FW.LightTower = class LightTower
     colorStart = new THREE.Color()
     colorStart.setRGB .8, .1, .9
     @towerEmitter = new ShaderParticleEmitter
-      size: 15000
+      size: 30000
       position: new THREE.Vector3(-5000, 100, -50000)
       positionSpread: new THREE.Vector3(100, 0, 100)
       colorStart: colorStart
       velocity: new THREE.Vector3(0, 5, 0)
       acceleration: new THREE.Vector3(0, 4.8, 0)
       accelerationSpread: new THREE.Vector3(0, .03, 0)
-      particlesPerSecond: 5
+      particlesPerSecond: 1
      
     
     @towerGroup.addEmitter @towerEmitter

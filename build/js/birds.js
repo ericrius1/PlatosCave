@@ -1,5 +1,5 @@
 (function() {
-  var Birds, last, windowHalfX, windowHalfY;
+  var Birds, last;
 
   window.WIDTH = 32;
 
@@ -35,10 +35,6 @@
 
   THREE.BirdGeometry.prototype = Object.create(THREE.Geometry.prototype);
 
-  windowHalfX = window.innerWidth / 2;
-
-  windowHalfY = window.innerHeight / 2;
-
   window.HEIGHT = WIDTH;
 
   window.PARTICLES = WIDTH * WIDTH;
@@ -61,9 +57,6 @@
       };
       this.valuesChanger();
       this.initBirds();
-      FW.scene.add(new THREE.Mesh(new THREE.CubeGeometry(400, 400), new THREE.MeshBasicMaterial({
-        color: 0xff0000
-      })));
     }
 
     Birds.prototype.valuesChanger = function() {
@@ -142,7 +135,6 @@
       birdMesh.sortObjects = false;
       birdMesh.matrixAutoUpdate = false;
       birdMesh.updateMatrix();
-      birdMesh.position.y = 20000;
       return FW.scene.add(birdMesh);
     };
 

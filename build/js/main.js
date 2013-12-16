@@ -38,7 +38,9 @@
     function Main() {
       if (soundOn) {
         SC.stream("/tracks/rameses-b-inspire", function(sound) {
-          return sound.play();
+          if (soundOn) {
+            return sound.play();
+          }
         });
       }
     }

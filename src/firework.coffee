@@ -2,8 +2,6 @@ FW.Firework = class Firework
   rnd = FW.rnd
   constructor: ()->
     #create a few different emmitters and add to pool
-    @colorStart = new THREE.Color()
-    @colorEnd = new THREE.Color()
     @lightIndex = 0
     @fwSpread = 200
     @fwAge = 11
@@ -28,20 +26,19 @@ FW.Firework = class Firework
     FW.scene.add(@particleGroup.mesh)
 
   generateEmitter : ->
-    @colorStart.setRGB(Math.random(), Math.random(),Math.random())
-    light = new THREE.PointLight(@colorStart, 0.0, @lightRange)
+    colorStart = new THREE.Color()
+    colorStart.setRGB(Math.random(), Math.random(),Math.random())
+    light = new THREE.PointLight(colorStart, 0.0, @lightRange)
     FW.scene.add(light)
     @lights.push(light)
-    @colorEnd.setRGB(Math.random(), Math.random(),Math.random())
     emitterSettings = 
-      positionSpread: new THREE.Vector3(10, 10, 10)
+      positionSpread: new THREE.Vector3 10, 10, 10
       velocitySpread: new THREE.Vector3 50, 50, 50
       accelerationSpread: new THREE.Vector3 10, 10, 10
       size: 200
       sizeSpread: 100
-      colorStart: @colorStart,
+      colorStart: colorStart,
       colorSpread: new THREE.Vector3(.2, .2, .2)
-      colorEnd: @colorEnd,
       particlesPerSecond: 500
       alive: 0,  
       emitterDuration: 1.0

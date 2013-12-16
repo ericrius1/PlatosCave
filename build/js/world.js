@@ -111,8 +111,7 @@
         side: THREE.DoubleSide
       });
       terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
-      terrain.position = position;
-      return FW.scene.add(terrain);
+      return terrain.position = position;
     };
 
     World.prototype.onWindowResize = function(event) {
@@ -139,7 +138,7 @@
     };
 
     World.prototype.render = function() {
-      this.screen.position.y += .1;
+      this.screen.position.y += .2;
       if (FW.development === true) {
         this.stats.update();
       }

@@ -30,9 +30,6 @@ THREE.BirdGeometry = ->
 
 THREE.BirdGeometry:: = Object.create(THREE.Geometry::)
 
-
-windowHalfX = window.innerWidth / 2
-windowHalfY = window.innerHeight / 2
 window.HEIGHT = WIDTH
 window.PARTICLES = WIDTH * WIDTH
 window.BOUNDS = 800
@@ -52,7 +49,6 @@ FW.Birds = class Birds
       freedom: 0.75
     @valuesChanger()
     @initBirds()
-    FW.scene.add new THREE.Mesh(new THREE.CubeGeometry(400,400), new THREE.MeshBasicMaterial({color: 0xff0000}))
 
   valuesChanger : ->
     simulator.velocityUniforms.seperationDistance.value = @effectController.seperation
@@ -133,7 +129,6 @@ FW.Birds = class Birds
     birdMesh.sortObjects = false
     birdMesh.matrixAutoUpdate = false
     birdMesh.updateMatrix()
-    birdMesh.position.y = 20000
     FW.scene.add birdMesh
     
  

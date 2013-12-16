@@ -8,8 +8,6 @@
 
     function Firework() {
       var i, _i;
-      this.colorStart = new THREE.Color();
-      this.colorEnd = new THREE.Color();
       this.lightIndex = 0;
       this.fwSpread = 200;
       this.fwAge = 11;
@@ -33,21 +31,20 @@
     }
 
     Firework.prototype.generateEmitter = function() {
-      var emitterSettings, light;
-      this.colorStart.setRGB(Math.random(), Math.random(), Math.random());
-      light = new THREE.PointLight(this.colorStart, 0.0, this.lightRange);
+      var colorStart, emitterSettings, light;
+      colorStart = new THREE.Color();
+      colorStart.setRGB(Math.random(), Math.random(), Math.random());
+      light = new THREE.PointLight(colorStart, 0.0, this.lightRange);
       FW.scene.add(light);
       this.lights.push(light);
-      this.colorEnd.setRGB(Math.random(), Math.random(), Math.random());
       return emitterSettings = {
         positionSpread: new THREE.Vector3(10, 10, 10),
         velocitySpread: new THREE.Vector3(50, 50, 50),
         accelerationSpread: new THREE.Vector3(10, 10, 10),
         size: 200,
         sizeSpread: 100,
-        colorStart: this.colorStart,
+        colorStart: colorStart,
         colorSpread: new THREE.Vector3(.2, .2, .2),
-        colorEnd: this.colorEnd,
         particlesPerSecond: 500,
         alive: 0,
         emitterDuration: 1.0
