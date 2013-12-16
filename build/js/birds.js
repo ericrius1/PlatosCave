@@ -3,7 +3,7 @@
 
   window.WIDTH = 32;
 
-  window.BIRDS = 1024;
+  window.BIRDS = 512;
 
   THREE.BirdGeometry = function() {
     var BIRDS, f, faces, fi, uvs, verts, wingsSpan;

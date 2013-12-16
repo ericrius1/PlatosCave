@@ -1,5 +1,5 @@
 window.WIDTH = 32
-window.BIRDS = 1024
+window.BIRDS = 512
 
 
 THREE.BirdGeometry = ->

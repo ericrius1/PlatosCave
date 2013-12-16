@@ -131,7 +131,7 @@ FW.World = class World
     terrainMaterial = new THREE.MeshPhongMaterial vertexColors: THREE.VertexColors, shading: THREE.FlatShading, side: THREE.DoubleSide 
     terrain = new THREE.Mesh terrainGeo, terrainMaterial
     terrain.position = position
-    # FW.scene.add terrain
+    FW.scene.add terrain
   onWindowResize : (event) ->
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
@@ -146,11 +146,13 @@ FW.World = class World
     @water.material.uniforms.time.value += 1.0 / 60
     @controls.update(delta)
     #Update Birds
-    @birds.birdUniforms.time.value = performance.now()
-    @birds.birdUniforms.delta.value = delta
-    simulator.simulate delta
-    @birds.birdUniforms.texturePosition.value = simulator.currentPosition
-    @birds.birdUniforms.textureVelocity.value = simulator.currentVelocity
+    # @birds.birdUniforms.time.value = performance.now()
+    # @birds.birdUniforms.delta.value = delta
+    # simulator.simulate delta
+    # @birds.birdUniforms.texturePosition.value = simulator.currentPosition
+    # @birds.birdUniforms.textureVelocity.value = simulator.currentVelocity
+    # simulator.velocityUniforms.predator.value.set( 0, 1000, 0 );
+
     @render()
   render : ->
     @screen.position.y += .2

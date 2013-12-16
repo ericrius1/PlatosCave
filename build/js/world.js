@@ -111,7 +111,8 @@
         side: THREE.DoubleSide
       });
       terrain = new THREE.Mesh(terrainGeo, terrainMaterial);
-      return terrain.position = position;
+      terrain.position = position;
+      return FW.scene.add(terrain);
     };
 
     World.prototype.onWindowResize = function(event) {
@@ -129,11 +130,6 @@
       time = Date.now();
       this.water.material.uniforms.time.value += 1.0 / 60;
       this.controls.update(delta);
-      this.birds.birdUniforms.time.value = performance.now();
-      this.birds.birdUniforms.delta.value = delta;
-      simulator.simulate(delta);
-      this.birds.birdUniforms.texturePosition.value = simulator.currentPosition;
-      this.birds.birdUniforms.textureVelocity.value = simulator.currentVelocity;
       return this.render();
     };
 
