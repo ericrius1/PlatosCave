@@ -42,17 +42,6 @@ last = performance.now()
 
 FW.Birds = class Birds
   constructor : ->
-    container = document.createElement("div")
-    document.body.appendChild container
-    FW.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000)
-    FW.camera.position.z = 350
-    FW.scene = new THREE.Scene()
-    FW.scene.fog = new THREE.Fog(0xffffff, 100, 1000)
-    FW.Renderer = new THREE.WebGLRenderer()
-    FW.Renderer.setSize window.innerWidth, window.innerHeight
-    container.appendChild FW.Renderer.domElement
-    FW.Renderer.setClearColor FW.scene.fog.color, 1
-    FW.Renderer.autoClear = true
     
     window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer)
     simulator.init()
@@ -145,9 +134,6 @@ FW.Birds = class Birds
     birdMesh.matrixAutoUpdate = false
     birdMesh.updateMatrix()
     FW.scene.add birdMesh
-  animate : =>
-    requestAnimationFrame @animate
-    @render()
   update : ->
     now = performance.now()
     delta = (now - last) / 1000
@@ -159,6 +145,5 @@ FW.Birds = class Birds
     @birdUniforms.texturePosition.value = simulator.currentPosition
     @birdUniforms.textureVelocity.value = simulator.currentVelocity
 
-    FW.renderer.render FW.scene, FW.camera
 
  

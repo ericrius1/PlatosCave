@@ -1,6 +1,5 @@
 (function() {
-  var Birds, last, windowHalfX, windowHalfY,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+  var Birds, last, windowHalfX, windowHalfY;
 
   window.WIDTH = 32;
 
@@ -52,19 +51,6 @@
 
   FW.Birds = Birds = (function() {
     function Birds() {
-      this.animate = __bind(this.animate, this);
-      var container;
-      container = document.createElement("div");
-      document.body.appendChild(container);
-      FW.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 3000);
-      FW.camera.position.z = 350;
-      FW.scene = new THREE.Scene();
-      FW.scene.fog = new THREE.Fog(0xffffff, 100, 1000);
-      FW.Renderer = new THREE.WebGLRenderer();
-      FW.Renderer.setSize(window.innerWidth, window.innerHeight);
-      container.appendChild(FW.Renderer.domElement);
-      FW.Renderer.setClearColor(FW.scene.fog.color, 1);
-      FW.Renderer.autoClear = true;
       window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer);
       simulator.init();
       this.effectController = {
@@ -159,11 +145,6 @@
       return FW.scene.add(birdMesh);
     };
 
-    Birds.prototype.animate = function() {
-      requestAnimationFrame(this.animate);
-      return this.render();
-    };
-
     Birds.prototype.update = function() {
       var delta, now;
       now = performance.now();
@@ -176,8 +157,7 @@
       this.birdUniforms.delta.value = delta;
       simulator.simulate(delta);
       this.birdUniforms.texturePosition.value = simulator.currentPosition;
-      this.birdUniforms.textureVelocity.value = simulator.currentVelocity;
-      return FW.renderer.render(FW.scene, FW.camera);
+      return this.birdUniforms.textureVelocity.value = simulator.currentVelocity;
     };
 
     return Birds;
