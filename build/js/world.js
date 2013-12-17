@@ -2,6 +2,10 @@
   var World, rnd,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
+  window.windowHalfX = window.innerWidth / 2;
+
+  window.windowHalfY = window.innerHeight / 2;
+
   rnd = FW.rnd;
 
   FW.World = World = (function() {
@@ -26,7 +30,9 @@
       this.height = 120000;
       this.startingY = 40;
       this.rippleFactor = rnd(60, 300);
-      FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 3, this.camFar);
+      window.mouseX = 10000;
+      window.mouseY = 10000;
+      FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, this.camFar);
       FW.camera.position.set(0, this.startingY, 0);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
@@ -50,7 +56,7 @@
       this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
       this.lightTower = new FW.LightTower();
-      this.birds = new FW.Birds();
+      FW.birds = new FW.Birds();
       directionalLight = new THREE.DirectionalLight(0xff0000, rnd(0.5, 1.5));
       randColor = Math.floor(Math.random() * 16777215);
       console.log(randColor);
@@ -97,7 +103,7 @@
         height: rnd(1000, 2000),
         widthSegments: 100,
         heightSegments: 100,
-        depth: rnd(1500, 5000),
+        depth: rnd(500, 3000),
         param: 4,
         filterparam: 1,
         filter: [CIRCLE_FILTER],
@@ -130,12 +136,12 @@
       time = Date.now();
       this.water.material.uniforms.time.value += 1.0 / 60;
       this.controls.update(delta);
-      this.birds.birdUniforms.time.value = performance.now();
-      this.birds.birdUniforms.delta.value = delta;
+      FW.birds.birdUniforms.time.value = performance.now();
+      FW.birds.birdUniforms.delta.value = delta;
       simulator.simulate(delta);
-      this.birds.birdUniforms.texturePosition.value = simulator.currentPosition;
-      this.birds.birdUniforms.textureVelocity.value = simulator.currentVelocity;
-      simulator.velocityUniforms.predator.value.set(0, 1000, 0);
+      FW.birds.birdUniforms.texturePosition.value = simulator.currentPosition;
+      FW.birds.birdUniforms.textureVelocity.value = simulator.currentVelocity;
+      simulator.velocityUniforms.predator.value.set(0, 0, 0);
       return this.render();
     };
 

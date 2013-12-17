@@ -1,4 +1,6 @@
 
+window.windowHalfX = window.innerWidth / 2;
+window.windowHalfY = window.innerHeight / 2;
 rnd = FW.rnd
 FW.World = class World
   constructor : ->
@@ -19,9 +21,11 @@ FW.World = class World
     @height = 120000
     @startingY = 40
     @rippleFactor = rnd(60, 300)
+    window.mouseX = 10000
+    window.mouseY = 10000
 
     # CAMERA
-    FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 3, @camFar)
+    FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 1, @camFar)
     FW.camera.position.set  0, @startingY, 0
     FW.camera.lookAt new THREE.Vector3 0, 40, 0
     
@@ -58,7 +62,7 @@ FW.World = class World
     @meteor = new FW.Meteor()
     @stars = new FW.Stars()
     @lightTower = new FW.LightTower()
-    @birds = new FW.Birds()
+    FW.birds = new FW.Birds()
     
     # LIGHTS
     directionalLight = new THREE.DirectionalLight 0xff0000, rnd(0.5, 1.5)
@@ -120,7 +124,7 @@ FW.World = class World
       height: rnd 1000, 2000
       widthSegments: 100
       heightSegments: 100
-      depth: rnd 1500, 5000
+      depth: rnd 500, 3000
       param: 4,
       filterparam: 1
       filter: [ CIRCLE_FILTER ]
@@ -146,12 +150,12 @@ FW.World = class World
     @water.material.uniforms.time.value += 1.0 / 60
     @controls.update(delta)
     # Update Birds
-    @birds.birdUniforms.time.value = performance.now()
-    @birds.birdUniforms.delta.value = delta
+    FW.birds.birdUniforms.time.value = performance.now()
+    FW.birds.birdUniforms.delta.value = delta
     simulator.simulate delta
-    @birds.birdUniforms.texturePosition.value = simulator.currentPosition
-    @birds.birdUniforms.textureVelocity.value = simulator.currentVelocity
-    simulator.velocityUniforms.predator.value.set( 0, 1000, 0 );
+    FW.birds.birdUniforms.texturePosition.value = simulator.currentPosition
+    FW.birds.birdUniforms.textureVelocity.value = simulator.currentVelocity
+    simulator.velocityUniforms.predator.value.set( 0, 0, 0 );
 
     @render()
   render : ->
@@ -165,6 +169,10 @@ FW.World = class World
     @lightTower.tick()
     @water.render()
     FW.Renderer.render( FW.scene, FW.camera );
+
+
+
+
      
 
 
