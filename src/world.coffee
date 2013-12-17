@@ -145,13 +145,13 @@ FW.World = class World
     time = Date.now()
     @water.material.uniforms.time.value += 1.0 / 60
     @controls.update(delta)
-    #Update Birds
-    # @birds.birdUniforms.time.value = performance.now()
-    # @birds.birdUniforms.delta.value = delta
-    # simulator.simulate delta
-    # @birds.birdUniforms.texturePosition.value = simulator.currentPosition
-    # @birds.birdUniforms.textureVelocity.value = simulator.currentVelocity
-    # simulator.velocityUniforms.predator.value.set( 0, 1000, 0 );
+    # Update Birds
+    @birds.birdUniforms.time.value = performance.now()
+    @birds.birdUniforms.delta.value = delta
+    simulator.simulate delta
+    @birds.birdUniforms.texturePosition.value = simulator.currentPosition
+    @birds.birdUniforms.textureVelocity.value = simulator.currentVelocity
+    simulator.velocityUniforms.predator.value.set( 0, 1000, 0 );
 
     @render()
   render : ->

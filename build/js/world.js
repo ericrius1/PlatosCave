@@ -130,6 +130,12 @@
       time = Date.now();
       this.water.material.uniforms.time.value += 1.0 / 60;
       this.controls.update(delta);
+      this.birds.birdUniforms.time.value = performance.now();
+      this.birds.birdUniforms.delta.value = delta;
+      simulator.simulate(delta);
+      this.birds.birdUniforms.texturePosition.value = simulator.currentPosition;
+      this.birds.birdUniforms.textureVelocity.value = simulator.currentVelocity;
+      simulator.velocityUniforms.predator.value.set(0, 1000, 0);
       return this.render();
     };
 
