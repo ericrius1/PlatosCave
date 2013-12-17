@@ -27,6 +27,7 @@ FW.Rockets = class Rockets
   explode: (rocket)->
     FW.scene.remove(rocket)
     @rockets.splice(@rockets.indexOf(rocket), 1) 
+    FW.birds.scatter()
     @firework.createExplosion(rocket.position)
 
 

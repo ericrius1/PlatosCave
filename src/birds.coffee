@@ -54,7 +54,14 @@ FW.Birds = class Birds
     @initBirds()
 
   scatter: ->
-    simulator.velocityUniforms.seperationDistance.value = @flockingFactors.seperation * 100
+    simulator.velocityUniforms.seperationDistance.value = @flockingFactors.seperation * 20
+    setTimeout(()=>
+      @reunite()
+    100)
+  reunite: ->
+    console.log "RENIUTE"
+    console.log @flockingFactors.seperation
+    simulator.velocityUniforms.seperationDistance = @flockingFactors.seperation
 
 
 

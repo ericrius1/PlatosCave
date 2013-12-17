@@ -28,6 +28,7 @@
     Rockets.prototype.explode = function(rocket) {
       FW.scene.remove(rocket);
       this.rockets.splice(this.rockets.indexOf(rocket), 1);
+      FW.birds.scatter();
       return this.firework.createExplosion(rocket.position);
     };
 

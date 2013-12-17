@@ -17,8 +17,8 @@ FW.World = class World
     @SCREEN_WIDTH = window.innerWidth
     @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
     @camFar = 200000
-    @width = 120000
-    @height = 120000
+    @width = 150000
+    @height = 150000
     @startingY = 40
     @rippleFactor = rnd(60, 300)
     window.mouseX = 10000
@@ -105,7 +105,6 @@ FW.World = class World
     aMeshMirror.rotation.x = -Math.PI * 0.5
     FW.scene.add aMeshMirror
 
-    # @loadSkyBox()
     
 
 

@@ -26,8 +26,8 @@
       this.SCREEN_WIDTH = window.innerWidth;
       this.SCREEN_HEIGHT = window.innerHeight - 2 * this.MARGIN;
       this.camFar = 200000;
-      this.width = 120000;
-      this.height = 120000;
+      this.width = 150000;
+      this.height = 150000;
       this.startingY = 40;
       this.rippleFactor = rnd(60, 300);
       window.mouseX = 10000;

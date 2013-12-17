@@ -63,7 +63,17 @@
     }
 
     Birds.prototype.scatter = function() {
-      return simulator.velocityUniforms.seperationDistance.value = this.flockingFactors.seperation * 100;
+      var _this = this;
+      simulator.velocityUniforms.seperationDistance.value = this.flockingFactors.seperation * 20;
+      return setTimeout(function() {
+        return _this.reunite();
+      }, 100);
+    };
+
+    Birds.prototype.reunite = function() {
+      console.log("RENIUTE");
+      console.log(this.flockingFactors.seperation);
+      return simulator.velocityUniforms.seperationDistance = this.flockingFactors.seperation;
     };
 
     Birds.prototype.initBirds = function() {

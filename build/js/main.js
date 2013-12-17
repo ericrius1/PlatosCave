@@ -20,13 +20,13 @@
     });
   }
 
-  window.soundOn = false;
+  window.soundOn = true;
 
   FW.sfxVolume = 0.2;
 
   FW.globalTick = 0.16;
 
-  FW.development = true;
+  FW.development = false;
 
   window.onload = function() {
     FW.myWorld = new FW.World();
