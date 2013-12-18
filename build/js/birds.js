@@ -1,14 +1,21 @@
 (function() {
-  var Birds, last;
+  var Birds, last, rnd;
 
   window.WIDTH = 32;
 
-  window.BIRDS = 512;
+  window.BIRDS = WIDTH * WIDTH;
+
+  window.HEIGHT = WIDTH;
+
+  window.BOUNDS = 800;
+
+  window.BOUNDS_HALF = BOUNDS / 2;
+
+  rnd = FW.rnd;
 
   THREE.BirdGeometry = function() {
-    var BIRDS, f, faces, fi, uvs, verts, wingsSpan;
+    var f, faces, fi, uvs, verts, wingsSpan;
     THREE.Geometry.call(this);
-    BIRDS = WIDTH * WIDTH;
     verts = this.vertices;
     faces = this.faces;
     uvs = this.faceVertexUvs[0];
@@ -35,24 +42,17 @@
 
   THREE.BirdGeometry.prototype = Object.create(THREE.Geometry.prototype);
 
-  window.HEIGHT = WIDTH;
-
-  window.PARTICLES = WIDTH * WIDTH;
-
-  window.BOUNDS = 800;
-
-  window.BOUNDS_HALF = BOUNDS / 2;
-
   last = performance.now();
 
   FW.Birds = Birds = (function() {
     function Birds() {
-      window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer);
+      this.birdsPosition = new THREE.Vector3(0, 2000, 0);
+      window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer, this.birdsPosition);
       simulator.init();
       this.flockingFactors = {
-        seperation: 20.0,
+        seperation: 500.0,
         alignment: 20.0,
-        cohesion: 20.0,
+        cohesion: 5.0,
         freedom: 0.75
       };
       simulator.velocityUniforms.seperationDistance.value = this.flockingFactors.seperation;
@@ -76,7 +76,7 @@
     };
 
     Birds.prototype.initBirds = function() {
-      var birdAttributes, birdColors, birdMesh, birdVertex, geometry, i, references, shaderMaterial, v, vertices, x, y;
+      var birdAttributes, birdColors, birdVertex, geometry, i, references, shaderMaterial, v, vertices, x, y;
       geometry = new THREE.BirdGeometry();
       birdAttributes = {
         index: {
@@ -139,11 +139,13 @@
         birdVertex[v] = v % 9;
         v++;
       }
-      birdMesh = new THREE.Mesh(geometry, shaderMaterial);
-      birdMesh.sortObjects = false;
-      birdMesh.matrixAutoUpdate = false;
-      birdMesh.updateMatrix();
-      return FW.scene.add(birdMesh);
+      this.birdMesh = new THREE.Mesh(geometry, shaderMaterial);
+      this.birdMesh.rotation.y = Math.PI / 2;
+      this.birdMesh.sortObjects = false;
+      this.birdMesh.matrixAutoUpdate = false;
+      this.birdMesh.updateMatrix();
+      this.birdMesh.position = new THREE.Vector3().copy(this.birdsPosition);
+      return FW.scene.add(this.birdMesh);
     };
 
     return Birds;

@@ -23,6 +23,7 @@ FW.World = class World
     @rippleFactor = rnd(60, 300)
     window.mouseX = 10000
     window.mouseY = 10000
+    @slowUpdateInterval = 10000
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 1, @camFar)
@@ -113,6 +114,8 @@ FW.World = class World
       @onWindowResize()
     ), false
 
+    @slowUpdate()
+
   
 
   loadTerrain: (position)->
@@ -167,7 +170,16 @@ FW.World = class World
     @stars.tick()
     @lightTower.tick()
     @water.render()
+    FW.birds.birdMesh.rotation.x +=1
     FW.Renderer.render( FW.scene, FW.camera );
+
+  #For the things I don't want to run as often.. meteors, birds moving etc
+  slowUpdate: ->
+    setTimeout(=>
+      @meteor.calcPositions()
+      # simulator.velocityUniforms.prey.value = new THREE.Vector3(rnd(-5000, 5000), simulator.velocityUniforms.prey.value.y, rnd(-5000, 5000))
+      @slowUpdate()
+    @slowUpdateInterval)
 
 
 

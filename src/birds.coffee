@@ -1,11 +1,13 @@
 window.WIDTH = 32
-window.BIRDS = 512
-
+window.BIRDS = WIDTH * WIDTH
+window.HEIGHT = WIDTH
+window.BOUNDS = 800
+window.BOUNDS_HALF = BOUNDS / 2
+rnd = FW.rnd
 
 
 THREE.BirdGeometry = ->
   THREE.Geometry.call this
-  BIRDS = WIDTH * WIDTH
   verts = @vertices
   faces = @faces
   uvs = @faceVertexUvs[0]
@@ -31,21 +33,18 @@ THREE.BirdGeometry = ->
 
 THREE.BirdGeometry:: = Object.create(THREE.Geometry::)
 
-window.HEIGHT = WIDTH
-window.PARTICLES = WIDTH * WIDTH
-window.BOUNDS = 800
-window.BOUNDS_HALF = BOUNDS / 2
 last = performance.now()
 
 
 FW.Birds = class Birds
   constructor : ->
-    window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer)
+    @birdsPosition = new THREE.Vector3(0, 2000, 0)
+    window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer, @birdsPosition)
     simulator.init()
     @flockingFactors =
-      seperation: 20.0
+      seperation: 500.0
       alignment: 20.0
-      cohesion: 20.0
+      cohesion: 5.0
       freedom: 0.75
     simulator.velocityUniforms.seperationDistance.value = @flockingFactors.seperation
     simulator.velocityUniforms.alignmentDistance.value = @flockingFactors.alignment
@@ -133,11 +132,12 @@ FW.Birds = class Birds
       birdVertex[v] = v % 9
       v++
     
-    birdMesh = new THREE.Mesh(geometry, shaderMaterial)
-    # birdMesh.rotation.y = Math.PI / 2
-    birdMesh.sortObjects = false
-    birdMesh.matrixAutoUpdate = false
-    birdMesh.updateMatrix()
-    FW.scene.add birdMesh
+    @birdMesh = new THREE.Mesh(geometry, shaderMaterial)
+    @birdMesh.rotation.y = Math.PI / 2
+    @birdMesh.sortObjects = false
+    @birdMesh.matrixAutoUpdate = false
+    @birdMesh.updateMatrix()
+    @birdMesh.position =new THREE.Vector3().copy(@birdsPosition)
+    FW.scene.add @birdMesh
     
  

@@ -32,6 +32,7 @@
       this.rippleFactor = rnd(60, 300);
       window.mouseX = 10000;
       window.mouseY = 10000;
+      this.slowUpdateInterval = 10000;
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, this.camFar);
       FW.camera.position.set(0, this.startingY, 0);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
@@ -92,6 +93,7 @@
       window.addEventListener("resize", (function() {
         return _this.onWindowResize();
       }), false);
+      this.slowUpdate();
     }
 
     World.prototype.loadTerrain = function(position) {
@@ -156,7 +158,16 @@
       this.stars.tick();
       this.lightTower.tick();
       this.water.render();
+      FW.birds.birdMesh.rotation.x += 1;
       return FW.Renderer.render(FW.scene, FW.camera);
+    };
+
+    World.prototype.slowUpdate = function() {
+      var _this = this;
+      return setTimeout(function() {
+        _this.meteor.calcPositions();
+        return _this.slowUpdate();
+      }, this.slowUpdateInterval);
     };
 
     return World;

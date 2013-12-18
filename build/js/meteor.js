@@ -72,8 +72,7 @@
         }
       }
       return setTimeout(function() {
-        _this.calcPositions();
-        return simulator.velocityUniforms.prey.value = new THREE.Vector3(FW.camera.position.x + 1000, simulator.velocityUniforms.prey.value.y, FW.camera.position.z + 1000);
+        return _this.calcPositions();
       }, 10000);
     };
 
