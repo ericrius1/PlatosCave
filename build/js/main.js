@@ -20,7 +20,7 @@
     });
   }
 
-  window.soundOn = false;
+  window.soundOn = true;
 
   FW.sfxVolume = 0.2;
 
