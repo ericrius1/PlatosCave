@@ -1,7 +1,7 @@
 (function() {
   var Birds, last, rnd;
 
-  window.WIDTH = 32;
+  window.WIDTH = 16;
 
   window.BIRDS = WIDTH * WIDTH;
 
@@ -50,7 +50,7 @@
       window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer, this.birdsPosition);
       simulator.init();
       this.flockingFactors = {
-        seperation: 100.0,
+        seperation: 10.0,
         alignment: 20.0,
         cohesion: 5.0,
         freedom: 0.75

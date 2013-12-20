@@ -15,7 +15,7 @@ FW.World = class World
     @mlib = {}
     @MARGIN = 10
     @SCREEN_WIDTH = window.innerWidth
-    @SCREEN_HEIGHT = window.innerHeight - 2 * @MARGIN
+    @SCREEN_HEIGHT = window.innerHeight
     @camFar = 200000
     @width = 150000
     @height = 150000
@@ -65,6 +65,7 @@ FW.World = class World
     @lightTower = new FW.LightTower()
     @lightCity = new FW.LightCity()
     FW.birds = new FW.Birds()
+    simulator.velocityUniforms.predator.value.set( 0, 0, 0 );
     
     # LIGHTS
     directionalLight = new THREE.DirectionalLight 0xff0000, rnd(0.5, 1.5)
@@ -158,7 +159,7 @@ FW.World = class World
     simulator.simulate delta
     FW.birds.birdUniforms.texturePosition.value = simulator.currentPosition
     FW.birds.birdUniforms.textureVelocity.value = simulator.currentVelocity
-    simulator.velocityUniforms.predator.value.set( 0, 0, 0 );
+
 
     @render()
   render : ->

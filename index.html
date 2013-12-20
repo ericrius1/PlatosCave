@@ -341,14 +341,6 @@
         float z2 = 0.2 +  vColor.x;
         gl_FragColor = vec4( z2, z2, z2, 1. );
 
-        // vec3 light = vec3( 0.0, 1.0, 1.0 );
-        // light = normalize( light );
-        // float dProd = dot( vNormal, light ) ; //* 0.5 + 0.5;
-        // vec4 tcolor = vColor;
-        // vec4 gray = vec4( vec3( tcolor.r * 0.3 + tcolor.g * 0.59 + tcolor.b * 0.11 ), 1.0 );
-
-        // gl_FragColor =  gray * dProd;
-        // gl_FragColor =  vec4( dProd  * tcolor );
 
       }
 
@@ -384,7 +376,21 @@
     <script src="build/js/stars.js"></script> 
     <script src = 'build/js/world.js'></script>
 
+    <div class= 'infoButton'>
+      <span class='infoText'>
+       <image class = 'icon' src='assets/star.png'>
+      </span>
+    </div>
 
+    <div class='info'>
+      <h2>Plato's Cave</h2>
+      <h4>Acknowledgments</h4>
+      <p>ThreeJS: <a href = 'http://threejs.org'>Mr. Doob</a></p>
+      <p>Particle Engine: <a href = 'https://github.com/squarefeet/ShaderParticleEngine'>Luke Moody</a></p>
+      <p>Water shaders and terrain generation library: <a href = 'http://jeremybouny.fr'>Jeremy Bouny</a></p>
+      <p>Birds: <a href = 'https://twitter.com/BlurSpline'>Blur Spine</a></p>
+      <p>Music: <a href = 'https://soundcloud.com/ramesesb'>Rameses B</a></p>
+    </div>
 
 
 

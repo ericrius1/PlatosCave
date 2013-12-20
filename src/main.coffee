@@ -24,14 +24,27 @@ window.onload = ->
   FW.myWorld = new FW.World()
   FW.myWorld.animate()
   FW.main = new FW.Main()
+  infoEl = document.getElementsByClassName('info')[0]
+  infoShowing = false
+  document.onclick = (event)-> 
+    el = event.target;
+    if (el.className is "icon" && !infoShowing) 
+      infoEl.style.display = 'block'
+      infoShowing = true;
+      event.stopPropagation()
+    else 
+      infoEl.style.display = 'none' 
+      infoShowing = false;
+        
+      
 
 
 FW.Main = class Main
   constructor: ->
     if soundOn
       SC.stream "/tracks/rameses-b-inspire", (sound)->
-        if soundOn
-          sound.play()
+        # if soundOn
+        #   sound.play()
 
 
 

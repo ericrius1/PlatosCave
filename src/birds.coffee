@@ -1,4 +1,4 @@
-window.WIDTH = 32
+window.WIDTH = 16
 window.BIRDS = WIDTH * WIDTH
 window.HEIGHT = WIDTH
 window.BOUNDS = 800
@@ -42,7 +42,7 @@ FW.Birds = class Birds
     window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer, @birdsPosition)
     simulator.init()
     @flockingFactors =
-      seperation: 100.0
+      seperation: 10.0
       alignment: 20.0
       cohesion: 5.0
       freedom: 0.75

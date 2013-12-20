@@ -29,19 +29,30 @@
   window.soundOn = !FW.development;
 
   window.onload = function() {
+    var infoEl, infoShowing;
     FW.myWorld = new FW.World();
     FW.myWorld.animate();
-    return FW.main = new FW.Main();
+    FW.main = new FW.Main();
+    infoEl = document.getElementsByClassName('info')[0];
+    infoShowing = false;
+    return document.onclick = function(event) {
+      var el;
+      el = event.target;
+      if (el.className === "icon" && !infoShowing) {
+        infoEl.style.display = 'block';
+        infoShowing = true;
+        return event.stopPropagation();
+      } else {
+        infoEl.style.display = 'none';
+        return infoShowing = false;
+      }
+    };
   };
 
   FW.Main = Main = (function() {
     function Main() {
       if (soundOn) {
-        SC.stream("/tracks/rameses-b-inspire", function(sound) {
-          if (soundOn) {
-            return sound.play();
-          }
-        });
+        SC.stream("/tracks/rameses-b-inspire", function(sound) {});
       }
     }
 

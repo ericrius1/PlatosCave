@@ -24,7 +24,7 @@
       this.mlib = {};
       this.MARGIN = 10;
       this.SCREEN_WIDTH = window.innerWidth;
-      this.SCREEN_HEIGHT = window.innerHeight - 2 * this.MARGIN;
+      this.SCREEN_HEIGHT = window.innerHeight;
       this.camFar = 200000;
       this.width = 150000;
       this.height = 150000;
@@ -61,6 +61,7 @@
       this.lightTower = new FW.LightTower();
       this.lightCity = new FW.LightCity();
       FW.birds = new FW.Birds();
+      simulator.velocityUniforms.predator.value.set(0, 0, 0);
       directionalLight = new THREE.DirectionalLight(0xff0000, rnd(0.5, 1.5));
       randColor = Math.floor(Math.random() * 16777215);
       console.log(randColor);
@@ -146,7 +147,6 @@
       simulator.simulate(delta);
       FW.birds.birdUniforms.texturePosition.value = simulator.currentPosition;
       FW.birds.birdUniforms.textureVelocity.value = simulator.currentVelocity;
-      simulator.velocityUniforms.predator.value.set(0, 0, 0);
       return this.render();
     };
 
