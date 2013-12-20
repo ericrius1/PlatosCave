@@ -28,7 +28,7 @@ FW.World = class World
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 1, @camFar)
-    FW.camera.position.set  0, @startingY, 0
+    FW.camera.position.set  0, @startingY, 100
     FW.camera.lookAt new THREE.Vector3 0, 40, 0
     
     #CONTROLS

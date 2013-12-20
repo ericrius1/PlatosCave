@@ -35,7 +35,7 @@
       this.slowUpdateInterval = 1000;
       this.noLightCity = true;
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, this.camFar);
-      FW.camera.position.set(0, this.startingY, 0);
+      FW.camera.position.set(0, this.startingY, 100);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
       this.controls.movementSpeed = 600;
