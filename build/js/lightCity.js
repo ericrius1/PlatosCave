@@ -27,7 +27,7 @@
       colorEnd = new THREE.Color();
       colorEnd.setRGB(Math.random(), Math.random(), Math.random());
       return cityEmitter = new ShaderParticleEmitter({
-        size: 3000,
+        size: 2000,
         colorStart: colorStart,
         colorEnd: colorEnd,
         velocity: new THREE.Vector3(0, 100, 0),
@@ -42,7 +42,7 @@
       var i, _i, _results;
       _results = [];
       for (i = _i = 1; _i <= 100; i = ++_i) {
-        _results.push(this.cityGroup.triggerPoolEmitter(1, new THREE.Vector3(rnd(1000, 50000), 0, rnd(1000, 50000))));
+        _results.push(this.cityGroup.triggerPoolEmitter(1, new THREE.Vector3(rnd(-40000, 20000), -100, rnd(-50000, -70000))));
       }
       return _results;
     };
