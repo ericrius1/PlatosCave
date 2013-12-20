@@ -15,9 +15,9 @@ FW.LightCity = class LightCity
 
   generateBuilding: ->
     colorStart = new THREE.Color()
-    colorStart.setRGB rnd(0, .5), rnd(0.01, .1), rnd(0.01, 0.1)
+    colorStart.setRGB Math.random(), Math.random(), Math.random()
     colorEnd = new THREE.Color()
-    colorEnd.setRGB rnd(0, 0.1), rnd(0.5, 1), rnd(0, 0.1)
+    colorEnd.setRGB Math.random(), Math.random(), Math.random()
     cityEmitter = new ShaderParticleEmitter
       size: 3000
       colorStart: colorStart
@@ -25,7 +25,7 @@ FW.LightCity = class LightCity
       velocity: new THREE.Vector3(0, 100, 0)
       acceleration: new THREE.Vector3(rnd(-1, 1), 0, rnd(-1, 1))
       particlesPerSecond: 1
-      opacityEnd: 1
+      opacityEnd: 0.5
       alive: 0
 
   activate: ->

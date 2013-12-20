@@ -172,7 +172,7 @@
         _this.meteor.calcPositions();
         if (_this.noLightCity) {
           distance = FW.camera.position.distanceTo(_this.lightTower.position);
-          if (distance < 1000) {
+          if (distance < 2000) {
             _this.activateLightCity();
             _this.noLightCity = false;
           }

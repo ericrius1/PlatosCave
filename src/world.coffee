@@ -180,7 +180,7 @@ FW.World = class World
       @meteor.calcPositions()
       if @noLightCity
         distance = FW.camera.position.distanceTo(@lightTower.position)
-        if distance < 1000
+        if distance < 2000
           @activateLightCity()
           @noLightCity = false
       @slowUpdate()
