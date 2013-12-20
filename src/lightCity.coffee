@@ -9,7 +9,7 @@ FW.LightCity = class LightCity
 
     @colorEnd = new THREE.Color()
     @colorEnd.setRGB(Math.random(),Math.random(),Math.random() )
-    for i in [1..100]
+    for i in [1..1000]
       @cityGroup.addPool 1, @generateBuilding(), false
     FW.scene.add(@cityGroup.mesh)
 
@@ -19,18 +19,17 @@ FW.LightCity = class LightCity
     colorEnd = new THREE.Color()
     colorEnd.setRGB Math.random(), Math.random(), Math.random()
     cityEmitter = new ShaderParticleEmitter
-      size: 2000
+      size: rnd(2500, 6000)
       colorStart: colorStart
       colorEnd: colorEnd
-      velocity: new THREE.Vector3(0, 100, 0)
-      acceleration: new THREE.Vector3(rnd(-1, 1), 0, rnd(-1, 1))
+      velocity: new THREE.Vector3(0, 111, 0)
+      acceleration: new THREE.Vector3(rnd(-0.8, 0.8), 0, rnd(-0.8, 0.8))
       particlesPerSecond: 1
-      opacityEnd: 0.5
       alive: 0
 
   activate: ->
     for i in [1..100]
-      @cityGroup.triggerPoolEmitter(1, new THREE.Vector3(rnd(-40000, 20000), -100, rnd(-50000, -70000)))
+      @cityGroup.triggerPoolEmitter(1, new THREE.Vector3(rnd(-100000, 20000), rnd(-300, -10), rnd(-40000, -100000)))
    
   
     

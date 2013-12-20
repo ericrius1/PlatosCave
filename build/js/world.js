@@ -76,7 +76,7 @@
       this.screen.position.set(0, -50, -200);
       FW.scene.add(this.screen);
       this.loadTerrain(new THREE.Vector3());
-      for (i = _i = 1; _i <= 4; i = ++_i) {
+      for (i = _i = 1; _i <= 10; i = ++_i) {
         this.loadTerrain(new THREE.Vector3(rnd(-this.width / 5, this.width / 5), 0, rnd(-this.height / 5, this.height / 5)));
       }
       waterNormals = new THREE.ImageUtils.loadTexture('./assets/waternormals.jpg');
@@ -104,11 +104,11 @@
       parameters = {
         alea: RAND_MT,
         generator: PN_GENERATOR,
-        width: rnd(1000, 2000),
-        height: rnd(1000, 2000),
+        width: rnd(2000, 4000),
+        height: rnd(2000, 4000),
         widthSegments: 100,
         heightSegments: 100,
-        depth: rnd(500, 3000),
+        depth: rnd(500, 2000),
         param: 4,
         filterparam: 1,
         filter: [CIRCLE_FILTER],

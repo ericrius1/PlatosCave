@@ -85,7 +85,7 @@ FW.World = class World
 
     #TERRAIN
     @loadTerrain new THREE.Vector3()
-    for i in [1..4]
+    for i in [1..10]
       @loadTerrain new THREE.Vector3(rnd(-@width/5, @width/5), 0, rnd(-@height/5, @height/5)) 
 
     #WATER
@@ -123,11 +123,11 @@ FW.World = class World
     parameters = 
       alea: RAND_MT,
       generator: PN_GENERATOR,
-      width: rnd 1000, 2000
-      height: rnd 1000, 2000
+      width: rnd 2000, 4000
+      height: rnd 2000, 4000
       widthSegments: 100
       heightSegments: 100
-      depth: rnd 500, 3000
+      depth: rnd 500, 2000
       param: 4,
       filterparam: 1
       filter: [ CIRCLE_FILTER ]

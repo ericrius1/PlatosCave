@@ -64,7 +64,7 @@
 
     Birds.prototype.scatter = function() {
       var _this = this;
-      simulator.velocityUniforms.seperationDistance.value = this.flockingFactors.seperation * 50;
+      simulator.velocityUniforms.seperationDistance.value = this.flockingFactors.seperation * 100;
       return setTimeout(function() {
         return _this.reunite();
       }, 20);
