@@ -56,9 +56,6 @@ FW.Meteor = class Meteor
       if distance > @meteorVisibleDistance + rnd(-@meteorVisibleDistance/2, @meteorVisibleDistance/2)
         @resetMeteor meteor
 
-    setTimeout(=>
-      @calcPositions()
-    10000)
     
 
   tick: ->

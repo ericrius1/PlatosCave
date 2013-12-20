@@ -61,19 +61,19 @@
     };
 
     Meteor.prototype.calcPositions = function() {
-      var distance, meteor, _i, _len, _ref,
-        _this = this;
+      var distance, meteor, _i, _len, _ref, _results;
       _ref = this.meteors;
+      _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         meteor = _ref[_i];
         distance = FW.camera.position.distanceTo(meteor.position);
         if (distance > this.meteorVisibleDistance + rnd(-this.meteorVisibleDistance / 2, this.meteorVisibleDistance / 2)) {
-          this.resetMeteor(meteor);
+          _results.push(this.resetMeteor(meteor));
+        } else {
+          _results.push(void 0);
         }
       }
-      return setTimeout(function() {
-        return _this.calcPositions();
-      }, 10000);
+      return _results;
     };
 
     Meteor.prototype.tick = function() {

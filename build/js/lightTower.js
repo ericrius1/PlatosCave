@@ -12,6 +12,7 @@
         maxAge: 111
       });
       this.colorEnd = new THREE.Color();
+      this.position = new THREE.Vector3(-5000, 100, -50000);
       this.colorEnd.setRGB(Math.random(), Math.random(), Math.random());
       this.generateTower();
       FW.scene.add(this.towerGroup.mesh);
@@ -23,7 +24,7 @@
       colorStart.setRGB(.8, .1, .9);
       this.towerEmitter = new ShaderParticleEmitter({
         size: 30000,
-        position: new THREE.Vector3(-5000, 100, -50000),
+        position: this.position,
         positionSpread: new THREE.Vector3(100, 0, 100),
         colorStart: colorStart,
         velocity: new THREE.Vector3(0, 5, 0),

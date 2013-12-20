@@ -38,11 +38,11 @@ last = performance.now()
 
 FW.Birds = class Birds
   constructor : ->
-    @birdsPosition = new THREE.Vector3(0, 2000, 0)
+    @birdsPosition = new THREE.Vector3(0, 0, 0)
     window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer, @birdsPosition)
     simulator.init()
     @flockingFactors =
-      seperation: 500.0
+      seperation: 100.0
       alignment: 20.0
       cohesion: 5.0
       freedom: 0.75

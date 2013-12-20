@@ -23,7 +23,8 @@ FW.World = class World
     @rippleFactor = rnd(60, 300)
     window.mouseX = 10000
     window.mouseY = 10000
-    @slowUpdateInterval = 10000
+    @slowUpdateInterval = 1000
+    @noLightCity = true
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 1, @camFar)
@@ -34,9 +35,10 @@ FW.World = class World
     @controls = new THREE.FlyControls(FW.camera)
     @controls.movementSpeed = 600;
     @controls.rollSpeed =  Math.PI / 8;
-    @controls.pitchEnabled = true
-    @controls.flyEnabled = true
-    @controls.mouseMove = false
+    if FW.development is true
+      @controls.pitchEnabled = true
+      @controls.flyEnabled = true
+      # @controls.mouseMove = true
 
     #STATS
     if FW.development is true
@@ -50,8 +52,6 @@ FW.World = class World
     # SCENE 
     FW.scene = new THREE.Scene()
 
-
-
     
     # RENDERER
     FW.Renderer = new THREE.WebGLRenderer()
@@ -63,6 +63,7 @@ FW.World = class World
     @meteor = new FW.Meteor()
     @stars = new FW.Stars()
     @lightTower = new FW.LightTower()
+    @lightCity = new FW.LightCity()
     FW.birds = new FW.Birds()
     
     # LIGHTS
@@ -169,17 +170,24 @@ FW.World = class World
     @meteor.tick()
     @stars.tick()
     @lightTower.tick()
+    @lightCity.tick()
     @water.render()
-    FW.birds.birdMesh.rotation.x +=1
     FW.Renderer.render( FW.scene, FW.camera );
 
   #For the things I don't want to run as often.. meteors, birds moving etc
   slowUpdate: ->
     setTimeout(=>
       @meteor.calcPositions()
-      # simulator.velocityUniforms.prey.value = new THREE.Vector3(rnd(-5000, 5000), simulator.velocityUniforms.prey.value.y, rnd(-5000, 5000))
+      if @noLightCity
+        distance = FW.camera.position.distanceTo(@lightTower.position)
+        if distance < 1000
+          @activateLightCity()
+          @noLightCity = false
       @slowUpdate()
     @slowUpdateInterval)
+
+  activateLightCity: ->
+    @lightCity.activate()
 
 
 

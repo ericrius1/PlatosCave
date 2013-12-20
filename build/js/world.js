@@ -32,16 +32,18 @@
       this.rippleFactor = rnd(60, 300);
       window.mouseX = 10000;
       window.mouseY = 10000;
-      this.slowUpdateInterval = 10000;
+      this.slowUpdateInterval = 1000;
+      this.noLightCity = true;
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, this.camFar);
       FW.camera.position.set(0, this.startingY, 0);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
       this.controls.movementSpeed = 600;
       this.controls.rollSpeed = Math.PI / 8;
-      this.controls.pitchEnabled = true;
-      this.controls.flyEnabled = true;
-      this.controls.mouseMove = false;
+      if (FW.development === true) {
+        this.controls.pitchEnabled = true;
+        this.controls.flyEnabled = true;
+      }
       if (FW.development === true) {
         this.stats = new Stats();
         this.stats.domElement.style.position = 'absolute';
@@ -57,6 +59,7 @@
       this.meteor = new FW.Meteor();
       this.stars = new FW.Stars();
       this.lightTower = new FW.LightTower();
+      this.lightCity = new FW.LightCity();
       FW.birds = new FW.Birds();
       directionalLight = new THREE.DirectionalLight(0xff0000, rnd(0.5, 1.5));
       randColor = Math.floor(Math.random() * 16777215);
@@ -157,17 +160,29 @@
       this.meteor.tick();
       this.stars.tick();
       this.lightTower.tick();
+      this.lightCity.tick();
       this.water.render();
-      FW.birds.birdMesh.rotation.x += 1;
       return FW.Renderer.render(FW.scene, FW.camera);
     };
 
     World.prototype.slowUpdate = function() {
       var _this = this;
       return setTimeout(function() {
+        var distance;
         _this.meteor.calcPositions();
+        if (_this.noLightCity) {
+          distance = FW.camera.position.distanceTo(_this.lightTower.position);
+          if (distance < 1000) {
+            _this.activateLightCity();
+            _this.noLightCity = false;
+          }
+        }
         return _this.slowUpdate();
       }, this.slowUpdateInterval);
+    };
+
+    World.prototype.activateLightCity = function() {
+      return this.lightCity.activate();
     };
 
     return World;

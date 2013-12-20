@@ -46,11 +46,11 @@
 
   FW.Birds = Birds = (function() {
     function Birds() {
-      this.birdsPosition = new THREE.Vector3(0, 2000, 0);
+      this.birdsPosition = new THREE.Vector3(0, 0, 0);
       window.simulator = new SimulatorRenderer(WIDTH, FW.Renderer, this.birdsPosition);
       simulator.init();
       this.flockingFactors = {
-        seperation: 500.0,
+        seperation: 100.0,
         alignment: 20.0,
         cohesion: 5.0,
         freedom: 0.75
