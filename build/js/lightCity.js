@@ -23,9 +23,9 @@
     LightCity.prototype.generateBuilding = function() {
       var cityEmitter, colorEnd, colorStart;
       colorStart = new THREE.Color();
-      colorStart.setRGB(Math.random(), Math.random(), Math.random());
+      colorStart.setRGB(rnd(0, .5), rnd(0.01, .1), rnd(0.01, 0.1));
       colorEnd = new THREE.Color();
-      colorEnd.setRGB(Math.random(), Math.random(), Math.random());
+      colorEnd.setRGB(rnd(0, 0.1), rnd(0.5, 1), rnd(0, 0.1));
       return cityEmitter = new ShaderParticleEmitter({
         size: 3000,
         colorStart: colorStart,
