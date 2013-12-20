@@ -8,7 +8,7 @@ FW.LightTower = class LightTower
     });
 
     @colorEnd = new THREE.Color()
-    @position = new THREE.Vector3 -5000, 100, -50000
+    @position = new THREE.Vector3 -5000, 100, -30000
     @colorEnd.setRGB(Math.random(),Math.random(),Math.random() )
     @generateTower()
     FW.scene.add(@towerGroup.mesh)
@@ -17,7 +17,7 @@ FW.LightTower = class LightTower
     colorStart = new THREE.Color()
     colorStart.setRGB .8, .1, .9
     @towerEmitter = new ShaderParticleEmitter
-      size: 30000
+      size: 10000
       position: @position
       positionSpread: new THREE.Vector3(100, 0, 100)
       colorStart: colorStart

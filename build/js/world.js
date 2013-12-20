@@ -38,7 +38,7 @@
       FW.camera.position.set(0, this.startingY, 100);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
-      this.controls.movementSpeed = 600;
+      this.controls.movementSpeed = 800;
       this.controls.rollSpeed = Math.PI / 8;
       if (FW.development === true) {
         this.controls.pitchEnabled = true;

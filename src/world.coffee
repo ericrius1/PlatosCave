@@ -33,7 +33,7 @@ FW.World = class World
     
     #CONTROLS
     @controls = new THREE.FlyControls(FW.camera)
-    @controls.movementSpeed = 600;
+    @controls.movementSpeed = 800;
     @controls.rollSpeed =  Math.PI / 8;
     if FW.development is true
       @controls.pitchEnabled = true
