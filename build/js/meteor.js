@@ -32,7 +32,7 @@
       meteor.dirX = rnd(-1, 1);
       meteor.dirY = -1;
       meteor.dirZ = rnd(1, -1);
-      return meteor.position = new THREE.Vector3(rnd(-10000, 10000), rnd(2000, 7000), rnd(-10000, 10000));
+      return meteor.position = new THREE.Vector3(rnd(-30000, 30000), rnd(2000, 7000), rnd(-30000, 30000));
     };
 
     Meteor.prototype.newMeteor = function() {

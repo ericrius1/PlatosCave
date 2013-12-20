@@ -35,7 +35,7 @@
       this.slowUpdateInterval = 1000;
       this.noLightCity = true;
       FW.camera = new THREE.PerspectiveCamera(55.0, this.SCREEN_WIDTH / this.SCREEN_HEIGHT, 1, this.camFar);
-      FW.camera.position.set(0, this.startingY, 100);
+      FW.camera.position.set(0, this.startingY, 400);
       FW.camera.lookAt(new THREE.Vector3(0, 40, 0));
       this.controls = new THREE.FlyControls(FW.camera);
       this.controls.movementSpeed = 800;
@@ -68,7 +68,7 @@
       directionalLight.color.setHex(randColor);
       directionalLight.position.set(0, 6000, 0);
       FW.scene.add(directionalLight);
-      screenGeo = new THREE.PlaneGeometry(200, 100, 10, 10);
+      screenGeo = new THREE.PlaneGeometry(400, 200, 10, 10);
       screenMat = new THREE.MeshBasicMaterial({
         map: THREE.ImageUtils.loadTexture('assets/sagan.jpg'),
         side: THREE.DoubleSide

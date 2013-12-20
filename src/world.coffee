@@ -28,7 +28,7 @@ FW.World = class World
 
     # CAMERA
     FW.camera = new THREE.PerspectiveCamera(55.0, @SCREEN_WIDTH / @SCREEN_HEIGHT, 1, @camFar)
-    FW.camera.position.set  0, @startingY, 100
+    FW.camera.position.set  0, @startingY, 400
     FW.camera.lookAt new THREE.Vector3 0, 40, 0
     
     #CONTROLS
@@ -77,7 +77,7 @@ FW.World = class World
 
 
     #SCREEN
-    screenGeo = new THREE.PlaneGeometry(200, 100, 10, 10)
+    screenGeo = new THREE.PlaneGeometry(400, 200, 10, 10)
     screenMat = new THREE.MeshBasicMaterial map: THREE.ImageUtils.loadTexture('assets/sagan.jpg'), side: THREE.DoubleSide
     @screen = new THREE.Mesh(screenGeo, screenMat)
     @screen.position.set(0,  -50, -200)
