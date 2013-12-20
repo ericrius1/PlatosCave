@@ -13,6 +13,8 @@ FW.Firework = class Firework
     @explodeSound.volume = FW.sfxVolume * 0.6
     @crackleSound = new Audio('./assets/crackle.mp3');
     @crackleSound.volume = FW.sfxVolume * 0.2
+    @explodeSound.load()
+    @crackleSound.load()
     @lights = []
     
     @particleGroup = new ShaderParticleGroup({
@@ -21,7 +23,7 @@ FW.Firework = class Firework
       maxAge: @fwAge
     });
 
-    for i in [1..10]
+    for i in [1..11]
       @particleGroup.addPool( 1, @generateEmitter(), false )     
     FW.scene.add(@particleGroup.mesh)
 
@@ -44,6 +46,7 @@ FW.Firework = class Firework
       emitterDuration: 1.0
 
   createExplosion: (origPos, newPos = origPos, count=0)->
+  
     emitter = @particleGroup.triggerPoolEmitter(1, newPos)
     light = @lights[@lightIndex++]
     if @lightIndex is @lights.length
@@ -61,7 +64,7 @@ FW.Firework = class Firework
               @crackleSound.load()
               @crackleSound.play()
             100)
-          50)
+          100)
         count++
         newPos = new THREE.Vector3(rnd(origPos.x - @fwSpread, origPos.x+@fwSpread), rnd(origPos.y - @fwSpread, origPos.y+@fwSpread), rnd(origPos.z - @fwSpread, origPos.z+@fwSpread))
         @createExplosion(origPos, newPos, count++)

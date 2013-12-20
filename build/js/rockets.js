@@ -16,8 +16,8 @@
       this.color.setRGB(200, 10, 0);
       this.firework = new FW.Firework(this.color);
       this.projector = new THREE.Projector();
-      this.launchSpeed = 40;
-      this.explosionDelay = 500;
+      this.launchSpeed = 20;
+      this.explosionDelay = 1000;
       this.shootDirection = new THREE.Vector3();
       this.rocketMat = new THREE.MeshBasicMaterial({
         color: 0xff00ff
@@ -38,8 +38,8 @@
       FW.numExplosionsPerRocket = (_ref = Math.random() > 0.99) != null ? _ref : {
         1: 0
       };
-      if (Math.random() > 0.85) {
-        FW.numExplosionsPerRocket = 5;
+      if (Math.random() > 0.90) {
+        FW.numExplosionsPerRocket = 4;
       }
       if (this.launching) {
         return;
@@ -57,7 +57,7 @@
       rocket.shootDirection.x = ray.direction.x;
       rocket.shootDirection.y = ray.direction.y;
       rocket.shootDirection.z = ray.direction.z;
-      rocket.launchSpeedY = rnd(7, 11);
+      rocket.launchSpeedY = rnd(3, 6);
       rocket.translateX(rocket.shootDirection.x);
       rocket.translateY(rocket.shootDirection.y);
       rocket.translateZ(rocket.shootDirection.z);

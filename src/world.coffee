@@ -39,14 +39,6 @@ FW.World = class World
       @controls.pitchEnabled = true
       @controls.flyEnabled = true
       # @controls.mouseMove = true
-
-    #STATS
-    if FW.development is true
-      @stats = new Stats()
-      @stats.domElement.style.position = 'absolute';
-      @stats.domElement.style.left = '0px';
-      @stats.domElement.style.top = '0px';
-      document.body.appendChild(@stats.domElement);
     
 
     # SCENE 
@@ -68,7 +60,7 @@ FW.World = class World
     simulator.velocityUniforms.predator.value.set( 0, 0, 0 );
     
     # LIGHTS
-    directionalLight = new THREE.DirectionalLight 0xff0000, rnd(0.5, 1.5)
+    directionalLight = new THREE.DirectionalLight 0xff0000, rnd(0.8, 1.5)
     randColor = Math.floor(Math.random()*16777215);
     console.log randColor
     directionalLight.color.setHex(randColor)
@@ -163,9 +155,7 @@ FW.World = class World
 
     @render()
   render : ->
-    @screen.position.y += .2
-    if FW.development is true
-      @stats.update()
+    @screen.position.y += .4
     FW.camera.position.y = @startingY
     @groundControl.update()
     @meteor.tick()

@@ -18,13 +18,15 @@
       this.explodeSound.volume = FW.sfxVolume * 0.6;
       this.crackleSound = new Audio('./assets/crackle.mp3');
       this.crackleSound.volume = FW.sfxVolume * 0.2;
+      this.explodeSound.load();
+      this.crackleSound.load();
       this.lights = [];
       this.particleGroup = new ShaderParticleGroup({
         texture: THREE.ImageUtils.loadTexture('assets/star.png'),
         blending: THREE.AdditiveBlending,
         maxAge: this.fwAge
       });
-      for (i = _i = 1; _i <= 10; i = ++_i) {
+      for (i = _i = 1; _i <= 11; i = ++_i) {
         this.particleGroup.addPool(1, this.generateEmitter(), false);
       }
       FW.scene.add(this.particleGroup.mesh);
@@ -77,7 +79,7 @@
                 _this.crackleSound.load();
                 return _this.crackleSound.play();
               }, 100);
-            }, 50);
+            }, 100);
           }
           count++;
           newPos = new THREE.Vector3(rnd(origPos.x - _this.fwSpread, origPos.x + _this.fwSpread), rnd(origPos.y - _this.fwSpread, origPos.y + _this.fwSpread), rnd(origPos.z - _this.fwSpread, origPos.z + _this.fwSpread));

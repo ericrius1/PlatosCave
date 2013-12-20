@@ -337,9 +337,8 @@
       uniform vec3 color;
 
       void main() {
-        // Fake colors for now
         float z2 = 0.2 +  vColor.x;
-        gl_FragColor = vec4( z2, z2, z2, 1. );
+        gl_FragColor = vec4( z2, z2, z2+.2, 1. );
 
 
       }
@@ -350,7 +349,6 @@
     // <script src="lib/ParticleEngine/ShaderParticleGroup.js"></script> -->
 
 
-    <script src="lib/stats.js"></script>
     <script src="build/js/main.js"></script>
     <script src="lib/SimulatorRenderer.js"></script>
 
@@ -381,15 +379,17 @@
        <image class = 'icon' src='assets/star.png'>
       </span>
     </div>
-
-    <div class='info'>
-      <h2>Plato's Cave</h2>
-      <h4>Acknowledgments</h4>
-      <p>ThreeJS: <a href = 'http://threejs.org'>Mr. Doob</a></p>
-      <p>Particle Engine: <a href = 'https://github.com/squarefeet/ShaderParticleEngine'>Luke Moody</a></p>
-      <p>Water shaders and terrain generation library: <a href = 'http://jeremybouny.fr'>Jeremy Bouny</a></p>
-      <p>Birds: <a href = 'https://twitter.com/BlurSpline'>Blur Spine</a></p>
-      <p>Music: <a href = 'https://soundcloud.com/ramesesb'>Rameses B</a></p>
+    <div class='infoWrapper'>
+      <div class='info'>
+        <h2>Plato's Cave</h2>
+        <h4>Acknowledgments:</h4>
+        <p>ThreeJS: <a href = 'http://threejs.org'>Mr. Doob</a></p>
+        <p>Particle Engine: <a href = 'https://github.com/squarefeet/ShaderParticleEngine' target="_blank">Luke Moody</a></p>
+        <p>Water shaders and terrain generation library: <a href = 'https://github.com/jbouny' target="_blank">Jeremy Bouny</a></p>
+        <p>Birds: <a href = 'https://twitter.com/BlurSpline' target="_blank">Blur Spine</a></p>
+        <p>Music: <a href = 'https://soundcloud.com/ramesesb' target="_blank">Rameses B</a></p>
+        <h4> You all inspire me to no end</h4>
+      </div>
     </div>
 
 

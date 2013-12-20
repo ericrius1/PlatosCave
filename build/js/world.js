@@ -44,13 +44,6 @@
         this.controls.pitchEnabled = true;
         this.controls.flyEnabled = true;
       }
-      if (FW.development === true) {
-        this.stats = new Stats();
-        this.stats.domElement.style.position = 'absolute';
-        this.stats.domElement.style.left = '0px';
-        this.stats.domElement.style.top = '0px';
-        document.body.appendChild(this.stats.domElement);
-      }
       FW.scene = new THREE.Scene();
       FW.Renderer = new THREE.WebGLRenderer();
       FW.Renderer.setSize(this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
@@ -62,7 +55,7 @@
       this.lightCity = new FW.LightCity();
       FW.birds = new FW.Birds();
       simulator.velocityUniforms.predator.value.set(0, 0, 0);
-      directionalLight = new THREE.DirectionalLight(0xff0000, rnd(0.5, 1.5));
+      directionalLight = new THREE.DirectionalLight(0xff0000, rnd(0.8, 1.5));
       randColor = Math.floor(Math.random() * 16777215);
       console.log(randColor);
       directionalLight.color.setHex(randColor);
@@ -151,10 +144,7 @@
     };
 
     World.prototype.render = function() {
-      this.screen.position.y += .2;
-      if (FW.development === true) {
-        this.stats.update();
-      }
+      this.screen.position.y += .4;
       FW.camera.position.y = this.startingY;
       this.groundControl.update();
       this.meteor.tick();

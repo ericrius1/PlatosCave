@@ -24,7 +24,7 @@
 
   FW.globalTick = 0.16;
 
-  FW.development = true;
+  FW.development = false;
 
   window.soundOn = !FW.development;
 
@@ -33,18 +33,15 @@
     FW.myWorld = new FW.World();
     FW.myWorld.animate();
     FW.main = new FW.Main();
-    infoEl = document.getElementsByClassName('info')[0];
+    infoEl = document.getElementsByClassName('infoWrapper')[0];
     infoShowing = false;
     return document.onclick = function(event) {
       var el;
+      console.log(event.target.className);
       el = event.target;
-      if (el.className === "icon" && !infoShowing) {
-        infoEl.style.display = 'block';
-        infoShowing = true;
-        return event.stopPropagation();
-      } else {
-        infoEl.style.display = 'none';
-        return infoShowing = false;
+      if (el.className === "icon") {
+        infoEl.style.display = infoShowing ? 'none' : 'block';
+        return infoShowing = !infoShowing;
       }
     };
   };
@@ -52,7 +49,11 @@
   FW.Main = Main = (function() {
     function Main() {
       if (soundOn) {
-        SC.stream("/tracks/rameses-b-inspire", function(sound) {});
+        SC.stream("/tracks/rameses-b-inspire", function(sound) {
+          if (soundOn) {
+            return sound.play();
+          }
+        });
       }
     }
 

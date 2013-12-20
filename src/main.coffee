@@ -14,7 +14,7 @@ SC?.initialize({
 });
 FW.sfxVolume = 0.2
 FW.globalTick = 0.16
-FW.development = true
+FW.development = false
 window.soundOn = !FW.development
 
 #make user let go when they want to explode firework
@@ -24,17 +24,15 @@ window.onload = ->
   FW.myWorld = new FW.World()
   FW.myWorld.animate()
   FW.main = new FW.Main()
-  infoEl = document.getElementsByClassName('info')[0]
+  infoEl = document.getElementsByClassName('infoWrapper')[0]
   infoShowing = false
   document.onclick = (event)-> 
+    console.log event.target.className
     el = event.target;
-    if (el.className is "icon" && !infoShowing) 
-      infoEl.style.display = 'block'
-      infoShowing = true;
-      event.stopPropagation()
-    else 
-      infoEl.style.display = 'none' 
-      infoShowing = false;
+    if (el.className is "icon") 
+      infoEl.style.display = if infoShowing then 'none' else 'block'
+      infoShowing = !infoShowing;
+
         
       
 
@@ -43,8 +41,8 @@ FW.Main = class Main
   constructor: ->
     if soundOn
       SC.stream "/tracks/rameses-b-inspire", (sound)->
-        # if soundOn
-        #   sound.play()
+        if soundOn
+          sound.play()
 
 
 
